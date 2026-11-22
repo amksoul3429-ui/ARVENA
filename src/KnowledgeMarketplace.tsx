@@ -1,3 +1,4 @@
+import UniversalExplorer from './UniversalExplorer';
 
 import {useEffect,useMemo,useState} from 'react';
 import {ChevronRight,Search,Lock,CheckCircle2,ArrowLeft,GraduationCap,Brain,FlaskConical,Code2,Microscope,BookOpen} from 'lucide-react';
@@ -128,6 +129,7 @@ export default function KnowledgeMarketplace({credits,onSpend}:{credits:number;o
   </>}
  </div>}
  if(view==='library') return <div className="km">
+  <UniversalExplorer/>
   <div className="km-tabs"><button className="active" onClick={()=>setView('library')}>MY LIBRARY <span>{libraryCourses.length}</span></button><button onClick={()=>setView('explore')}>EXPLORE KNOWLEDGE</button></div>
   <div className="km-library-hero"><div><span>YOUR PERMANENT COLLECTION</span><h2>My Learning Library</h2><p>Every course you unlock with Credits stays here. Reopen it whenever you want—no repeat payment.</p></div><div className="km-library-count"><b>{libraryCourses.length.toString().padStart(2,'0')}</b><small>OWNED PATHWAYS</small></div></div>
   {libraryCourses.length ? <div className="km-grid km-library-grid">{libraryCourses.map(course=>{const done=saved.done[course.id]||[];const last=saved.lastLesson?.[course.id];return <article className="km-card km-owned-card" key={course.id}><div className="km-cardtop"><span>{course.category} · {course.level}</span><em>UNLOCKED</em></div><div className="km-courseicon"><GraduationCap/></div><small>{course.subject}</small><h4>{course.title}</h4><p>{course.description}</p><div className="km-library-progress"><div><span>{done.length} / {course.lessons.length} lessons completed</span><b>{Math.round(done.length/course.lessons.length*100)}%</b></div><i><span style={{width:(done.length/course.lessons.length*100)+'%'}}/></i></div><div className="km-cardfoot"><b>PERMANENT ACCESS</b><button onClick={()=>openCourse(course)}>OPEN LIBRARY <ChevronRight size={13}/></button></div>{last!==undefined&&course.lessons[last]&&<small className="km-last-lesson">Last opened: {course.lessons[last]}</small>}</article>})}</div> : <div className="km-empty"><BookOpen size={26}/><b>Your library is waiting for its first unlock.</b><p>When you spend Credits on a course, it will appear here permanently.</p><button className="primary" onClick={()=>setView('explore')}>EXPLORE COURSES</button></div>}
