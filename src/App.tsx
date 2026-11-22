@@ -1,7 +1,7 @@
 import {useEffect,useState} from 'react';
 import Aeris from './Aeris';
 import {getLevel,xpIntoLevel,completeMissionReward,redeemReward} from './core/system';
-import {Activity,BookOpen,CalendarDays,Check,ChevronRight,Compass,Download,Edit3,Flame,LayoutDashboard,Menu,Plus,Settings,Sparkles,Search,Target,Trash2,Trophy,Upload,Wallet,X,Zap,Moon,Sun} from 'lucide-react';
+import {Activity,BookOpen,CalendarDays,Check,Compass,Download,Edit3,Flame,LayoutDashboard,Menu,Plus,Settings,Sparkles,Search,Target,Trash2,Trophy,Upload,Wallet,X,Zap,Moon,Sun} from 'lucide-react';
 import KnowledgeMarketplace from './KnowledgeMarketplace';
 type Page='Overview'|'Missions'|'Planner'|'Dream Life'|'Evolution'|'Knowledge'|'Rewards'|'Journal'|'Reports'|'Settings';
 type Item={id:string;title:string;created:string;[key:string]:any};
