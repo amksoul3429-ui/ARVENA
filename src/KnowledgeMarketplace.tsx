@@ -4,7 +4,6 @@ import {ChevronRight,Search,Lock,CheckCircle2,ArrowLeft,GraduationCap,Brain,Flas
 type Level='Beginner'|'Foundation'|'Intermediate'|'Advanced'|'Expert'|'Research';
 type Course={id:string;subject:string;category:string;level:Level;title:string;description:string;price:number;lessons:string[]};
 const levels:Level[]=['Beginner','Foundation','Intermediate','Advanced','Expert','Research'];
-const priceByLevel:Record<Level,number>={Beginner:5,Foundation:10,Intermediate:20,Advanced:25,Expert:50,Research:100};
 const seeds:Course[]=[
  {id:'physics-beginner',subject:'Physics',category:'Science',level:'Beginner',title:'Physics from Zero',description:'A gentle introduction to matter, motion, energy and how we describe the physical world.',price:5,lessons:['What is physics?','Measurement and units','Matter and its properties','Motion: position, distance and displacement','Speed and velocity','Forces in everyday life']},
  {id:'physics-foundation',subject:'Physics',category:'Science',level:'Foundation',title:'Physics Foundations',description:'Build a connected foundation in mechanics, heat, waves and electricity.',price:10,lessons:['Vectors and scalars','Kinematics','Newton’s laws','Work, energy and power','Thermal physics','Waves and sound']},
