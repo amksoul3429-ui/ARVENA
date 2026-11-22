@@ -35,7 +35,7 @@ export default function KnowledgeMarketplace({credits,onSpend}:{credits:number;o
  const unlock=()=>{if(!selected)return;if(saved.owned.includes(selected.id))return;if(credits<selected.price)return;if(!onSpend(selected.price))return;persist({...saved,owned:[...saved.owned,selected.id]});};
  const markDone=(lesson:string)=>{if(!selected||!owned)return;const next=[...new Set([...completed,lesson])];persist({...saved,done:{...saved.done,[selected.id]:next}})};
  const submitTest=()=>{if(!selected)return;const score=questions.reduce((n,q,i)=>n+(answers[i]===q.a?1:0),0);persist({...saved,scores:{...saved.scores,[selected.id]:[...(saved.scores[selected.id]||[]),score]}});setTest(false);setAnswers({});};
- const lastScore=selected?(saved.scores[selected.id]||[]).at(-1):undefined;
+ const scoreHistory=selected?(saved.scores[selected.id]||[]):[];const lastScore=scoreHistory.length?scoreHistory[scoreHistory.length-1]:undefined;
  if(selected){return <div className="km">
   <button className="km-back" onClick={()=>{setSelected(null);setTest(false)}}><ArrowLeft size={15}/> BACK TO MARKETPLACE</button>
   <div className="km-detail"><div className="km-kicker">{selected.category} / {selected.level.toUpperCase()}</div><h2>{selected.title}</h2><p>{selected.description}</p><div className="km-meta"><span>{selected.lessons.length} learning modules</span><span>{selected.price.toString().padStart(2,'0')} Credits</span><span>{owned?'Permanently owned':'One-time unlock'}</span></div></div>
