@@ -303,3 +303,14 @@ footer>span:first-child{color:#a99cff;font-weight:800;letter-spacing:2px}
 .activity-event time{text-align:right;white-space:nowrap}
 :root[data-theme="light"] .activity-event{border-color:#e5e8f0}
 @media(max-width:560px){.activity-event{grid-template-columns:8px minmax(0,1fr)}.activity-event time{grid-column:2;text-align:left}}
+
+/* Command Center quick actions and daily context */
+.dashboard-command-strip{display:flex;align-items:center;justify-content:space-between;gap:18px;margin:14px 0 19px;padding:17px 19px;border:1px solid var(--arv-line);border-radius:15px;background:linear-gradient(110deg,rgba(142,128,236,.09),rgba(89,182,193,.055),var(--arv-panel))}
+.dashboard-date{display:grid;gap:5px;min-width:190px}
+.dashboard-date small{font-size:7px;letter-spacing:1.6px;font-weight:800;color:var(--arv-accent)}
+.dashboard-date b{font:700 13px Manrope;color:var(--arv-text)}
+.dashboard-date span{font-size:9px;color:var(--arv-muted)}
+.dashboard-quick-actions{display:flex;gap:7px;flex-wrap:wrap;justify-content:flex-end}
+.dashboard-quick-actions button{display:flex;align-items:center;gap:7px;padding:9px 11px;border:1px solid var(--arv-line);border-radius:9px;background:rgba(130,145,180,.07);color:var(--arv-text);font-size:8px;font-weight:800;letter-spacing:.65px}
+.dashboard-quick-actions button:hover{border-color:rgba(169,156,255,.4);background:rgba(142,128,236,.13)}
+@media(max-width:760px){.dashboard-command-strip{align-items:flex-start;flex-direction:column}.dashboard-quick-actions{justify-content:flex-start;width:100%}.dashboard-quick-actions button{flex:1;justify-content:center}}
