@@ -7,7 +7,7 @@ export const SYSTEM_CONFIG = {
   name: "ARVENA",
   version: "1.1.0",
   xpPerLevel: 500,
-  creditsPerTenXp: 10,
+  creditsPerXp: 1,
   minimumMissionCredits: 0,
 } as const;
 
@@ -62,7 +62,7 @@ const rewardXp = Number.isFinite(rawXp)
   : 0;
 
 // ARVENA economy rule: every earned XP is matched by one earned Credit.
-const earnedCredits = rewardXp;
+const earnedCredits = Math.max(0, Math.floor(rewardXp * SYSTEM_CONFIG.creditsPerXp));
 
   return {
     awarded: true,
