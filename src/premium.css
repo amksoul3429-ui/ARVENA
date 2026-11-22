@@ -132,3 +132,39 @@ body{background-image:linear-gradient(rgba(125,142,185,.025) 1px,transparent 1px
 :root[data-theme="light"] .content input,:root[data-theme="light"] .content textarea,:root[data-theme="light"] .content select{background:#fff!important;border-color:#dfe3ef!important}
 @media(max-width:950px){main{width:calc(100% - 245px)}main>.content{max-width:100%;padding-left:24px;padding-right:24px}}
 @media(max-width:700px){main{width:100%;margin-left:0}main>.content{width:100%;max-width:100%;padding:19px 13px 90px}}
+
+/* Knowledge Space — permanent owned library and clearer product hierarchy */
+.km{width:100%;max-width:1180px;margin-inline:auto}
+.km-tabs{display:flex;gap:9px;padding:5px;margin:0 0 22px;border:1px solid var(--arv-border);border-radius:14px;background:rgba(117,130,176,.06);width:max-content;max-width:100%}
+.km-tabs button{display:flex;align-items:center;gap:9px;border:1px solid transparent;background:transparent;color:var(--arv-muted);border-radius:10px;padding:11px 16px;font-size:9px;font-weight:800;letter-spacing:1px}
+.km-tabs button.active{background:linear-gradient(120deg,rgba(145,130,242,.22),rgba(85,182,194,.12));border-color:rgba(160,148,245,.25);color:var(--arv-accent)}
+.km-tabs button span{display:grid;place-items:center;min-width:21px;height:21px;padding:0 6px;border-radius:20px;background:rgba(159,146,245,.16);color:var(--arv-accent);font-size:9px}
+.km-library-hero{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:30px 34px;margin-bottom:23px;border:1px solid rgba(163,151,255,.23);border-radius:20px;background:radial-gradient(circle at 88% 45%,rgba(131,113,229,.2),transparent 23%),linear-gradient(115deg,#121c35,#1c2140 58%,#17313b);box-shadow:0 20px 50px rgba(0,0,0,.14)}
+.km-library-hero>div:first-child{max-width:700px}
+.km-library-hero>div>span{font-size:8px;letter-spacing:2px;color:#aaa1f2;font-weight:800}
+.km-library-hero h2{font:800 clamp(25px,3vw,36px)/1.15 Manrope,sans-serif;color:#f0efff;margin:10px 0}
+.km-library-hero p{font-size:11px;line-height:1.8;color:#aab6cf;margin:0}
+.km-library-count{display:flex;flex-direction:column;align-items:center;justify-content:center;min-width:112px;min-height:100px;border:1px solid rgba(172,161,255,.25);border-radius:17px;background:rgba(146,132,232,.09)}
+.km-library-count b{font:800 34px Manrope;color:#d6ceff}
+.km-library-count small{font-size:7px;letter-spacing:1.3px;color:#aab3d0}
+.km-library-grid{align-items:stretch}
+.km-owned-card{display:flex;flex-direction:column;min-height:320px}
+.km-owned-card .km-cardfoot{margin-top:auto}
+.km-library-progress{margin:15px 0 8px}
+.km-library-progress>div{display:flex;justify-content:space-between;gap:8px;font-size:9px;color:var(--arv-muted)}
+.km-library-progress>div b{color:var(--arv-accent)}
+.km-library-progress>i{display:block;height:5px;border-radius:9px;background:rgba(130,145,184,.2);overflow:hidden;margin-top:9px}
+.km-library-progress>i span{display:block;height:100%;border-radius:9px;background:linear-gradient(90deg,#8e82ee,#72d5d9)}
+.km-owned-card .km-cardfoot>b{font-size:8px;letter-spacing:1px;color:#86d9c4}
+.km-last-lesson{display:block;margin-top:10px;color:var(--arv-muted);font-size:8px}
+.km-empty{display:flex;flex-direction:column;align-items:center;text-align:center;gap:10px;padding:45px 20px;border:1px dashed var(--arv-border);border-radius:18px}
+.km-empty p{max-width:430px}
+:root[data-theme="light"] .km-library-hero{background:radial-gradient(circle at 88% 45%,rgba(131,113,229,.14),transparent 23%),linear-gradient(115deg,#e9eaff,#f0edff 58%,#e9f6f6);border-color:#dedcf4}
+:root[data-theme="light"] .km-library-hero h2{color:#242b43}
+:root[data-theme="light"] .km-library-hero p{color:#66718a}
+:root[data-theme="light"] .km-library-count{background:rgba(145,132,232,.1)}
+@media(max-width:700px){.km-tabs{width:100%}.km-tabs button{flex:1;justify-content:center;padding:10px 9px;font-size:8px}.km-library-hero{padding:22px 18px;align-items:flex-start}.km-library-count{min-width:78px;min-height:78px}.km-library-count b{font-size:27px}.km-library-count small{font-size:6px;text-align:center}.km-library-hero h2{font-size:25px}}
+/* Keep all page content optically centred in the available workspace */
+main>.content{display:block;max-width:1240px;margin-inline:auto;padding-inline:clamp(18px,4vw,56px)}
+.content>.km{margin-inline:auto}
+@media(min-width:701px){main>.content{width:min(100%,1240px)}}
