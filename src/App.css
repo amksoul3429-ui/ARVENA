@@ -60,3 +60,5 @@
 :root[data-theme="light"] .km{--km-text:#202a3b;--km-muted:#68758b;--km-border:#e0e5ef;--km-panel:#e9edff;--km-panel2:#f1edff;--km-card:#fff}
 :root[data-theme="light"] .km-cats button.active{background:#ecebff;color:#4d478e}
 @media(max-width:760px){.km-levels{grid-template-columns:repeat(3,1fr)}.km-grid{grid-template-columns:1fr}.km-intro h2{font-size:23px}.km-filters{align-items:flex-start;flex-direction:column}.km-filters select{width:100%}.km-buy,.km-test{align-items:flex-start;flex-direction:column}.km-card p{min-height:0}}
+
+.theme-options{display:flex;gap:9px;flex-wrap:wrap;margin-top:12px}
