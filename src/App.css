@@ -86,3 +86,15 @@
   :root[data-theme="light"] .scrim{background:#18243a55}
   :root[data-theme="light"] .hamb{color:#34415a}
 }
+
+/* Knowledge Space lesson reader */
+.km-reader{margin:18px 0;padding:22px;border:1px solid var(--km-border,#30415c);border-radius:15px;background:var(--km-card,#111d2e)}
+.km-reader h2{font-size:25px;margin:12px 0}.km-reader h3{font-size:15px;margin:22px 0 10px}
+.km-reader-intro{font-size:14px;line-height:1.85;color:var(--km-text,#e8edf7);max-width:780px}
+.km-reader ul{padding-left:22px;line-height:1.9;font-size:13px;color:var(--km-text,#e8edf7)}
+.km-example{margin:18px 0;padding:17px;border-radius:10px;background:var(--km-panel,#14243a);border:1px solid var(--km-border,#30415c)}
+.km-example b,.km-check>b{font-size:10px;letter-spacing:1.2px;color:#999be9}.km-example p,.km-check p{font-size:13px;line-height:1.8}
+.km-check{margin-top:18px;padding:18px;border:1px solid var(--km-border,#30415c);border-radius:10px}
+.km-check label{display:flex;align-items:flex-start;gap:9px;padding:9px 0;font-size:12px;line-height:1.5}
+.km-check input{margin-top:2px;accent-color:#8987f6}.km-correct{color:#279b71!important}.km-incorrect{color:#d58b52!important}
+.km-finish{margin-top:14px}.km-reader .km-back{margin-bottom:20px}
