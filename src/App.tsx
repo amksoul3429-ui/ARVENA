@@ -48,7 +48,7 @@ function App(){
  const navIcon:Record<Page,any>={Overview:LayoutDashboard,Missions:Target,Planner:CalendarDays,'Dream Life':Compass,Evolution:Activity,Knowledge:BookOpen,Rewards:Trophy,Journal:Edit3,Reports:Flame,Settings:Settings};
  return <div className="shell">
  {mobile&&<button className="scrim" onClick={()=>setMobile(false)}/>}<aside className={mobile?'sidebar show':'sidebar'}>
- <div className="brand"><span><Sparkles/></span><div><b>ARVENA</b><small>PERSONAL INTELLIGENCE</small></div><button className="close" onClick={()=>setMobile(false)}><X/></button></div>
+ <div className="brand"><span className="brand-mark"><img src={`${import.meta.env.BASE_URL}favicon.svg`} alt="" /></span><div><b>ARVENA</b><small>PERSONAL INTELLIGENCE</small></div><button className="close" onClick={()=>setMobile(false)}><X/></button></div>
  <div className="operator"><b>System Operator</b><small>Level {getLevel(data.xp)} · {data.xp} XP</small></div>
  {sections.map(p=>{const I=navIcon[p];return <button key={p} className={'nav '+(page===p?'active':'')} onClick={()=>{setPage(p);setMobile(false)}}><I size={17}/>{labels[p]}{page===p&&<ChevronRight size={14}/>}</button>})}
  <div className="sidefoot">● LOCAL SYSTEM · V1.0</div></aside>
