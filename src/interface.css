@@ -126,3 +126,29 @@ footer>span:first-child{color:#a99cff;font-weight:800;letter-spacing:2px}
 @media(max-width:800px){.global-search{width:190px}.chips i{padding:7px 8px}.chips i:first-child{display:none}}
 @media(max-width:700px){:root{--arv-sidebar:0px}.sidebar{width:285px;transform:translateX(-105%);transition:transform .24s cubic-bezier(.2,.8,.2,1);padding-top:18px}.sidebar.show{transform:translateX(0);box-shadow:18px 0 65px rgba(0,0,0,.45)}.scrim{display:block;position:fixed;inset:0;z-index:19;background:rgba(2,6,15,.58);backdrop-filter:blur(3px);border:0}main{width:100%;margin:0}.topbar{height:61px;padding:0 14px}.hamb{display:grid;place-items:center;width:34px;height:34px;border:1px solid var(--arv-line);border-radius:9px;background:rgba(130,144,180,.08);color:var(--arv-text)}.breadcrumb{font-size:8px;gap:5px}.breadcrumb>span{display:none}.topbar-tools{gap:7px}.global-search{width:35px;height:35px;padding:0;justify-content:center;border-radius:9px}.global-search input,.global-search kbd{display:none}.global-search:focus-within{width:150px}.global-search:focus-within input{display:block}.global-search button{display:none}.chips{gap:5px}.chips i{display:none}.theme-toggle{width:34px;height:35px}.content{padding:20px 14px 105px}.hero{min-height:255px;padding:25px 22px;border-radius:17px}.hero h1{font-size:33px}.hero p{max-width:75%;font-size:10px}.orb{right:16px;top:52%;width:82px;height:82px;opacity:.65}.orb svg{width:24px}.stats{gap:8px;margin:12px 0}.stat{min-height:76px;padding:12px}.stat b{font-size:19px}.stat small{font-size:7px;letter-spacing:.6px}.cols,.grid{grid-template-columns:1fr}.head{align-items:flex-start;flex-direction:column;gap:12px}.head h1{font-size:27px}.record{align-items:flex-start;flex-wrap:wrap}.recordtext{min-width:0;flex:1 1 70%}.actions{margin-left:auto}.panel{padding:16px}.formgrid{grid-template-columns:1fr}.mobile-dock{position:fixed;z-index:16;bottom:0;left:0;right:0;display:grid;grid-template-columns:repeat(4,1fr);padding:8px 7px max(8px,env(safe-area-inset-bottom));background:rgba(10,16,30,.93);backdrop-filter:blur(20px);border-top:1px solid var(--arv-line)}.mobile-dock button{display:flex;flex-direction:column;align-items:center;gap:4px;border:0;background:none;color:#7787a3;padding:5px 2px;font-size:8px}.mobile-dock button.active{color:#b8adff}.mobile-dock button.active svg{filter:drop-shadow(0 0 6px rgba(169,156,255,.4))}.aeris-launch{bottom:76px}.aeris-panel{bottom:132px}footer{padding:13px 14px 76px;font-size:7px}.footer-right{display:none}}
 @media(max-width:380px){.hero h1{font-size:29px}.hero p{max-width:100%}.orb{display:none}.chips{display:none}.breadcrumb b{font-size:8px}}
+
+/* Module identity and assistant surfaces */
+.head{display:flex;justify-content:space-between;align-items:center;gap:18px;padding:7px 0 21px;margin-bottom:23px;border-bottom:1px solid var(--arv-line)}
+.head-copy{min-width:0}
+.head-copy>small{display:inline-flex;align-items:center;gap:7px;padding:6px 9px;border:1px solid rgba(169,156,255,.2);border-radius:6px;background:rgba(142,127,235,.08)}
+.head-copy h1{margin:12px 0 5px}
+.head-copy p{max-width:650px;margin:0}
+.head-actions{display:flex;align-items:center;gap:11px;flex-wrap:wrap;justify-content:flex-end}
+.module-state{display:flex;align-items:center;gap:7px;padding:8px 10px;border:1px solid var(--arv-line);border-radius:8px;color:var(--arv-muted);font-size:7px;font-weight:800;letter-spacing:1px;white-space:nowrap}
+.module-state i{width:6px;height:6px;border-radius:50%;background:#70d6ad;box-shadow:0 0 8px #70d6ad}
+.head-actions .primary{white-space:nowrap}
+.aeris-launch{right:24px;bottom:26px;padding:13px 17px;border-radius:14px;background:linear-gradient(120deg,#383567,#1b5260);border:1px solid rgba(169,156,255,.38);box-shadow:0 14px 40px rgba(0,0,0,.25);font-size:9px;letter-spacing:1.3px}
+.aeris-panel{right:24px;bottom:86px;border-radius:18px;background:linear-gradient(145deg,#111b30,#0d1929);border:1px solid rgba(169,156,255,.28);box-shadow:0 28px 90px rgba(0,0,0,.42)}
+.aeris-head{background:linear-gradient(100deg,rgba(135,119,230,.16),rgba(83,179,188,.08));padding:16px}
+.aeris-avatar{border:1px solid rgba(169,156,255,.3);background:linear-gradient(145deg,#514b86,#243d57)}
+.aeris-head b{font:800 12px Manrope;letter-spacing:1.7px}
+.aeris-modes{font-size:8px;padding:11px 5px}
+.aeris-message{border:1px solid rgba(156,171,207,.1);border-radius:13px}
+.aeris-message.you{border-color:rgba(169,156,255,.2)}
+.aeris-compose{padding:12px}
+.aeris-compose input{border-radius:10px}
+:root[data-theme="light"] .head-copy>small{color:#645caa;background:#f2f0ff;border-color:#e1ddff}
+:root[data-theme="light"] .module-state{background:#fff;color:#718099;border-color:#e2e7f0}
+:root[data-theme="light"] .aeris-panel{background:linear-gradient(145deg,#fff,#f7f9fd);border-color:#dfe3f1}
+:root[data-theme="light"] .aeris-head{background:linear-gradient(100deg,#f0efff,#edf8f8)}
+@media(max-width:700px){.head{align-items:flex-start;flex-direction:column;gap:13px}.head-actions{justify-content:flex-start}.module-state{display:none}.aeris-launch{right:14px;bottom:78px}.aeris-panel{right:10px;bottom:135px}}
