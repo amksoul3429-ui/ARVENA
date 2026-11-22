@@ -102,3 +102,33 @@ footer{letter-spacing:1.6px}
  .search input{width:105px}
  .aeris-launch{box-shadow:0 8px 30px rgba(0,0,0,.24)}
 }
+
+
+/* Layout correction: centre every page within the usable area beside the sidebar */
+main{width:calc(100% - 245px);margin-left:245px;min-width:0}
+main>.content{width:100%;max-width:1320px;margin-left:auto;margin-right:auto;padding-left:clamp(20px,3.2vw,48px);padding-right:clamp(20px,3.2vw,48px)}
+/* A more intentional command-console visual language across every module */
+body{background-image:linear-gradient(rgba(125,142,185,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(125,142,185,.025) 1px,transparent 1px),radial-gradient(ellipse at 70% -20%,rgba(104,92,190,.2),transparent 44%);background-size:36px 36px,36px 36px,auto;background-color:var(--arv-bg)}
+.content>.head{max-width:100%;padding:6px 2px 19px;border-bottom:1px solid var(--arv-border);margin-bottom:23px}
+.content>.head h1{font-size:clamp(28px,3.1vw,39px);letter-spacing:-1.4px}
+.content>.head p{max-width:680px}
+.content>.record,.content>.panel,.content>.grid>.panel{border-radius:17px}
+.content>.grid{gap:15px}
+.content .record{position:relative;overflow:hidden}
+.content .record:before,.content .panel:before{content:"";position:absolute;pointer-events:none}
+.content .panel{position:relative;overflow:hidden}
+.content .panel h4{display:flex;align-items:center;gap:9px}
+.content .panel h4:before{content:"";width:5px;height:5px;border-radius:50%;background:#9e96ff;box-shadow:0 0 10px #9e96ff}
+.content .record h3{letter-spacing:-.2px}
+.content .tag{font-weight:700;text-transform:uppercase}
+.content input,.content textarea,.content select{border-radius:10px!important;border:1px solid var(--arv-border)!important;background:rgba(125,140,180,.07)!important}
+.content input:focus,.content textarea:focus,.content select:focus{outline:2px solid rgba(153,142,244,.22);border-color:rgba(153,142,244,.5)!important}
+.content .secondary{transition:background .18s,border-color .18s,transform .18s}
+.content .secondary:hover{background:rgba(140,130,224,.15);border-color:rgba(153,142,244,.3);transform:translateY(-1px)}
+.content .primary{transition:transform .18s,box-shadow .18s,filter .18s}
+.content .primary:hover{transform:translateY(-2px);box-shadow:0 10px 26px rgba(105,95,202,.3);filter:brightness(1.08)}
+:root[data-theme="light"] body{background-image:linear-gradient(rgba(83,99,139,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(83,99,139,.035) 1px,transparent 1px),radial-gradient(ellipse at 70% -20%,rgba(134,124,218,.12),transparent 44%)}
+:root[data-theme="light"] .content>.head{border-bottom-color:rgba(70,84,120,.14)}
+:root[data-theme="light"] .content input,:root[data-theme="light"] .content textarea,:root[data-theme="light"] .content select{background:#fff!important;border-color:#dfe3ef!important}
+@media(max-width:950px){main{width:calc(100% - 245px)}main>.content{max-width:100%;padding-left:24px;padding-right:24px}}
+@media(max-width:700px){main{width:100%;margin-left:0}main>.content{width:100%;max-width:100%;padding:19px 13px 90px}}
