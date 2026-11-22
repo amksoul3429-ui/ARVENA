@@ -226,3 +226,41 @@ main>.content{display:block;max-width:1240px;margin-inline:auto;padding-inline:c
 :root[data-theme="light"] .km-notes-panel li,:root[data-theme="light"] .km-notes-panel p{color:#4f5c75}
 :root[data-theme="light"] .km-long-notes h4{color:#625ba4}
 @media(max-width:700px){.km-studio-head{padding:18px 16px;flex-direction:column}.km-format-tabs{grid-template-columns:repeat(2,minmax(0,1fr))}.km-format-tabs button{min-height:47px;font-size:8px}.km-video-screen{min-height:270px;padding:15px 15px 0}.km-video-timeline{margin:0 -15px}.km-video-content p{font-size:11px}.km-notes-panel{padding:15px}.km-notes-title h3{font-size:21px}.km-notes-title>b{font-size:7px}.km-studio-footer{align-items:flex-start;flex-direction:column}}
+
+
+/* Knowledge Space discovery landing — new editorial intelligence layout */
+.km-hero-v2{position:relative;isolation:isolate;display:grid;grid-template-columns:minmax(0,1.25fr) minmax(240px,.75fr);align-items:center;gap:22px;min-height:355px;padding:35px 39px 67px;margin:0 0 24px;overflow:hidden;border:1px solid rgba(159,148,255,.27);border-radius:22px;background:radial-gradient(ellipse at 78% 42%,rgba(94,197,209,.13),transparent 30%),radial-gradient(ellipse at 22% 10%,rgba(143,122,239,.2),transparent 42%),linear-gradient(118deg,#0f1930,#1b1e40 60%,#102b39);box-shadow:0 25px 65px rgba(0,0,0,.18)}
+.km-hero-v2:before{content:"";position:absolute;inset:0;z-index:-1;background-image:linear-gradient(rgba(188,190,255,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(188,190,255,.035) 1px,transparent 1px);background-size:31px 31px;mask-image:linear-gradient(90deg,black,transparent)}
+.km-hero-copy{position:relative;z-index:2}
+.km-overline{font-size:8px;letter-spacing:2.3px;color:#a9a0f2;font-weight:800}
+.km-hero-copy h2{font:800 clamp(35px,5vw,57px)/.98 Manrope,sans-serif;letter-spacing:-2.4px;color:#f4f1ff;margin:17px 0}
+.km-hero-copy h2 em{font-style:normal;background:linear-gradient(90deg,#bdb1ff,#7ad9e0);background-clip:text;-webkit-background-clip:text;color:transparent}
+.km-hero-copy p{max-width:510px;color:#b1bdd2;font-size:11px;line-height:1.9}
+.km-hero-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px}
+.km-hero-actions button{display:flex;align-items:center;gap:8px;padding:11px 14px;border:1px solid rgba(176,166,255,.28);border-radius:9px;background:linear-gradient(110deg,rgba(135,119,229,.28),rgba(75,178,190,.13));color:#e9e5ff;font-size:8px;font-weight:800;letter-spacing:.8px}
+.km-hero-actions button+button{background:rgba(151,162,197,.07);border-color:rgba(171,181,214,.2);color:#c2cbe0}
+.km-hero-orbit{height:225px;min-width:220px;position:relative;display:grid;place-items:center}
+.km-orbit-ring{position:absolute;border:1px solid rgba(164,154,255,.32);border-radius:50%;transform:rotate(-25deg)}
+.km-orbit-one{width:190px;height:190px;box-shadow:0 0 40px rgba(137,119,237,.09),inset 0 0 30px rgba(137,119,237,.07)}
+.km-orbit-two{width:145px;height:205px;border-color:rgba(112,209,216,.32);transform:rotate(52deg)}
+.km-orbit-core{width:112px;height:112px;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;background:radial-gradient(circle at 30% 25%,#34356d,#151d38 72%);border:1px solid rgba(185,176,255,.5);color:#c9c0ff;box-shadow:0 0 38px rgba(141,126,240,.25),inset 0 0 25px rgba(135,119,229,.16)}
+.km-orbit-core b{font:800 10px Manrope;letter-spacing:2px;color:#f1efff}
+.km-orbit-core small{font-size:6px;letter-spacing:1.5px;color:#80d8dd}
+.km-orbit-tag{position:absolute;padding:5px 8px;border-radius:20px;border:1px solid rgba(168,159,255,.3);background:#171d39;color:#c7c0ff;font-size:7px;font-weight:800;letter-spacing:1px}
+.km-orbit-tag.tag-a{top:8px;right:24px}.km-orbit-tag.tag-b{bottom:18px;right:5px}.km-orbit-tag.tag-c{bottom:25px;left:4px}
+.km-hero-foot{position:absolute;bottom:0;left:0;right:0;display:flex;gap:0;border-top:1px solid rgba(176,171,229,.16);background:rgba(7,12,26,.22)}
+.km-hero-foot span{flex:1;padding:13px 18px;color:#929fbc;font-size:7px;letter-spacing:1.1px;border-right:1px solid rgba(176,171,229,.12)}
+.km-hero-foot span:last-child{border:0}
+.km-hero-foot b{font:800 14px Manrope;color:#c9c1ff;margin-right:7px}
+:root[data-theme="light"] .km-hero-v2{background:radial-gradient(ellipse at 78% 42%,rgba(94,197,209,.14),transparent 30%),radial-gradient(ellipse at 22% 10%,rgba(143,122,239,.14),transparent 42%),linear-gradient(118deg,#e8eaff,#eeedff 60%,#e7f5f6);border-color:#dedcf4}
+:root[data-theme="light"] .km-hero-copy h2{color:#252b47}
+:root[data-theme="light"] .km-hero-copy p{color:#626f89}
+:root[data-theme="light"] .km-hero-actions button{color:#4f498f;background:linear-gradient(110deg,#dedbff,#e1f5f5)}
+:root[data-theme="light"] .km-hero-actions button+button{color:#4f5b74;background:rgba(255,255,255,.55)}
+:root[data-theme="light"] .km-orbit-core{background:radial-gradient(circle at 30% 25%,#e4e1ff,#cbd9ec 72%);color:#625ca5}
+:root[data-theme="light"] .km-orbit-core b{color:#383d62}
+:root[data-theme="light"] .km-orbit-tag{background:#fff;color:#625ca5}
+:root[data-theme="light"] .km-hero-foot{background:rgba(255,255,255,.24);border-color:rgba(85,94,140,.14)}
+:root[data-theme="light"] .km-hero-foot span{color:#69748c;border-color:rgba(85,94,140,.12)}
+:root[data-theme="light"] .km-hero-foot b{color:#665eac}
+@media(max-width:700px){.km-hero-v2{grid-template-columns:1fr;min-height:430px;padding:25px 20px 68px;gap:0}.km-hero-copy h2{font-size:42px}.km-hero-orbit{height:190px;min-width:0}.km-orbit-one{width:160px;height:160px}.km-orbit-two{height:170px;width:125px}.km-orbit-core{width:95px;height:95px}.km-hero-foot span{padding:10px 7px;font-size:6px;letter-spacing:.5px}.km-hero-foot b{display:block;margin:0 0 3px;font-size:13px}}
