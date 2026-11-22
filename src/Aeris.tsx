@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { Bot, Mic, Send, Volume2, X, Sparkles, Settings, Save, Loader2 } from 'lucide-react';
 
 type Msg = { role: 'aeris' | 'you'; text: string };
+type Persona = 'COMMANDER' | 'COMPANION' | 'STRATEGIST';
 type Recognition = {
   lang: string; interimResults: boolean; maxAlternatives: number;
   onresult: ((event: any) => void) | null; onerror: (() => void) | null;
@@ -33,6 +34,7 @@ function localReply(message: string) {
 
 export default function Aeris() {
   const [open, setOpen] = useState(false);
+  const [persona, setPersona] = useState<Persona>('STRATEGIST');
   const [input, setInput] = useState('');
   const [listening, setListening] = useState(false);
   const [sending, setSending] = useState(false);
@@ -41,7 +43,7 @@ export default function Aeris() {
   const [token, setToken] = useState(() => localStorage.getItem(TOKEN_KEY) || '');
   const [aiReady, setAiReady] = useState(false);
   const [msgs, setMsgs] = useState<Msg[]>([
-    { role: 'aeris', text: 'AERIS online. Commander, Companion and Strategist are ready. Connect the secure AI service to enable full conversational intelligence.' },
+    { role: 'aeris', text: 'AERIS online. Select Commander for disciplined execution, Companion for supportive conversation, or Strategist for analysis and learning. Connect the secure AI service to enable full conversational intelligence.' },
   ]);
   const rec = useRef<Recognition | null>(null);
   const configured = Boolean(endpoint.trim() && token.trim());
@@ -75,7 +77,7 @@ export default function Aeris() {
         body: JSON.stringify({
           messages: next.slice(-16).map(item => ({
             role: item.role === 'you' ? 'user' : 'assistant',
-            content: item.text
+            content: item.role === 'you' && item === next[next.length - 1] ? `[ACTIVE AERIS PERSONA: ${persona}]\n${item.text}` : item.text
           }))
         })
       });
@@ -147,8 +149,8 @@ export default function Aeris() {
               <small>Your token is stored in this browser only. Never paste it into GitHub source code or a public chat.</small>
             </div>
           )}
-          <div className="aeris-modes">
-            <span>COMMANDER</span><span>COMPANION</span><span>STRATEGIST</span>
+          <div className="aeris-modes" role="group" aria-label="Choose AERIS persona">
+            {(['COMMANDER','COMPANION','STRATEGIST'] as Persona[]).map(mode=><button type="button" key={mode} className={persona===mode?'active':''} aria-pressed={persona===mode} onClick={()=>setPersona(mode)}>{mode}</button>)}
           </div>
           <div className="aeris-messages">
             {msgs.map((message, index) => (
