@@ -1,6 +1,6 @@
 
 import {useMemo,useState} from 'react';
-import {BookOpen,ChevronRight,Search,Lock,CheckCircle2,ArrowLeft,GraduationCap,Brain,FlaskConical,Code2,Palette,Briefcase,Microscope,PlayCircle,RotateCcw} from 'lucide-react';
+import {ChevronRight,Search,Lock,CheckCircle2,ArrowLeft,GraduationCap,Brain,FlaskConical,Code2,Microscope} from 'lucide-react';
 type Level='Beginner'|'Foundation'|'Intermediate'|'Advanced'|'Expert'|'Research';
 type Course={id:string;subject:string;category:string;level:Level;title:string;description:string;price:number;lessons:string[]};
 const levels:Level[]=['Beginner','Foundation','Intermediate','Advanced','Expert','Research'];
