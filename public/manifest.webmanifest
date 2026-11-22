@@ -7,7 +7,9 @@
   "scope": "/ARVENA/",
   "display": "standalone",
   "orientation": "portrait",
-  "background_color": "#090f1b",
-  "theme_color": "#090f1b",
-  "icons": [{ "src": "/ARVENA/favicon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }]
+  "background_color": "#101b32",
+  "theme_color": "#101b32",
+  "icons": [
+    { "src": "/ARVENA/favicon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }
+  ]
 }
