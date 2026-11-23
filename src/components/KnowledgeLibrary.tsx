@@ -6,7 +6,7 @@ import "./KnowledgeLibrary.css";
 
 type Props = { courses: any[]; credits: number; onChange: (courses: KnowledgeCourse[]) => void; onEconomy: (courses: KnowledgeCourse[], credits: number, xp: number) => void };
 const categories = ["All subjects", "Science", "Technology", "Business", "Mathematics", "Psychology", "Humanities", "Philosophy", "Health science", "Creative arts", "Practical skills"];
-const levels = ["All levels", "Foundation to Advanced", "Beginner", "Foundation", "Intermediate", "Advanced", "Expert", "Research"];
+const levels = ["All depths", "Foundation to Advanced"];
 const categoryFor = (subject: string) => {
   const s = subject.toLowerCase();
   if (/health|body|wellbeing/.test(s)) return "Health science";
@@ -25,7 +25,7 @@ const categoryFor = (subject: string) => {
 export default function KnowledgeLibrary({ courses, credits, onChange, onEconomy }: Props) {
   const normalized = useMemo(() => courses.map(normalizeKnowledgeCourse).filter((c): c is KnowledgeCourse => !!c), [courses]);
   const [category, setCategory] = useState("All subjects");
-  const [level, setLevel] = useState("All levels");
+  const [level, setLevel] = useState("All depths");
   const [query, setQuery] = useState("");
   const [selectedId, setSelectedId] = useState("");
   const [activeLesson, setActiveLesson] = useState("");
@@ -41,7 +41,7 @@ export default function KnowledgeLibrary({ courses, credits, onChange, onEconomy
   const current = normalized.find(c => c.id === selectedId) || null;
   const filtered = normalized.filter(c => {
     const matchesCategory = category === "All subjects" || categoryFor(c.subject) === category || c.subject.toLowerCase() === category.toLowerCase();
-    const matchesLevel = level === "All levels" || c.level.toLowerCase() === level.toLowerCase() || (level === "Foundation" && c.level.toLowerCase().includes("foundation"));
+    const matchesLevel = level === "All depths" || c.level.toLowerCase() === level.toLowerCase();
     const searchable = [c.title, c.subject, c.description, ...c.objectives].join(" ").toLowerCase();
     return matchesCategory && matchesLevel && (!query.trim() || searchable.includes(query.toLowerCase().trim()));
   }).sort((a, b) => Number(b.unlocked) - Number(a.unlocked) || Number(b.done) - Number(a.done) || a.title.localeCompare(b.title));
@@ -68,7 +68,7 @@ export default function KnowledgeLibrary({ courses, credits, onChange, onEconomy
       <section className="km-intro"><div><span>UNIVERSAL KNOWLEDGE MARKETPLACE</span><h2>Explore the world of knowledge.</h2><p>A curated library of ready-made learning paths across science, technology, mathematics, health, society, business, arts and more. Start with foundations, build understanding and progress toward advanced mastery.</p></div><div className="km-emblem"><GraduationCap size={34}/></div></section>
       <div className="km-search"><Search size={18}/><input value={query} onChange={e => setQuery(e.target.value)} placeholder="Search the knowledge universe — science, history, finance, psychology..."/>{query && <button onClick={() => setQuery("")} aria-label="Clear search">×</button>}</div>
       <div className="km-policy"><BookOpen size={18}/><p><b>Ready-made courses. Complete learning paths.</b><br/>Preview the curriculum, unlock a course once, and keep permanent access. Lessons and knowledge checks are included.</p></div>
-      <div className="km-filters"><div className="km-cats">{categories.map(item => <button key={item} className={category === item ? "active" : ""} onClick={() => setCategory(item)}>{item}</button>)}</div><select value={level} onChange={e => setLevel(e.target.value)} aria-label="Filter by learning level">{levels.map(item => <option key={item}>{item}</option>)}</select></div>
+      <div className="km-filters"><div className="km-cats">{categories.map(item => <button key={item} className={category === item ? "active" : ""} onClick={() => setCategory(item)}>{item}</button>)}</div><select value={level} onChange={e => setLevel(e.target.value)} aria-label="Filter by learning depth">{levels.map(item => <option key={item}>{item}</option>)}</select></div>
       <div className="km-market-stats"><span><BookOpen size={14}/> {summary.courses} curated courses</span><span><Unlock size={14}/> {summary.unlocked} permanently unlocked</span><span><Trophy size={14}/> {summary.completedCourses} mastered</span><b>{credits} credits available</b></div>
       <div className="km-heading"><div><h3>{category === "All subjects" ? "YOUR COURSE MARKETPLACE" : category.toUpperCase()}</h3><p>Explore curated subjects and structured learning paths</p></div></div>
       {filtered.length ? <div className="km-grid">{filtered.map(course => {
