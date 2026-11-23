@@ -12,6 +12,7 @@ export type YouTubeSearchItem = {
   comments: number;
   channelSubscribers: number;
   url: string;
+  language: "English" | "Hindi";
   score: number;
   scoreReasons: string[];
 };
@@ -22,7 +23,7 @@ type YouTubeChannelsResponse = { items?: Array<{ id?: string; statistics?: { sub
 
 const safeCount = (value: string | undefined) => Math.max(0, Number(value) || 0);
 export function parseYouTubeDuration(value: string): number {
-  const match = value.match(/^PT(?:(\d+)H)?(?:(\d+)M)?(?:(\d+)S)?$/);
+  const match = value.match(/^PT(?:(\\d+)H)?(?:(\\d+)M)?(?:(\\d+)S)?$/);
   if (!match) return 0;
   return Math.ceil((Number(match[1] || 0) * 3600 + Number(match[2] || 0) * 60 + Number(match[3] || 0)) / 60);
 }
@@ -51,43 +52,78 @@ export function rankYouTubeResults(items: Omit<YouTubeSearchItem,"score"|"scoreR
     return { ...item, score, scoreReasons };
   }).sort((a,b) => b.score-a.score);
 }
-export async function searchYouTubeEducationalVideos(apiKey: string, query: string, level = "All levels", maxResults = 15): Promise<YouTubeSearchItem[]> {
+
+export async function searchYouTubeEducationalVideos(apiKey: string, query: string, level = "All levels", maxResults = 50): Promise<YouTubeSearchItem[]> {
   const key = apiKey.trim(), topic = query.trim();
   if (!key) throw new Error("Add your YouTube Data API key to enable automatic video discovery.");
   if (!topic) throw new Error("Enter a subject or lesson topic to find videos.");
-  const searchUrl = new URL("https://www.googleapis.com/youtube/v3/search");
-  searchUrl.search = new URLSearchParams({ part:"snippet", type:"video", maxResults:String(Math.min(25,Math.max(5,maxResults))), q:topic+" "+(level==="All levels"?"educational lecture":level+" lesson lecture"), order:"relevance", safeSearch:"strict", videoEmbeddable:"true", videoSyndicated:"true", key }).toString();
-  const searchResponse = await fetch(searchUrl.toString());
-  const searchData = await searchResponse.json() as YouTubeSearchResponse & { error?: { message?: string } };
-  if (!searchResponse.ok) throw new Error(searchData.error?.message || "YouTube search failed. Check the API key, quota and API restrictions.");
-  const ids = (searchData.items || []).map(x=>x.id?.videoId).filter((x):x is string=>!!x);
-  if (!ids.length) return [];
-  const videoUrl = new URL("https://www.googleapis.com/youtube/v3/videos");
-  videoUrl.search = new URLSearchParams({ part:"snippet,contentDetails,statistics", id:ids.join(","), key }).toString();
-  const videoResponse = await fetch(videoUrl.toString());
-  const videoData = await videoResponse.json() as YouTubeVideosResponse & { error?: { message?: string } };
-  if (!videoResponse.ok) throw new Error(videoData.error?.message || "Could not load video details.");
-  const channelIds = [...new Set((videoData.items||[]).map(x=>x.snippet?.channelId).filter((x):x is string=>!!x))];
+
+  // Search independently with English and Hindi language relevance, then rank one combined list.
+  const languages = [
+    { label: "English" as const, code: "en", terms: "English lecture lesson" },
+    { label: "Hindi" as const, code: "hi", terms: "Hindi lecture lesson" },
+  ];
+  const searches = await Promise.all(languages.map(async language => {
+    const searchUrl = new URL("https://www.googleapis.com/youtube/v3/search");
+    searchUrl.search = new URLSearchParams({
+      part: "snippet", type: "video", maxResults: "50",
+      q: topic + " " + language.terms + (level === "All levels" ? " educational" : level),
+      order: "relevance", safeSearch: "strict", videoEmbeddable: "true",
+      videoSyndicated: "true", relevanceLanguage: language.code, key,
+    }).toString();
+    const response = await fetch(searchUrl.toString());
+    const data = await response.json() as YouTubeSearchResponse & { error?: { message?: string } };
+    if (!response.ok) throw new Error(data.error?.message || "YouTube search failed. Check the API key, quota and API restrictions.");
+    return (data.items || []).map(item => ({
+      id: item.id?.videoId || "",
+      snippet: item.snippet || {},
+      language: language.label,
+    })).filter(item => item.id);
+  }));
+
+  const unique = new Map<string, {id:string;snippet:NonNullable<YouTubeSearchResponse["items"]>[number]["snippet"];language:"English"|"Hindi"}>();
+  searches.flat().forEach(item => { if (!unique.has(item.id)) unique.set(item.id, item as typeof unique extends Map<string,infer V> ? V : never); });
+  const candidates = [...unique.values()];
+  if (!candidates.length) return [];
+
+  const ids = candidates.map(item => item.id);
+  const details: NonNullable<YouTubeVideosResponse["items"]> = [];
+  for (let i = 0; i < ids.length; i += 50) {
+    const videoUrl = new URL("https://www.googleapis.com/youtube/v3/videos");
+    videoUrl.search = new URLSearchParams({ part: "snippet,contentDetails,statistics", id: ids.slice(i,i+50).join(","), key }).toString();
+    const response = await fetch(videoUrl.toString());
+    const data = await response.json() as YouTubeVideosResponse & { error?: { message?: string } };
+    if (!response.ok) throw new Error(data.error?.message || "Could not load video details.");
+    details.push(...(data.items || []));
+  }
+
+  const channelIds = [...new Set(details.map(item => item.snippet?.channelId).filter((x): x is string => !!x))];
   const channelCounts = new Map<string,number>();
-  if (channelIds.length) {
+  for (let i = 0; i < channelIds.length; i += 50) {
     const channelUrl = new URL("https://www.googleapis.com/youtube/v3/channels");
-    channelUrl.search = new URLSearchParams({ part:"statistics", id:channelIds.join(","), key }).toString();
-    const channelResponse = await fetch(channelUrl.toString());
-    if (channelResponse.ok) {
-      const channelData = await channelResponse.json() as YouTubeChannelsResponse;
-      (channelData.items||[]).forEach(x=>{ if(x.id) channelCounts.set(x.id,safeCount(x.statistics?.subscriberCount)); });
+    channelUrl.search = new URLSearchParams({ part: "statistics", id: channelIds.slice(i,i+50).join(","), key }).toString();
+    const response = await fetch(channelUrl.toString());
+    if (response.ok) {
+      const data = await response.json() as YouTubeChannelsResponse;
+      (data.items || []).forEach(item => { if (item.id) channelCounts.set(item.id,safeCount(item.statistics?.subscriberCount)); });
     }
   }
-  const results = (videoData.items||[]).map(item=>{
-    const snippet=item.snippet||{}, id=item.id||"", stats=item.statistics||{};
-    const thumbs=snippet.thumbnails||{};
+
+  const languageById = new Map(candidates.map(item => [item.id,item.language]));
+  const ranked = details.map(item => {
+    const snippet=item.snippet||{}, id=item.id||"", stats=item.statistics||{}, thumbs=snippet.thumbnails||{};
     return {
-      id,title:snippet.title||"Untitled video",description:snippet.description||"",channelTitle:snippet.channelTitle||"YouTube channel",
-      channelId:snippet.channelId||"",thumbnail:thumbs.high?.url||thumbs.medium?.url||thumbs.default?.url||"",
-      publishedAt:snippet.publishedAt||"",durationMinutes:parseYouTubeDuration(item.contentDetails?.duration||""),
-      views:safeCount(stats.viewCount),likes:safeCount(stats.likeCount),comments:safeCount(stats.commentCount),
-      channelSubscribers:channelCounts.get(snippet.channelId||"")||0,url:"https://www.youtube.com/watch?v="+id,
+      id, title:snippet.title||"Untitled video", description:snippet.description||"",
+      channelTitle:snippet.channelTitle||"YouTube channel", channelId:snippet.channelId||"",
+      thumbnail:thumbs.high?.url||thumbs.medium?.url||thumbs.default?.url||"",
+      publishedAt:snippet.publishedAt||"",
+      durationMinutes:parseYouTubeDuration(item.contentDetails?.duration||""),
+      views:safeCount(stats.viewCount), likes:safeCount(stats.likeCount), comments:safeCount(stats.commentCount),
+      channelSubscribers:channelCounts.get(snippet.channelId||"")||0,
+      url:"https://www.youtube.com/watch?v="+id,
+      language:languageById.get(id)||"English" as const,
     };
-  }).filter(x=>x.id && x.durationMinutes>0);
-  return rankYouTubeResults(results,topic);
+  }).filter(item => item.id && item.durationMinutes > 0);
+
+  return rankYouTubeResults(ranked,topic).slice(0,Math.min(50,Math.max(1,maxResults)));
 }
