@@ -43,3 +43,17 @@
 :root[data-theme="light"] .km-market-stats,:root[data-theme="light"] .km-outcomes,:root[data-theme="light"] .km-lesson-card{background:#fff}
 :root[data-theme="light"] .km-market-stats b{color:#202a3b}
 @media(max-width:760px){.km-market-stats{gap:9px}.km-market-stats b{margin-left:0}.km-heading{align-items:flex-start;flex-direction:column}.km-buy{align-items:flex-start}.km-buy>strong{order:0}.km-reader-actions{justify-content:flex-start}}
+
+
+/* AI-generated course discovery */
+.km-generatebar{display:flex;align-items:end;justify-content:space-between;gap:12px;margin:12px 0;padding:12px 14px;border:1px solid var(--km-border,#293a54);border-radius:10px;background:var(--km-card,#111d2e)}
+.km-generatebar label{display:flex;align-items:center;gap:10px;color:var(--km-muted,#9ba9bd);font-size:8px;font-weight:800;letter-spacing:1px}
+.km-generatebar select{min-width:150px;padding:8px 10px;border:1px solid var(--km-border,#35445c);border-radius:8px;background:var(--km-panel,#14243a);color:var(--km-text,#e8edf7);font-size:10px}
+.km-generatebar button{white-space:nowrap}
+.km-generatebar button:disabled{opacity:.55;cursor:wait}
+.km-error{padding:11px 13px;margin:10px 0;border:1px solid #a85b68;border-radius:9px;background:#542b3833;color:#f0b8c1;font-size:10px;line-height:1.6}
+.km-spin{animation:km-spin 1s linear infinite}
+@keyframes km-spin{to{transform:rotate(360deg)}}
+:root[data-theme="light"] .km-generatebar{background:#fff}
+:root[data-theme="light"] .km-generatebar select{background:#f8f9fc;color:#263247}
+@media(max-width:600px){.km-generatebar{align-items:stretch;flex-direction:column}.km-generatebar label{align-items:flex-start;flex-direction:column}.km-generatebar select{width:100%}.km-generatebar button{justify-content:center}}
