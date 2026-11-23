@@ -567,3 +567,13 @@ footer>span:first-child{color:#a99cff;font-weight:800;letter-spacing:2px}
 :root[data-theme="light"] .chips i{background:#bfc4cc!important;color:#050505!important;border-color:#969ba4!important}
 :root[data-theme="light"] .command-metric-icon,
 :root[data-theme="light"] .command-focus-action{background:#b9bec8!important;color:#050505!important;border-color:#9298a3!important}
+
+/* Command Center priority briefing */
+.command-priority-brief{display:flex;align-items:center;gap:16px;margin:0 0 22px;padding:18px 20px;border:1px solid rgba(169,156,255,.3);border-radius:17px;background:linear-gradient(105deg,rgba(117,101,205,.13),var(--arv-panel) 65%);box-shadow:0 12px 34px rgba(15,20,45,.06)}
+.priority-brief-icon{width:39px;height:39px;flex:0 0 39px;display:grid;place-items:center;border-radius:12px;color:var(--arv-accent);background:rgba(169,156,255,.13)}
+.priority-brief-copy{min-width:0;flex:1;display:grid;gap:5px}
+.priority-brief-copy small{font-size:9px;letter-spacing:1.3px;color:var(--arv-accent);font-weight:800}
+.priority-brief-copy b{font-size:15px;color:var(--arv-text);overflow-wrap:anywhere}
+.priority-brief-copy p{margin:0;color:var(--arv-muted);font-size:12px;line-height:1.55}
+.command-priority-brief>.primary{flex:0 0 auto;white-space:nowrap}
+@media(max-width:700px){.command-priority-brief{align-items:flex-start;flex-wrap:wrap;gap:12px;padding:15px}.priority-brief-copy{flex-basis:calc(100% - 54px)}.command-priority-brief>.primary{margin-left:51px}}
