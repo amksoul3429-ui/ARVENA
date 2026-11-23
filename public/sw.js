@@ -1,4 +1,4 @@
-const CACHE = 'arvena-shell-v3';
+const CACHE = 'arvena-shell-v4';
 const BASE = new URL('./', self.location).pathname;
 const SHELL = [BASE, BASE + 'index.html', BASE + 'manifest.webmanifest', BASE + 'favicon.svg'];
 
@@ -36,16 +36,18 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
-  // Vite's hashed assets are immutable; cache them for reliable offline use.
+  // Prefer deployed assets so installed PWAs receive new releases immediately.
   if (['script', 'style', 'image', 'font'].includes(event.request.destination)) {
     event.respondWith(
-      caches.match(event.request).then((cached) => cached || fetch(event.request).then((response) => {
-        if (response.ok) {
-          const copy = response.clone();
-          caches.open(CACHE).then((cache) => cache.put(event.request, copy));
-        }
-        return response;
-      }))
+      fetch(event.request)
+        .then((response) => {
+          if (response.ok) {
+            const copy = response.clone();
+            caches.open(CACHE).then((cache) => cache.put(event.request, copy));
+          }
+          return response;
+        })
+        .catch(() => caches.match(event.request))
     );
   }
 });
