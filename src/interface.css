@@ -415,3 +415,89 @@ footer>span:first-child{color:#a99cff;font-weight:800;letter-spacing:2px}
 @media(max-width:1050px){.command-metrics{grid-template-columns:repeat(2,minmax(0,1fr))}.command-main-grid{grid-template-columns:minmax(0,1.1fr) minmax(250px,.9fr)}}
 @media(max-width:760px){.command-hero{grid-template-columns:minmax(0,1fr) 145px;padding:23px;gap:12px}.command-level-card{width:140px;padding:11px}.command-level-ring{width:72px;height:72px}.command-level-ring b{font-size:25px}.command-main-grid,.command-lower-grid{grid-template-columns:1fr}.command-side-stack{display:grid;grid-template-columns:1fr 1fr}.command-panel{padding:15px}}
 @media(max-width:520px){.command-hero{grid-template-columns:1fr;padding:22px;min-height:0}.command-level-card{display:none}.command-hero h1{font-size:30px}.command-date-row{align-items:flex-start;flex-direction:column}.command-live{font-size:6px}.command-metrics{gap:8px}.command-metrics article{padding:10px;gap:8px}.command-metric-icon{width:30px;height:30px;flex-basis:30px}.command-metrics small{font-size:6px}.command-metrics b{font-size:19px}.command-side-stack{grid-template-columns:1fr}.command-panel-head h2{font-size:15px}}
+
+
+/* High-contrast, low-glare light theme */
+:root[data-theme="light"]{
+ color-scheme:light;
+ --arv-text:#111827;
+ --arv-muted:#39465b;
+ --arv-line:#cbd2df;
+ --arv-panel:#f0f1f4;
+ background:#e9ebef;
+ color:#111827;
+}
+:root[data-theme="light"] body{background:#e9ebef!important;color:#111827!important}
+:root[data-theme="light"] main,
+:root[data-theme="light"] .content{color:#111827}
+:root[data-theme="light"] .sidebar{background:#e1e4e9!important;border-color:#c4cbd6!important}
+:root[data-theme="light"] header{background:#e5e7ebf2!important;border-color:#cbd2dc!important;color:#273449!important}
+:root[data-theme="light"] header b,
+:root[data-theme="light"] .brand b,
+:root[data-theme="light"] .operator b,
+:root[data-theme="light"] .nav,
+:root[data-theme="light"] .head h1,
+:root[data-theme="light"] .hero h1,
+:root[data-theme="light"] .panel h3,
+:root[data-theme="light"] .panel h4,
+:root[data-theme="light"] .record h3,
+:root[data-theme="light"] .task b,
+:root[data-theme="light"] .stat b,
+:root[data-theme="light"] .command-panel-head h2,
+:root[data-theme="light"] .command-focus>b,
+:root[data-theme="light"] .command-metrics b,
+:root[data-theme="light"] .command-mission-row b,
+:root[data-theme="light"] .command-goal-row b,
+:root[data-theme="light"] .command-activity-row b{color:#111827!important}
+:root[data-theme="light"] .brand small,
+:root[data-theme="light"] .operator small,
+:root[data-theme="light"] .nav,
+:root[data-theme="light"] .head p,
+:root[data-theme="light"] .hero p,
+:root[data-theme="light"] .panel p,
+:root[data-theme="light"] .record p,
+:root[data-theme="light"] .record small,
+:root[data-theme="light"] .muted,
+:root[data-theme="light"] .stat small,
+:root[data-theme="light"] .command-panel-head p,
+:root[data-theme="light"] .command-metrics div>span,
+:root[data-theme="light"] .command-activity-row span,
+:root[data-theme="light"] .command-activity-row time,
+:root[data-theme="light"] .command-date-row b{color:#39465b!important}
+:root[data-theme="light"] .stat,
+:root[data-theme="light"] .panel,
+:root[data-theme="light"] .record,
+:root[data-theme="light"] .command-panel,
+:root[data-theme="light"] .command-metrics article,
+:root[data-theme="light"] .command-level-card{background:#f0f1f4!important;border-color:#cbd2df!important}
+:root[data-theme="light"] .operator{background:#d9dee6!important;border-color:#c2cad6!important}
+:root[data-theme="light"] .nav.active,:root[data-theme="light"] .nav:hover{background:#cfd5e0!important;color:#111827!important}
+:root[data-theme="light"] .hero{background:linear-gradient(115deg,#dce1ed,#e5e1ee 65%,#e4e8ed)!important;border-color:#c5ccda!important}
+:root[data-theme="light"] .hero small,:root[data-theme="light"] .head small{color:#353e61!important}
+:root[data-theme="light"] .hero em{color:#4d438d!important}
+:root[data-theme="light"] .command-hero{background:linear-gradient(112deg,#dce1ed,#e5e1ee 58%,#dce7e9)!important;border-color:#c5ccda!important}
+:root[data-theme="light"] .command-hero h1{color:#111827!important}
+:root[data-theme="light"] .command-hero h1 em{background:none;color:#3e3978!important}
+:root[data-theme="light"] .command-hero-copy>p{color:#39465b!important}
+:root[data-theme="light"] .command-greeting,:root[data-theme="light"] .command-eyebrow{color:#3e4770!important}
+:root[data-theme="light"] .command-level-ring b,:root[data-theme="light"] .command-level-card>strong{color:#111827!important}
+:root[data-theme="light"] .command-level-ring span,:root[data-theme="light"] .command-level-card>small,:root[data-theme="light"] .command-level-caption{color:#39465b!important}
+:root[data-theme="light"] .command-panel-head small{color:#494477!important}
+:root[data-theme="light"] .command-metric-icon{background:#dfe2eb!important;color:#38356e!important}
+:root[data-theme="light"] .command-focus-action{color:#28245f!important;background:#e0e1ed!important}
+:root[data-theme="light"] .command-text-action{color:#38356e!important}
+:root[data-theme="light"] .km{--km-text:#111827;--km-muted:#39465b;--km-border:#cbd2df;--km-panel:#e1e4e9;--km-panel2:#d9dce5;--km-card:#f0f1f4}
+:root[data-theme="light"] .km-reader-intro,:root[data-theme="light"] .km-reader ul{color:#111827!important}
+:root[data-theme="light"] .km-search input,:root[data-theme="light"] .km-card h4{color:#111827!important}
+:root[data-theme="light"] .km-card p,:root[data-theme="light"] .km-levels small{color:#39465b!important}
+:root[data-theme="light"] .km-cats button,:root[data-theme="light"] .km-filters select{color:#273449!important;background:#f0f1f4!important;border-color:#cbd2df!important}
+:root[data-theme="light"] .km-levels button{color:#111827!important}
+:root[data-theme="light"] .km-cardfoot>b{color:#5b4516!important}
+:root[data-theme="light"] .aeris-panel{background:#f0f1f4!important}
+:root[data-theme="light"] .aeris-head b,:root[data-theme="light"] .aeris-message p{color:#111827!important}
+:root[data-theme="light"] .aeris-message small,:root[data-theme="light"] .aeris-note{color:#39465b!important}
+:root[data-theme="light"] .aeris-compose input{color:#111827!important;background:#e1e4e9!important}
+:root[data-theme="light"] .secondary{color:#111827!important;background:#dfe2e9!important}
+:root[data-theme="light"] .textbtn,:root[data-theme="light"] .km-back{color:#35316f!important}
+:root[data-theme="light"] .simple{color:#111827!important}
+:root[data-theme="light"] footer{color:#39465b!important}
