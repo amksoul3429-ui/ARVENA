@@ -53,16 +53,19 @@ export function rankYouTubeResults(items: Omit<YouTubeSearchItem,"score"|"scoreR
   }).sort((a,b) => b.score-a.score);
 }
 
-export async function searchYouTubeEducationalVideos(apiKey: string, query: string, level = "All levels", maxResults = 50): Promise<YouTubeSearchItem[]> {
+export async function searchYouTubeEducationalVideos(apiKey: string, query: string, level = "All levels", maxResults = 50, languagePreference: "Both" | "English" | "Hindi" = "Both"): Promise<YouTubeSearchItem[]> {
   const key = apiKey.trim(), topic = query.trim();
   if (!key) throw new Error("Add your YouTube Data API key to enable automatic video discovery.");
   if (!topic) throw new Error("Enter a subject or lesson topic to find videos.");
 
   // Search independently with English and Hindi language relevance, then rank one combined list.
-  const languages = [
+  const allLanguages = [
     { label: "English" as const, code: "en", terms: "English lecture lesson" },
     { label: "Hindi" as const, code: "hi", terms: "Hindi lecture lesson" },
   ];
+  const languages = languagePreference === "Both"
+    ? allLanguages
+    : allLanguages.filter(language => language.label === languagePreference);
   const searches = await Promise.all(languages.map(async language => {
     const searchUrl = new URL("https://www.googleapis.com/youtube/v3/search");
     searchUrl.search = new URLSearchParams({
