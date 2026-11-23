@@ -1,85 +1,187 @@
 /**
- * ARVENA local data safety layer.
- * Keeps the legacy storage key and accepts older backup files.
+ * ARVENA Core Storage
+ * Backward-compatible, validated local persistence and portable backups.
+ * Keeps the historical uls-data-v1 key so existing installations migrate in place.
  */
+export const STORAGE_KEY = "uls-data-v1";
+export const BACKUP_FORMAT = "arvena-backup";
+export const BACKUP_VERSION = 1;
 
-export type BackupEnvelope<T> = {
-  app: "ARVENA";
-  formatVersion: 2;
-  exportedAt: string;
-  data: T;
-  knowledgeMarketplace: unknown;
+export type CoreRecord = { id: string; title: string; created: string; [key: string]: unknown };
+export type AppData = {
+  missions: CoreRecord[];
+  tasks: CoreRecord[];
+  goals: CoreRecord[];
+  knowledge: CoreRecord[];
+  rewards: CoreRecord[];
+  journal: CoreRecord[];
+  videos: CoreRecord[];
+  evolution: CoreRecord[];
+  achievementClaims: string[];
+  unlockedItems: string[];
+  xp: number;
+  credits: number;
+};
+export const EMPTY_APP_DATA: AppData = {
+  missions: [], tasks: [], goals: [], knowledge: [], rewards: [], journal: [], videos: [], evolution: [], achievementClaims: [], unlockedItems: [], xp: 0, credits: 0,
 };
 
-const COLLECTIONS = ["missions", "tasks", "goals", "knowledge", "rewards", "journal", "activity"] as const;
+export type StorageResult<T> = { ok: true; value: T; warning?: string } | { ok: false; error: string };
+export type BackupEnvelope = {
+  format: typeof BACKUP_FORMAT;
+  version: typeof BACKUP_VERSION;
+  app: "ARVENA";
+  exportedAt: string;
+  data: AppData;
+};
 
-function safeCount(value: unknown): number {
-  const number = Number(value);
-  return Number.isFinite(number) ? Math.max(0, Math.floor(number)) : 0;
+const isObject = (value: unknown): value is Record<string, unknown> =>
+  typeof value === "object" && value !== null && !Array.isArray(value);
+const safeNumber = (value: unknown) =>
+  typeof value === "number" && Number.isFinite(value) ? Math.max(0, Math.floor(value)) : 0;
+
+function normalizeRecord(value: unknown): CoreRecord | null {
+  if (!isObject(value)) return null;
+  const id = typeof value.id === "string" ? value.id : "";
+  const title = typeof value.title === "string" ? value.title : "";
+  const created = typeof value.created === "string" ? value.created : "";
+  if (!id || !title) return null;
+  return { ...value, id, title, created };
 }
 
-export function normalizeAppData<T extends object>(value: unknown, fallback: T): T {
-  const source = value && typeof value === "object" && !Array.isArray(value)
-    ? value as Record<string, unknown>
-    : {};
-  const normalized: Record<string, unknown> = { ...(fallback as Record<string, unknown>), ...source };
-
-  for (const key of COLLECTIONS) {
-    normalized[key] = Array.isArray(source[key]) ? source[key] : (fallback as Record<string, unknown>)[key];
-  }
-
-  normalized.xp = safeCount(source.xp);
-  normalized.credits = safeCount(source.credits);
-  return normalized as T;
-}
-
-export function readLocalData<T extends object>(key: string, fallback: T): T {
-  try {
-    const raw = localStorage.getItem(key);
-    return raw ? normalizeAppData(JSON.parse(raw), fallback) : fallback;
-  } catch {
-    return fallback;
-  }
-}
-
-export function createBackup<T>(data: T, knowledgeMarketplace: unknown): BackupEnvelope<T> {
+/** Drops malformed records and normalizes numeric economy fields. */
+export function validateAppData(value: unknown): AppData {
+  const source = isObject(value) ? value : {};
+  const collection = (key: keyof Pick<AppData, "missions" | "tasks" | "goals" | "knowledge" | "rewards" | "journal" | "videos" | "evolution">) =>
+    Array.isArray(source[key])
+      ? (source[key] as unknown[]).map(normalizeRecord).filter((item): item is CoreRecord => item !== null)
+      : [];
   return {
-    app: "ARVENA",
-    formatVersion: 2,
-    exportedAt: new Date().toISOString(),
-    data,
-    knowledgeMarketplace,
+    missions: collection("missions"),
+    tasks: collection("tasks"),
+    goals: collection("goals"),
+    knowledge: collection("knowledge"),
+    rewards: collection("rewards"),
+    journal: collection("journal"),
+    videos: collection("videos"),
+    evolution: collection("evolution"),
+    achievementClaims: Array.isArray(source.achievementClaims) ? [...new Set(source.achievementClaims.filter((x): x is string => typeof x === "string" && x.length <= 100))] : [],
+    unlockedItems: Array.isArray(source.unlockedItems) ? [...new Set(source.unlockedItems.filter((x): x is string => typeof x === "string" && x.length <= 100))] : [],
+    xp: safeNumber(source.xp),
+    credits: safeNumber(source.credits),
   };
 }
 
-export function parseBackup<T extends object>(raw: string, fallback: T): {
-  data: T;
-  knowledgeMarketplace?: unknown;
-} {
+function parseStoredValue(raw: string): AppData {
   const parsed: unknown = JSON.parse(raw);
-  if (!parsed || typeof parsed !== "object" || Array.isArray(parsed)) {
-    throw new Error("Backup must contain a JSON object.");
+  // Versioned envelope is the current format; flat objects are the original ULS format.
+  if (isObject(parsed) && parsed.format === BACKUP_FORMAT) {
+    if (parsed.version !== BACKUP_VERSION || !isObject(parsed.data)) {
+      throw new Error("Unsupported stored data version");
+    }
+    return validateAppData(parsed.data);
   }
+  return validateAppData(parsed);
+}
 
-  const envelope = parsed as Record<string, unknown>;
-  const source = envelope.data && typeof envelope.data === "object" && !Array.isArray(envelope.data)
-    ? envelope.data
-    : envelope;
-
-  if (!Array.isArray((source as Record<string, unknown>).missions) ||
-      !Array.isArray((source as Record<string, unknown>).tasks)) {
-    throw new Error("This file is not a valid ARVENA backup.");
+export function loadAppData(): StorageResult<AppData> {
+  try {
+    const raw = window.localStorage.getItem(STORAGE_KEY);
+    if (!raw) return { ok: true, value: EMPTY_APP_DATA };
+    const value = parseStoredValue(raw);
+    // Rewrite legacy flat data as a normalized envelope without changing the storage key.
+    const parsed: unknown = JSON.parse(raw);
+    if (!isObject(parsed) || parsed.format !== BACKUP_FORMAT) {
+      const saved = saveAppData(value);
+      if (!saved.ok) return { ok: true, value, warning: "Data loaded, but its migration could not be saved. Export a backup." };
+    }
+    return { ok: true, value };
+  } catch {
+    return { ok: false, error: "Saved data could not be read. Your original browser data was left untouched." };
   }
+}
 
-  const data = normalizeAppData(source, fallback);
-  const marketplace = envelope.knowledgeMarketplace;
-  if (marketplace !== undefined &&
-      (!marketplace || typeof marketplace !== "object" || Array.isArray(marketplace))) {
-    throw new Error("The learning progress section is invalid.");
+export function saveAppData(value: unknown): StorageResult<AppData> {
+  try {
+    const data = validateAppData(value);
+    const existingRaw = window.localStorage.getItem(STORAGE_KEY);
+    if (existingRaw) {
+      try {
+        const parsedExisting: unknown = JSON.parse(existingRaw);
+        if (isObject(parsedExisting) && parsedExisting.format === BACKUP_FORMAT) {
+          if (parsedExisting.version !== BACKUP_VERSION) {
+            return { ok: false, error: "Saved data was created by a newer ARVENA version. It was left untouched; open it with a compatible version or explicitly reset local data." };
+          }
+          const existing = parseStoredValue(existingRaw);
+          if (JSON.stringify(existing) === JSON.stringify(data)) return { ok: true, value: data };
+        }
+      } catch { /* A deliberate valid save may replace malformed data after recovery. */ }
+    }
+    const envelope: BackupEnvelope = {
+      format: BACKUP_FORMAT, version: BACKUP_VERSION, app: "ARVENA",
+      exportedAt: new Date().toISOString(), data,
+    };
+    window.localStorage.setItem(STORAGE_KEY, JSON.stringify(envelope));
+    return { ok: true, value: data };
+  } catch (error) {
+    const quota = error instanceof DOMException && (error.name === "QuotaExceededError" || error.name === "NS_ERROR_DOM_QUOTA_REACHED");
+    return { ok: false, error: quota
+      ? "Browser storage is full. Export a backup and free space before making more changes."
+      : "Could not save data. Check browser storage permissions and try again." };
   }
+}
 
+/** Removes the app data only after the user has explicitly confirmed a reset. */
+export function clearStoredAppData(): StorageResult<true> {
+  try {
+    window.localStorage.removeItem(STORAGE_KEY);
+    return { ok: true, value: true };
+  } catch {
+    return { ok: false, error: "Could not clear local data. Check browser storage permissions and try again." };
+  }
+}
+
+export function createBackup(value: unknown): BackupEnvelope {
   return {
-    data,
-    ...(marketplace !== undefined ? { knowledgeMarketplace: marketplace } : {}),
+    format: BACKUP_FORMAT, version: BACKUP_VERSION, app: "ARVENA",
+    exportedAt: new Date().toISOString(), data: validateAppData(value),
+  };
+}
+
+export function parseBackup(value: unknown): StorageResult<AppData> {
+  if (!isObject(value)) return { ok: false, error: "This file is not a valid ARVENA backup." };
+  if (value.format === BACKUP_FORMAT) {
+    if (value.version !== BACKUP_VERSION || !isObject(value.data)) {
+      return { ok: false, error: "This backup version is not supported by this ARVENA build." };
+    }
+    const backupData = value.data;
+    if (!isObject(backupData)) return { ok: false, error: "This backup does not contain a valid data object." };
+    const knownCollections = ["missions", "tasks", "goals", "knowledge", "rewards", "journal", "videos", "evolution", "achievementClaims", "unlockedItems"];
+    const recognizable = knownCollections.some(key => Array.isArray(backupData[key])) ||
+      typeof backupData.xp === "number" || typeof backupData.credits === "number";
+    if (!recognizable) return { ok: false, error: "The backup does not contain recognizable ARVENA data." };
+    return { ok: true, value: validateAppData(backupData) };
+  }
+  // Accept legacy ULS flat backups, but reject unrelated JSON files.
+  const looksLikeLegacy = ["missions", "tasks", "goals", "knowledge", "rewards", "journal", "videos", "evolution", "achievementClaims", "unlockedItems"].some(key => Array.isArray(value[key]));
+  return looksLikeLegacy
+    ? { ok: true, value: validateAppData(value), warning: "Legacy backup imported and upgraded to the ARVENA format." }
+    : { ok: false, error: "The JSON file does not contain recognizable ARVENA/ULS data." };
+}
+
+export function subscribeToExternalChanges(onChange: (data: AppData) => void): () => void {
+  const onStorage = (event: StorageEvent) => {
+    if (event.key !== STORAGE_KEY || !event.newValue) return;
+    try { onChange(parseStoredValue(event.newValue)); } catch { /* Ignore malformed writes from another tab. */ }
+  };
+  const onLocal = (event: Event) => {
+    const detail = (event as CustomEvent<AppData>).detail;
+    if (detail) onChange(validateAppData(detail));
+  };
+  window.addEventListener("storage", onStorage);
+  window.addEventListener("arvena:data-updated", onLocal);
+  return () => {
+    window.removeEventListener("storage", onStorage);
+    window.removeEventListener("arvena:data-updated", onLocal);
   };
 }
