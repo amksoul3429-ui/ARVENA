@@ -23,7 +23,7 @@ type YouTubeChannelsResponse = { items?: Array<{ id?: string; statistics?: { sub
 
 const safeCount = (value: string | undefined) => Math.max(0, Number(value) || 0);
 export function parseYouTubeDuration(value: string): number {
-  const match = value.match(/^PT(?:(\\d+)H)?(?:(\\d+)M)?(?:(\\d+)S)?$/);
+  const match = value.match(/^PT(?:(\d+)H)?(?:(\d+)M)?(?:(\d+)S)?$/);
   if (!match) return 0;
   return Math.ceil((Number(match[1] || 0) * 3600 + Number(match[2] || 0) * 60 + Number(match[3] || 0)) / 60);
 }
