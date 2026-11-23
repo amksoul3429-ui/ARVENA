@@ -77,11 +77,11 @@ function App(){
  const list=(p:Page)=>data[key(p)].filter(x=>x.title.toLowerCase().includes(search.toLowerCase()));
  const navIcon:Record<Page,any>={Overview:LayoutDashboard,Missions:Target,Planner:CalendarDays,'Dream Life':Compass,Evolution:Activity,Knowledge:BookOpen,Videos:VideoIcon,Rewards:Trophy,Journal:Edit3,Reports:Flame,Settings:Settings};
  return <div className="shell">
- {mobile&&<button className="scrim" onClick={()=>setMobile(false)}/>}<aside className={mobile?'sidebar show':'sidebar'}>
+ {mobile&&<div className="navigation-layer" onClick={()=>setMobile(false)}><aside className="sidebar navigation-panel" onClick={e=>e.stopPropagation()}>
  <div className="brand"><span><Sparkles/></span><div><b>ARVENA</b><small>PERSONAL SYSTEM</small></div><button className="close" onClick={()=>setMobile(false)}><X/></button></div>
  <div className="operator"><b>System Operator</b><small>Level {getLevel(data.xp)} · {data.xp} XP</small></div>
  {sections.map(p=>{const I=navIcon[p];return <button key={p} className={'nav '+(page===p?'active':'')} onClick={()=>{setPage(p);setMobile(false)}}><I size={17}/>{labels[p]}{page===p&&<ChevronRight size={14}/>}</button>})}
- <div className="sidefoot">● LOCAL SYSTEM · V1.0</div></aside>
+ <div className="sidefoot">● LOCAL SYSTEM · V1.0</div></aside></div>}
  <main><header><button className="hamb" onClick={()=>setMobile(true)}><Menu/></button><span>ARVENA　›　<b>{labels[page].toUpperCase()}</b></span><div className="chips"><button className="theme-toggle" onClick={()=>setTheme(t=>t==='dark'?'light':'dark')} aria-label={theme==='dark'?'Switch to light theme':'Switch to dark theme'}>{theme==='dark'?<Sun size={15}/>:<Moon size={15}/>}<span>{theme==='dark'?'LIGHT':'DARK'}</span></button><i><Wallet size={14}/> {data.credits} credits</i><i><Zap size={14}/> LVL {getLevel(data.xp)}</i></div></header>
  <div className="content">
  {page==='Overview'&&<CommandCenter data={data} level={getLevel(data.xp)} xpIntoLevel={xpIntoLevel(data.xp)} onOpen={p=>open(p)} onNavigate={p=>setPage(p)} onToggleTask={taskId=>setData(d=>({...d,tasks:d.tasks.map(t=>t.id===taskId?{...t,done:!t.done}:t)}))}/>}
