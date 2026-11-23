@@ -1,6 +1,5 @@
 import {useEffect,useState} from 'react';
 import CommandCenter from './components/CommandCenter';
-import Aeris from './Aeris';
 import MissionControl from './components/MissionControl';
 import DailyPlanner from './components/DailyPlanner';
 import DreamLife from './components/DreamLife';
@@ -99,7 +98,6 @@ function App(){
  {modal&&<Modal page={modal} initial={editing} defaultDate={plannerDate} close={()=>{setModal(null);setEditing(null)}} save={f=>save(modal,f)}/>}
  {toast&&<div className="toast">✓　{toast}</div>}
  <div className="search"><input placeholder="Filter current section..." value={search} onChange={e=>setSearch(e.target.value)}/>{search&&<button onClick={()=>setSearch('')}><X size={13}/></button>}</div>
- <Aeris />
  </div>
 }
 function Head({page,onAdd}:{page:Page;onAdd?:()=>void}){return <div className="head"><div><small>UNIVERSAL LIFE SYSTEM / {page.toUpperCase()}</small><h1>{labels[page]}</h1><p>Plan deliberately. Execute consistently. Review honestly.</p></div>{onAdd&&<button className="primary" onClick={onAdd}><Plus size={15}/> ADD NEW</button>}</div>}
