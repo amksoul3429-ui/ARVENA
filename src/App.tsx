@@ -9,7 +9,7 @@ type Item={id:string;title:string;created:string;[key:string]:any};
 type ActivityEvent={id:string;type:string;title:string;detail?:string;created:string};
 type Data={missions:Item[];tasks:Item[];goals:Item[];knowledge:Item[];rewards:Item[];journal:Item[];activity:ActivityEvent[];xp:number;credits:number};
 const blank:Data={missions:[],tasks:[],goals:[],knowledge:[],rewards:[],journal:[],activity:[],xp:0,credits:0};
-const KEY='uls-data-v1',today=()=>new Date().toISOString().slice(0,10),id=()=>crypto.randomUUID();
+const KEY='uls-data-v1',today=()=>{const d=new Date();return [d.getFullYear(),String(d.getMonth()+1).padStart(2,'0'),String(d.getDate()).padStart(2,'0')].join('-')},id=()=>crypto.randomUUID();
 const activityEvent=(type:string,title:string,detail=''):ActivityEvent=>({id:id(),type,title,detail,created:new Date().toISOString()});
 const navGroups:{title:string;pages:Page[]}[]=[
  {title:'WORKSPACE',pages:['Overview','Missions','Planner']},
@@ -53,8 +53,15 @@ function App(){
   });
 };
  const list=(p:Page)=>data[key(p)].filter(x=>x.title.toLowerCase().includes(search.toLowerCase()));
- const tasksToday=data.tasks.filter(x=>x.date===today()),doneToday=tasksToday.filter(x=>x.done).length;
-  const openMissions=data.missions.filter(x=>!x.done),activeGoals=data.goals.filter(x=>(x.progress||0)<100),levelProgress=xpIntoLevel(data.xp),greeting=new Date().getHours()<12?'GOOD MORNING':new Date().getHours()<18?'GOOD AFTERNOON':'GOOD EVENING',focusTask=tasksToday.find(x=>!x.done);
+ const todayKey=today(),tasksToday=data.tasks.filter(x=>x.date===todayKey),doneToday=tasksToday.filter(x=>x.done).length;
+ const openMissions=data.missions.filter(x=>!x.done),activeGoals=data.goals.filter(x=>(x.progress||0)<100),levelProgress=xpIntoLevel(data.xp),greeting=new Date().getHours()<12?'GOOD MORNING':new Date().getHours()<18?'GOOD AFTERNOON':'GOOD EVENING',focusTask=tasksToday.find(x=>!x.done);
+ const overdueTasks=data.tasks.filter(x=>!x.done&&x.date&&x.date<todayKey).sort((a,b)=>a.date.localeCompare(b.date));
+ const dueMissions=openMissions.filter(x=>x.deadline&&x.deadline<=todayKey).sort((a,b)=>(a.deadline||'').localeCompare(b.deadline||''));
+ const nextTask=overdueTasks[0]||focusTask;
+ const nextMission=dueMissions[0]||openMissions.slice().sort((a,b)=>(a.deadline||'9999').localeCompare(b.deadline||'9999'))[0];
+ const priorityTitle=nextTask?.title||nextMission?.title||activeGoals[0]?.title||'Choose your first priority';
+ const priorityReason=overdueTasks.length?'This task is overdue. Reschedule it or complete it before adding more work.':dueMissions.length?'A mission deadline is due or has passed. Review its next concrete step.':focusTask?'This is your next unfinished task scheduled for today.':nextMission?'Your schedule is clear. Move one active mission forward.':activeGoals[0]?'Take one concrete step toward an active goal.':'Create a mission or goal to give your effort a direction.';
+ const priorityPage:Page=nextTask?'Planner':nextMission?'Missions':activeGoals.length?'Dream Life':'Missions';
  const navIcon:Record<Page,any>={Overview:LayoutDashboard,Missions:Target,Planner:CalendarDays,'Dream Life':Compass,Evolution:Activity,Knowledge:BookOpen,Rewards:Trophy,Journal:Edit3,Reports:Flame,Settings:Settings};
  return <div className="shell">
  {mobile&&<button className="scrim" onClick={()=>setMobile(false)}/>}<aside className={'sidebar '+(mobile?'show':'')+(sidebarCollapsed?' collapsed':'')}>
@@ -88,6 +95,11 @@ function App(){
     <article><span className="command-metric-icon"><Target size={17}/></span><div><small>ACTIVE MISSIONS</small><b>{openMissions.length}</b><span>{data.missions.filter(x=>x.done).length} completed overall</span></div></article>
     <article><span className="command-metric-icon"><Compass size={17}/></span><div><small>ACTIVE GOALS</small><b>{activeGoals.length}</b><span>{data.goals.filter(x=>(x.progress||0)>=100).length} achieved</span></div></article>
    </section>
+   <section className="command-priority-brief" aria-label="Personalized priority briefing">
+    <div className="priority-brief-icon"><Sparkles size={18}/></div>
+    <div className="priority-brief-copy"><small>PRIORITY BRIEFING · GENERATED FROM YOUR RECORDS</small><b>{priorityTitle}</b><p>{priorityReason}</p></div>
+    <button className="primary mini" onClick={()=>nextTask?setPage('Planner'):nextMission?setPage('Missions'):activeGoals.length?setPage('Dream Life'):open('Missions')}>TAKE ACTION <span>↗</span></button>
+   </section>
    <div className="command-main-grid">
     <section className="command-panel command-today">
      <div className="command-panel-head"><div><small>EXECUTION / 01</small><h2>Today's plan</h2><p>Turn your priorities into completed actions.</p></div><button className="command-text-action" onClick={()=>setPage('Planner')}>OPEN PLANNER ↗</button></div>
@@ -97,9 +109,9 @@ function App(){
     <div className="command-side-stack">
      <section className="command-panel command-focus">
       <div className="command-panel-head"><div><small>INTELLIGENCE / 02</small><h2>Next best move</h2></div><span className="command-focus-mark"><Sparkles size={17}/></span></div>
-      <b>{focusTask?focusTask.title:openMissions[0]?.title||(activeGoals[0]?.title)||'Choose your first priority'}</b>
-      <p>{focusTask?'This is your next unfinished task scheduled for today. Complete it before adding more commitments.':openMissions.length?'Your schedule is clear. Make progress on one active mission.':activeGoals.length?'Your day is open. Take one concrete step toward an active goal.':'Create a mission or goal to give your effort a direction.'}</p>
-      <button className="command-focus-action" onClick={()=>focusTask?setPage('Planner'):openMissions.length?setPage('Missions'):open('Missions')}>{focusTask?'VIEW TODAY’S TASK':openMissions.length?'OPEN MISSION CONTROL':'CREATE A MISSION'} <span>↗</span></button>
+      <b>{priorityTitle}</b>
+      <p>{priorityReason}</p>
+      <button className="command-focus-action" onClick={()=>setPage(priorityPage)}>{nextTask?'REVIEW PLANNER':nextMission?'OPEN MISSION CONTROL':activeGoals.length?'REVIEW YOUR GOALS':'CREATE A MISSION'} <span>↗</span></button>
      </section>
      <section className="command-panel command-missions">
       <div className="command-panel-head"><div><small>LONG-TERM EXECUTION / 03</small><h2>Active missions</h2></div><button className="command-text-action" onClick={()=>setPage('Missions')}>VIEW ALL ↗</button></div>
