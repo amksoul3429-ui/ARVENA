@@ -12,29 +12,11 @@
 
 
 /* Restored ARVENA companion and theme support */
-.aeris-launch{position:fixed;right:22px;bottom:68px;z-index:30;display:flex;align-items:center;gap:8px;padding:12px 16px;border:1px solid #746ed5;border-radius:24px;background:linear-gradient(135deg,#26365a,#34284f);color:#f4f1ff;font-size:10px;font-weight:800;letter-spacing:1.2px;box-shadow:0 8px 35px #0007}
-.aeris-panel{position:fixed;right:22px;bottom:124px;z-index:40;width:min(380px,calc(100vw - 28px));height:min(560px,calc(100vh - 160px));display:flex;flex-direction:column;background:#101b2c;border:1px solid #465477;border-radius:17px;box-shadow:0 24px 90px #000b;overflow:hidden}
-.aeris-head{display:flex;align-items:center;gap:10px;padding:14px;border-bottom:1px solid #2b3b55}.aeris-avatar{width:36px;height:36px;border-radius:11px;background:#37345f;color:#c9c5ff;display:grid;place-items:center}.aeris-head b,.aeris-head small{display:block}.aeris-head b{font:800 12px Manrope;letter-spacing:1px}.aeris-head small{font-size:7px;color:#8e9bb6;margin-top:4px;letter-spacing:.8px}.aeris-head>button{margin-left:auto;background:none;border:0;color:#aab7cb}.aeris-modes{display:flex;justify-content:space-around;padding:9px 4px;border-bottom:1px solid #27364d;color:#aaa6ee;font-size:7px;letter-spacing:.7px}.aeris-messages{padding:12px;overflow:auto;flex:1}.aeris-message{max-width:92%;padding:10px 11px;border-radius:11px;margin:0 0 10px;background:#1a2940}.aeris-message.you{margin-left:auto;background:#292c50}.aeris-message small{font-size:7px;letter-spacing:1px;color:#a7a6df}.aeris-message p{font-size:10px;line-height:1.6;color:#dce4f2;margin:5px 0}.aeris-speak{display:flex;align-items:center;gap:5px;background:none;border:0;color:#a9b3cc;font-size:8px;padding:2px 0}.aeris-compose{display:flex;gap:7px;padding:10px;border-top:1px solid #2b3b55}.aeris-compose input{min-width:0;flex:1;background:#0b1422;border:1px solid #35445f;border-radius:9px;padding:10px;color:white;font-size:10px}.aeris-compose button{width:36px;border:1px solid #48547a;border-radius:9px;background:#252d4d;color:#d8d6ff;display:grid;place-items:center}.aeris-compose button.listening{background:#7b3346;border-color:#d26c83}.aeris-note{font-size:7px;color:#8190a8;text-align:center;padding:0 8px 9px}
-@media(max-width:700px){.aeris-launch{right:14px;bottom:68px}.aeris-panel{right:10px;bottom:120px;width:calc(100vw - 20px);height:min(540px,calc(100vh - 145px))}}
 
 
-.aeris-launch{position:fixed;right:22px;bottom:68px;z-index:30;display:flex;align-items:center;gap:8px;padding:12px 16px;border:1px solid #746ed5;border-radius:24px;background:linear-gradient(135deg,#26365a,#34284f);color:#f4f1ff;font-size:10px;font-weight:800;letter-spacing:1.2px;box-shadow:0 8px 35px #0007}.aeris-panel{position:fixed;right:22px;bottom:124px;z-index:40;width:min(380px,calc(100vw - 28px));height:min(560px,calc(100vh - 160px));display:flex;flex-direction:column;background:#101b2c;border:1px solid #465477;border-radius:17px;box-shadow:0 24px 90px #000b;overflow:hidden}.aeris-head{display:flex;align-items:center;gap:10px;padding:14px;border-bottom:1px solid #2b3b55}.aeris-avatar{width:36px;height:36px;border-radius:11px;background:#37345f;color:#c9c5ff;display:grid;place-items:center}.aeris-head b,.aeris-head small{display:block}.aeris-head b{font:800 12px Manrope;letter-spacing:1px}.aeris-head small{font-size:7px;color:#8e9bb6;margin-top:4px}.aeris-head>button{margin-left:auto;background:none;border:0;color:#aab7cb}.aeris-modes{display:flex;justify-content:space-around;padding:9px 4px;border-bottom:1px solid #27364d;color:#aaa6ee;font-size:7px;letter-spacing:.7px}.aeris-messages{padding:12px;overflow:auto;flex:1}.aeris-message{max-width:92%;padding:10px 11px;border-radius:11px;margin:0 0 10px;background:#1a2940}.aeris-message.you{margin-left:auto;background:#292c50}.aeris-message small{font-size:7px;letter-spacing:1px;color:#a7a6df}.aeris-message p{font-size:10px;line-height:1.6;color:#dce4f2;margin:5px 0}.aeris-speak{display:flex;align-items:center;gap:5px;background:none;border:0;color:#a9b3cc;font-size:8px;padding:2px 0}.aeris-compose{display:flex;gap:7px;padding:10px;border-top:1px solid #2b3b55}.aeris-compose input{min-width:0;flex:1;background:#0b1422;border:1px solid #35445f;border-radius:9px;padding:10px;color:white;font-size:10px}.aeris-compose button{width:36px;border:1px solid #48547a;border-radius:9px;background:#252d4d;color:#d8d6ff;display:grid;place-items:center}.aeris-compose button.listening{background:#7b3346;border-color:#d26c83}.aeris-note{font-size:7px;color:#8190a8;text-align:center;padding:0 8px 9px}@media(max-width:700px){.aeris-launch{right:14px;bottom:68px}.aeris-panel{right:10px;bottom:120px;width:calc(100vw - 20px);height:min(540px,calc(100vh - 145px))}}
 
 
 /* AERIS secure connection settings and live-request state */
-.aeris-config{padding:14px 16px;border-bottom:1px solid rgba(156,171,207,.16);background:rgba(121,130,190,.07)}
-.aeris-config>b{font-size:9px;letter-spacing:1.3px;color:#bcb3ff}
-.aeris-config>p,.aeris-config>small{display:block;color:var(--arv-muted);font-size:10px;line-height:1.6;margin:8px 0}
-.aeris-config label{display:block;color:var(--arv-muted);font-size:8px;letter-spacing:1px;margin:10px 0}
-.aeris-config input{display:block;width:100%;margin-top:5px;padding:10px;border:1px solid var(--arv-line);border-radius:8px;background:rgba(5,12,25,.55);color:var(--arv-text);font-size:11px;outline:none}
-.aeris-config>div{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
-.aeris-config>div button{display:flex;align-items:center;gap:6px;padding:9px 11px;border:1px solid var(--arv-line);border-radius:8px;background:rgba(135,126,220,.16);color:var(--arv-text);font-size:8px;font-weight:800;letter-spacing:.7px}
-.aeris-config>div button:first-child{background:linear-gradient(110deg,#8178eb,#8d70d6);color:white}
-.aeris-head>button{display:grid;place-items:center;width:30px;height:30px;border:1px solid rgba(156,171,207,.18);border-radius:8px;background:rgba(135,148,183,.08);color:var(--arv-text)}
-.aeris-spinner{display:inline-block;vertical-align:middle;animation:arvena-spin 1s linear infinite}
-@keyframes arvena-spin{to{transform:rotate(360deg)}}
-:root[data-theme="light"] .aeris-config{background:#f6f7fc;border-color:#e2e7f0}
-:root[data-theme="light"] .aeris-config input{background:#fff;color:#26334a;border-color:#e0e5ef}
 
 
 /* ARVENA theme system */
@@ -70,13 +52,6 @@
 :root[data-theme="light"] .search{background:#fff;border-color:#dce2ec}
 :root[data-theme="light"] .search input{color:#263247}
 :root[data-theme="light"] footer{color:#8994a8}
-:root[data-theme="light"] .aeris-panel{background:#fff;border-color:#d7dced}
-:root[data-theme="light"] .aeris-head,:root[data-theme="light"] .aeris-modes,:root[data-theme="light"] .aeris-compose{border-color:#e4e8f0}
-:root[data-theme="light"] .aeris-message{background:#f0f2fa}
-:root[data-theme="light"] .aeris-message.you{background:#e8e9ff}
-:root[data-theme="light"] .aeris-message p{color:#27334a}
-:root[data-theme="light"] .aeris-compose input{background:#f7f8fc;border-color:#dce2ec;color:#263247}
-:root[data-theme="light"] .aeris-note{color:#77839a}
 .theme-toggle{display:inline-flex;align-items:center;gap:6px;padding:7px 10px;border:1px solid #3a4962;border-radius:18px;background:transparent;color:inherit;font-size:9px;font-weight:700;letter-spacing:.7px}
 :root[data-theme="light"] .theme-toggle{border-color:#dce2ec;color:#47536a}
 @media(max-width:700px){.theme-toggle span{display:none}.theme-toggle{padding:7px}}
@@ -130,46 +105,40 @@
 
 
 
-/* ARVENA navigation overlay — one source of truth */
-.shell > aside.sidebar {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  right: auto;
-  bottom: auto;
-  width: min(340px, calc(100vw - 32px));
-  max-height: calc(100vh - 32px);
-  overflow-x: hidden;
-  overflow-y: auto;
-  padding: 20px 15px;
-  display: flex;
-  flex-direction: column;
-  transform: translate(-50%, -50%) scale(.97);
-  transform-origin: center;
-  z-index: 50;
-  border: 1px solid #3a4b68;
-  border-radius: 20px;
-  box-shadow: 0 24px 90px #000b;
-  background: rgba(13, 22, 37, .98);
-  backdrop-filter: blur(18px);
-  visibility: hidden;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity .18s ease, transform .18s ease, visibility .18s ease;
+/* Navigation is a centred modal panel on every screen size. */
+.shell > main { margin-left: 0 !important; }
+.shell > aside.sidebar,
+.shell > aside.sidebar.show {
+  position: fixed !important;
+  inset: 50% auto auto 50% !important;
+  width: min(380px, calc(100vw - 28px)) !important;
+  height: auto !important;
+  max-height: calc(100dvh - 28px) !important;
+  overflow-x: hidden !important;
+  overflow-y: auto !important;
+  display: flex !important;
+  flex-direction: column !important;
+  margin: 0 !important;
+  border: 1px solid #3a4b68 !important;
+  border-radius: 20px !important;
+  transform: translate3d(-50%, -50%, 0) scale(.97) !important;
+  transform-origin: center !important;
+  z-index: 80 !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+  transition: opacity .18s ease, transform .18s ease, visibility .18s ease !important;
 }
 .shell > aside.sidebar.show {
-  transform: translate(-50%, -50%) scale(1);
-  visibility: visible;
-  opacity: 1;
-  pointer-events: auto;
+  transform: translate3d(-50%, -50%, 0) scale(1) !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  pointer-events: auto !important;
 }
-.shell > aside.sidebar .close {
-  display: grid;
-  place-items: center;
-}
-.shell > main header .hamb {
-  display: grid;
-  place-items: center;
+.shell > aside.sidebar .close { display: grid !important; place-items: center !important; }
+.shell > main > header .hamb {
+  display: grid !important;
+  place-items: center !important;
   width: 36px;
   height: 36px;
   border: 1px solid #35445d;
@@ -178,61 +147,17 @@
   color: #e8eef8;
 }
 .shell > button.scrim {
-  display: block;
-  position: fixed;
-  inset: 0;
-  z-index: 40;
+  display: block !important;
+  position: fixed !important;
+  inset: 0 !important;
+  z-index: 70 !important;
   border: 0;
   background: rgba(2, 7, 19, .72);
   backdrop-filter: blur(3px);
 }
 :root[data-theme="light"] .shell > aside.sidebar {
-  background: rgba(255, 255, 255, .98);
+  background: rgba(255,255,255,.98);
   border-color: #dce3ef;
-  box-shadow: 0 24px 80px #25324b30;
-}
-:root[data-theme="light"] .shell > main header .hamb {
-  background: #f4f6fb;
-  border-color: #dce2ec;
-  color: #34415a;
-}
-@media (prefers-reduced-motion: reduce) {
-  .shell > aside.sidebar { transition: none; }
-}
-
-
-/* Final navigation placement override: centre the menu panel on every viewport. */
-.shell > aside.sidebar,
-.shell > aside.sidebar.show {
-  position: fixed !important;
-  inset: 50% auto auto 50% !important;
-  width: min(380px, calc(100vw - 28px)) !important;
-  max-height: calc(100dvh - 28px) !important;
-  height: auto !important;
-  margin: 0 !important;
-  overflow-x: hidden !important;
-  overflow-y: auto !important;
-  border: 1px solid #3a4b68 !important;
-  border-radius: 20px !important;
-  transform: translate3d(-50%, -50%, 0) scale(.97) !important;
-  transform-origin: center !important;
-  z-index: 80 !important;
-}
-.shell > aside.sidebar.show {
-  transform: translate3d(-50%, -50%, 0) scale(1) !important;
-}
-.shell > button.scrim {
-  position: fixed !important;
-  inset: 0 !important;
-  z-index: 70 !important;
-}
-.shell > main > header .hamb {
-  display: grid !important;
-  place-items: center !important;
-}
-.shell > aside.sidebar .close {
-  display: grid !important;
-  place-items: center !important;
 }
 @media (prefers-reduced-motion: reduce) {
   .shell > aside.sidebar { transition: none !important; }
