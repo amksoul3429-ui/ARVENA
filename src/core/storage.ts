@@ -33,7 +33,7 @@ export function normalizeAppData<T extends object>(value: unknown, fallback: T):
   return normalized as T;
 }
 
-export function readLocalData<T extends Record<string, unknown>>(key: string, fallback: T): T {
+export function readLocalData<T extends object>(key: string, fallback: T): T {
   try {
     const raw = localStorage.getItem(key);
     return raw ? normalizeAppData(JSON.parse(raw), fallback) : fallback;
@@ -52,7 +52,7 @@ export function createBackup<T>(data: T, knowledgeMarketplace: unknown): BackupE
   };
 }
 
-export function parseBackup<T extends Record<string, unknown>>(raw: string, fallback: T): {
+export function parseBackup<T extends object>(raw: string, fallback: T): {
   data: T;
   knowledgeMarketplace?: unknown;
 } {
