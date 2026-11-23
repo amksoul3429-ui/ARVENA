@@ -5,31 +5,23 @@ import { createUniversalKnowledgeCourses } from "../core/knowledgeCatalog";
 import "./KnowledgeLibrary.css";
 
 type Props = { courses: any[]; credits: number; onChange: (courses: KnowledgeCourse[]) => void; onEconomy: (courses: KnowledgeCourse[], credits: number, xp: number) => void };
-const uid = () => crypto.randomUUID();
-const categories = ["All subjects", "Science", "Technology", "Business", "Mathematics", "Psychology", "Humanities", "Creative arts", "Practical skills", "Advanced research"];
-const levels = ["All levels", "Beginner", "Foundation", "Intermediate", "Advanced", "Expert", "Research"];
-const arr = (v: unknown): any[] => Array.isArray(v) ? v : [];
+const categories = ["All subjects", "Science", "Technology", "Business", "Mathematics", "Psychology", "Humanities", "Philosophy", "Health science", "Creative arts", "Practical skills"];
+const levels = ["All levels", "Foundation to Advanced", "Beginner", "Foundation", "Intermediate", "Advanced", "Expert", "Research"];
 const categoryFor = (subject: string) => {
   const s = subject.toLowerCase();
+  if (/health|body|wellbeing/.test(s)) return "Health science";
+  if (/philosophy|ethic|logic/.test(s)) return "Philosophy";
   if (/physics|chemistry|biology|science|astronomy|environment/.test(s)) return "Science";
   if (/computer|program|technology|coding|ai|data|engineering/.test(s)) return "Technology";
   if (/business|finance|entrepreneur|marketing|econom|startup|invest/.test(s)) return "Business";
   if (/math|algebra|calculus|statistics/.test(s)) return "Mathematics";
   if (/psych|behavio|mental|cognitive/.test(s)) return "Psychology";
-  if (/philosophy|ethic|logic/.test(s)) return "Philosophy";
-  if (/health|body|wellbeing/.test(s)) return "Health science";
-  if (/history|philosophy|literature|politic|sociology|humanit/.test(s)) return "Humanities";
+  if (/history|literature|politic|sociology|humanit/.test(s)) return "Humanities";
   if (/art|design|music|writing|creative|photography/.test(s)) return "Creative arts";
   if (/skill|language|communication|cooking|repair|practical/.test(s)) return "Practical skills";
   if (/research|thesis|academic|advanced/.test(s)) return "Advanced research";
   return "Practical skills";
 };
-const parseReply = (reply: string) => {
-  const fence = String.fromCharCode(96).repeat(3);
-  const cleaned = reply.trim().replace(fence + "json", "").replace(fence, "").trim();
-  return JSON.parse(cleaned);
-};
-
 export default function KnowledgeLibrary({ courses, credits, onChange, onEconomy }: Props) {
   const normalized = useMemo(() => courses.map(normalizeKnowledgeCourse).filter((c): c is KnowledgeCourse => !!c), [courses]);
   const [category, setCategory] = useState("All subjects");
