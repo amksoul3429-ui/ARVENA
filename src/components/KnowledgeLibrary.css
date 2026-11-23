@@ -3,3 +3,43 @@
 @media(max-width:500px){.kl-course-header{flex-direction:column}.kl-course-header .actions{margin-left:0}.kl-progress>div:first-child{font-size:9px}.kl-locked .kl-actions{flex-direction:column}.kl-locked .kl-actions button{justify-content:center}}
 
 .kl-lesson-actions{display:flex;gap:7px;justify-content:flex-end;margin:0 0 8px}.kl-lesson-actions button{font-size:8px}
+
+
+/* Marketplace catalogue layout */
+.km-owned{display:inline-flex;align-items:center;gap:7px;color:var(--km-muted,#9ba9bd);font-size:9px;white-space:nowrap}
+.km-owned input{accent-color:#8984ed}
+.km-market-stats{display:flex;align-items:center;gap:16px;flex-wrap:wrap;padding:11px 13px;margin:0 0 20px;border:1px solid var(--km-border,#293a54);border-radius:9px;background:var(--km-card,#111d2e);color:var(--km-muted,#9ba9bd);font-size:9px}
+.km-market-stats span{display:inline-flex;align-items:center;gap:6px}
+.km-market-stats span svg{color:#a7a1ed}
+.km-market-stats b{margin-left:auto;color:var(--km-text,#e8edf7)}
+.km-heading{gap:12px}
+.km-heading .primary{white-space:nowrap}
+.km-cardmeta{display:flex;gap:13px;flex-wrap:wrap;color:var(--km-muted,#9ba9bd);font-size:8px}
+.km-cardmeta span{display:inline-flex;align-items:center;gap:5px}
+.km-cardmeta svg{color:#a5a0ed}
+.km-cardfoot>b{white-space:nowrap}
+.km-cardfoot button{white-space:nowrap}
+.km-detail-intro{margin-bottom:16px}
+.km-detail-intro .km-meta{gap:9px}
+.km-detail-intro .km-meta span{padding:5px 8px;border:1px solid var(--km-border,#34445f);border-radius:20px}
+.km-buy{flex-wrap:wrap}
+.km-buy>div{flex:1;min-width:180px}
+.km-buy>strong{white-space:nowrap;color:#e5c77f;font:800 16px Manrope}
+.km-buy>button{white-space:nowrap}
+.km-buy>small{flex-basis:100%;font-size:9px;color:var(--km-muted,#9eacc0)}
+.km-buy>div>b{display:flex;align-items:center;gap:6px}
+.km-section-title{margin-top:22px}
+.km-outcomes{padding:14px 18px 14px 34px;border:1px solid var(--km-border,#34445f);border-radius:10px;background:var(--km-card,#111d2e);color:var(--km-text,#dce5f4);font-size:11px;line-height:1.9}
+.km-section-heading{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:22px 0 10px}
+.km-section-heading h3{font:700 14px Manrope;margin:0}
+.km-lesson-card{border:1px solid var(--km-border,#2c3b53);border-radius:10px;margin:8px 0;overflow:hidden;background:var(--km-card,#111d2e)}
+.km-lesson-card>.km-lesson{width:100%;text-align:left;color:var(--km-text,#e8edf7);background:transparent;border:0}
+.km-lesson-card>.km-lesson>svg{flex:0 0 auto}
+.km-reader-content{white-space:pre-wrap;line-height:1.85;color:var(--km-text,#e8edf7);padding:14px;border:1px solid var(--km-border,#34445f);border-radius:9px;background:var(--km-panel,#14243a);margin:12px 0}
+.km-reader-actions{display:flex;justify-content:flex-end;gap:7px;flex-wrap:wrap;margin-top:14px}
+.km-reader-actions button{font-size:8px}
+.km-feedback{color:#75d4aa!important;font-size:10px}
+.km-empty .primary{margin-top:14px}
+:root[data-theme="light"] .km-market-stats,:root[data-theme="light"] .km-outcomes,:root[data-theme="light"] .km-lesson-card{background:#fff}
+:root[data-theme="light"] .km-market-stats b{color:#202a3b}
+@media(max-width:760px){.km-market-stats{gap:9px}.km-market-stats b{margin-left:0}.km-heading{align-items:flex-start;flex-direction:column}.km-buy{align-items:flex-start}.km-buy>strong{order:0}.km-reader-actions{justify-content:flex-start}}
