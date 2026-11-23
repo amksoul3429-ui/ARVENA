@@ -18,14 +18,14 @@ function safeCount(value: unknown): number {
   return Number.isFinite(number) ? Math.max(0, Math.floor(number)) : 0;
 }
 
-export function normalizeAppData<T extends Record<string, unknown>>(value: unknown, fallback: T): T {
+export function normalizeAppData<T extends object>(value: unknown, fallback: T): T {
   const source = value && typeof value === "object" && !Array.isArray(value)
     ? value as Record<string, unknown>
     : {};
-  const normalized: Record<string, unknown> = { ...fallback, ...source };
+  const normalized: Record<string, unknown> = { ...(fallback as Record<string, unknown>), ...source };
 
   for (const key of COLLECTIONS) {
-    normalized[key] = Array.isArray(source[key]) ? source[key] : fallback[key];
+    normalized[key] = Array.isArray(source[key]) ? source[key] : (fallback as Record<string, unknown>)[key];
   }
 
   normalized.xp = safeCount(source.xp);
