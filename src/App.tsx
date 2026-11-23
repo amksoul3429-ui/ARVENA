@@ -1,5 +1,6 @@
 import {useEffect,useState} from 'react';
 import CommandCenter from './components/CommandCenter';
+import Aeris from './Aeris';
 import MissionControl from './components/MissionControl';
 import DailyPlanner from './components/DailyPlanner';
 import DreamLife from './components/DreamLife';
@@ -19,7 +20,7 @@ import {claimAchievement,redeemPersonalReward,fulfillPersonalReward,unlockSystem
 import {habitStreak} from './core/evolution';
 import {loadAppData,saveAppData,subscribeToExternalChanges,clearStoredAppData} from './core/storage';
 import {getNotificationAccess,requestNotificationAccess,sendSystemNotification} from './core/permissions';
-import {Activity,BookOpen,CalendarDays,Check,ChevronRight,Compass,Edit3,Flame,LayoutDashboard,Menu,Plus,Settings,Sparkles,Target,Trophy,Wallet,Video as VideoIcon,X,Zap} from 'lucide-react';
+import {Activity,BookOpen,CalendarDays,Check,ChevronRight,Compass,Edit3,Flame,LayoutDashboard,Menu,Plus,Settings,Sparkles,Target,Trophy,Wallet,Video as VideoIcon,X,Zap,Sun,Moon} from 'lucide-react';
 type Page='Overview'|'Missions'|'Planner'|'Dream Life'|'Evolution'|'Knowledge'|'Videos'|'Rewards'|'Journal'|'Reports'|'Settings';
 type Item={id:string;title:string;created:string;[key:string]:any};
 type Data={missions:Item[];tasks:Item[];goals:Item[];knowledge:Item[];videos:Item[];evolution:Item[];rewards:Item[];journal:Item[];activity:Item[];achievementClaims:string[];unlockedItems:string[];xp:number;credits:number};
@@ -33,8 +34,10 @@ function App(){
  const[data,setData]=useState<Data>(()=>loadResult.ok?loadResult.value:blank);
  const[persistenceReady,setPersistenceReady]=useState(loadResult.ok);
  const[notificationAccess,setNotificationAccess]=useState(getNotificationAccess);
+ const[theme,setTheme]=useState<'dark'|'light'>(()=>localStorage.getItem('arvena-theme')==='light'?'light':'dark');
  const[page,setPage]=useState<Page>('Overview'),[modal,setModal]=useState<Page|null>(null),[editing,setEditing]=useState<Item|null>(null),[plannerDate,setPlannerDate]=useState(today()),[mobile,setMobile]=useState(false),[toast,setToast]=useState(loadResult.ok?(loadResult.warning||''):loadResult.error),[search,setSearch]=useState('');
  useEffect(()=>{if(!persistenceReady)return;const result=saveAppData(data);if(!result.ok)setToast(result.error)},[data,persistenceReady]);
+ useEffect(()=>{document.documentElement.dataset.theme=theme;localStorage.setItem('arvena-theme',theme)},[theme]);
  useEffect(()=>subscribeToExternalChanges(next=>setData(next)),[]);
  useEffect(()=>{if(toast){const t=setTimeout(()=>setToast(''),4000);return()=>clearTimeout(t)}},[toast]);
  const key=(p:Page)=>p==='Missions'?'missions':p==='Planner'?'tasks':p==='Dream Life'?'goals':p==='Knowledge'?'knowledge':p==='Videos'?'videos':p==='Evolution'?'evolution':p==='Rewards'?'rewards':'journal';
@@ -79,7 +82,7 @@ function App(){
  <div className="operator"><b>System Operator</b><small>Level {getLevel(data.xp)} · {data.xp} XP</small></div>
  {sections.map(p=>{const I=navIcon[p];return <button key={p} className={'nav '+(page===p?'active':'')} onClick={()=>{setPage(p);setMobile(false)}}><I size={17}/>{labels[p]}{page===p&&<ChevronRight size={14}/>}</button>})}
  <div className="sidefoot">● LOCAL SYSTEM · V1.0</div></aside>
- <main><header><button className="hamb" onClick={()=>setMobile(true)}><Menu/></button><span>ARVENA　›　<b>{labels[page].toUpperCase()}</b></span><div className="chips"><i><Wallet size={14}/> {data.credits} credits</i><i><Zap size={14}/> LVL {getLevel(data.xp)}</i></div></header>
+ <main><header><button className="hamb" onClick={()=>setMobile(true)}><Menu/></button><span>ARVENA　›　<b>{labels[page].toUpperCase()}</b></span><div className="chips"><button className="theme-toggle" onClick={()=>setTheme(t=>t==='dark'?'light':'dark')} aria-label={theme==='dark'?'Switch to light theme':'Switch to dark theme'}>{theme==='dark'?<Sun size={15}/>:<Moon size={15}/>}<span>{theme==='dark'?'LIGHT':'DARK'}</span></button><i><Wallet size={14}/> {data.credits} credits</i><i><Zap size={14}/> LVL {getLevel(data.xp)}</i></div></header>
  <div className="content">
  {page==='Overview'&&<CommandCenter data={data} level={getLevel(data.xp)} xpIntoLevel={xpIntoLevel(data.xp)} onOpen={p=>open(p)} onNavigate={p=>setPage(p)} onToggleTask={taskId=>setData(d=>({...d,tasks:d.tasks.map(t=>t.id===taskId?{...t,done:!t.done}:t)}))}/>}
  {page==='Missions'&&<><Head page={page} onAdd={()=>open(page)}/><MissionControl missions={list(page)} onEdit={m=>open(page,m as Item)} onDelete={m=>{if(confirm('Delete this mission and its linked planner task, if any?')){setData(d=>({...d,missions:d.missions.filter(x=>x.id!==m.id),tasks:removeMissionTasks(d.tasks as any,m.id) as Item[]}));setToast('Mission deleted')}}} onActivate={missionId=>{const m=data.missions.find(x=>x.id===missionId);changeMissionStatus(missionId,normalizeMission(m||{id:'',title:'',created:''}).status==='Active'?'Available':'Active')}} onComplete={completeMission} onPlanner={addMissionToPlanner}/></>}
@@ -96,6 +99,7 @@ function App(){
  {modal&&<Modal page={modal} initial={editing} defaultDate={plannerDate} close={()=>{setModal(null);setEditing(null)}} save={f=>save(modal,f)}/>}
  {toast&&<div className="toast">✓　{toast}</div>}
  <div className="search"><input placeholder="Filter current section..." value={search} onChange={e=>setSearch(e.target.value)}/>{search&&<button onClick={()=>setSearch('')}><X size={13}/></button>}</div>
+ <Aeris />
  </div>
 }
 function Head({page,onAdd}:{page:Page;onAdd?:()=>void}){return <div className="head"><div><small>UNIVERSAL LIFE SYSTEM / {page.toUpperCase()}</small><h1>{labels[page]}</h1><p>Plan deliberately. Execute consistently. Review honestly.</p></div>{onAdd&&<button className="primary" onClick={onAdd}><Plus size={15}/> ADD NEW</button>}</div>}
