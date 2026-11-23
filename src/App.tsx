@@ -53,6 +53,7 @@ function App(){
 };
  const list=(p:Page)=>data[key(p)].filter(x=>x.title.toLowerCase().includes(search.toLowerCase()));
  const tasksToday=data.tasks.filter(x=>x.date===today()),doneToday=tasksToday.filter(x=>x.done).length;
+  const openMissions=data.missions.filter(x=>!x.done),activeGoals=data.goals.filter(x=>(x.progress||0)<100),levelProgress=xpIntoLevel(data.xp),greeting=new Date().getHours()<12?'GOOD MORNING':new Date().getHours()<18?'GOOD AFTERNOON':'GOOD EVENING',focusTask=tasksToday.find(x=>!x.done);
  const navIcon:Record<Page,any>={Overview:LayoutDashboard,Missions:Target,Planner:CalendarDays,'Dream Life':Compass,Evolution:Activity,Knowledge:BookOpen,Rewards:Trophy,Journal:Edit3,Reports:Flame,Settings:Settings};
  return <div className="shell">
  {mobile&&<button className="scrim" onClick={()=>setMobile(false)}/>}<aside className={'sidebar '+(mobile?'show':'')+(sidebarCollapsed?' collapsed':'')}>
@@ -63,7 +64,62 @@ function App(){
  <div className="sidefoot"><span className="system-indicator"/> PRIVATE SYSTEM <span>V1.0</span></div></aside>
  <main><header className="topbar"><div className="topbar-left"><button className="hamb" onClick={()=>{if(window.innerWidth<=700){setSidebarCollapsed(false);setMobile(true)}else setSidebarCollapsed(v=>!v)}} aria-label="Toggle navigation menu"><Menu size={21}/></button><div className="topbar-brand"><b>ARVENA</b><small>PERSONAL INTELLIGENCE SYSTEM</small></div><span className="topbar-page">{labels[page]}</span></div><div className="topbar-tools"><label className="global-search"><Search size={15}/><input placeholder="Search this workspace..." value={search} onChange={e=>setSearch(e.target.value)}/>{search&&<button onClick={()=>setSearch('')}><X size={13}/></button>}</label><div className="chips"><button className="theme-toggle" onClick={()=>setTheme(t=>t==='dark'?'light':'dark')} aria-label={theme==='dark'?'Switch to light mode':'Switch to dark mode'}>{theme==='dark'?<Sun size={16}/>:<Moon size={16}/>}<span>{theme==='dark'?'LIGHT':'DARK'}</span></button><i><Zap size={14}/> LEVEL {getLevel(data.xp)}</i><i><Wallet size={14}/> {data.credits.toLocaleString()} CREDITS</i></div></div></header>
  <div className="content">
- {page==='Overview'&&<><section className="hero"><div><small>YOUR LIFE, INTENTIONALLY BUILT</small><h1>Design your days.<br/><em>Build your future.</em></h1><p>A personal operating system for consistent action, meaningful growth and long-term direction.</p><button className="primary" onClick={()=>open('Missions')}><Plus size={16}/> CREATE A MISSION</button></div><div className="orb"><Sparkles size={38}/></div></section><section className="dashboard-command-strip"><div className="dashboard-date"><small>COMMAND CENTER / TODAY</small><b>{new Date().toLocaleDateString(undefined,{weekday:'long',day:'numeric',month:'long',year:'numeric'})}</b><span>{tasksToday.length?`${doneToday} of ${tasksToday.length} scheduled tasks complete`:'A clear space to plan your next move'}</span></div><div className="dashboard-quick-actions"><button onClick={()=>open('Planner')}><CalendarDays size={15}/> PLAN TASK</button><button onClick={()=>open('Missions')}><Target size={15}/> NEW MISSION</button><button onClick={()=>open('Journal')}><Edit3 size={15}/> JOURNAL</button><button onClick={()=>setPage('Knowledge')}><BookOpen size={15}/> LEARN</button></div></section><div className="stats">{[[Target,'ACTIVE MISSIONS',data.missions.filter(x=>!x.done).length],[Check,'TASKS COMPLETED',data.tasks.filter(x=>x.done).length],[Trophy,'TOTAL XP',data.xp],[Wallet,'CREDITS',data.credits]].map(([I,l,v]:any)=><Stat key={l} icon={I} label={l} value={v}/>)}</div><div className="cols"><Panel title="TODAY'S EXECUTION"><div className="bar"><i style={{width:`${tasksToday.length?doneToday/tasksToday.length*100:0}%`}}/></div><p className="muted">{doneToday} of {tasksToday.length} tasks completed today</p>{tasksToday.map(t=><Task key={t.id} item={t} toggle={()=>setData(d=>({...d,tasks:d.tasks.map(x=>x.id===t.id?{...x,done:!x.done}:x),activity:[activityEvent(t.done?'task-reopened':'task-completed',t.done?'Task reopened':'Task completed',t.title),...d.activity].slice(0,500)}))}/>)}{!tasksToday.length&&<Empty text="No tasks scheduled today." onAdd={()=>open('Planner')}/>}</Panel><Panel title="ACTIVE MISSIONS">{data.missions.filter(x=>!x.done).slice(0,5).map(m=><div className="simple" key={m.id}><b>{m.title}</b><small>+{m.xp} XP</small></div>)}{!data.missions.some(x=>!x.done)&&<Empty text="Your mission board is clear." onAdd={()=>open('Missions')}/>}</Panel></div></>}
+  {page==='Overview'&&<div className="command-dashboard">
+   <section className="command-hero">
+    <div className="command-hero-copy">
+     <div className="command-eyebrow"><i/> ARVENA / PERSONAL COMMAND</div>
+     <div className="command-greeting">{greeting}, OPERATOR</div>
+     <h1>Make today<br/><em>move you forward.</em></h1>
+     <p>Your command centre for focused execution, meaningful learning and long-term progress.</p>
+     <div className="command-hero-actions"><button className="primary" onClick={()=>open('Planner')}><CalendarDays size={15}/> PLAN MY DAY</button><button className="secondary" onClick={()=>open('Missions')}><Target size={15}/> SET A MISSION</button></div>
+    </div>
+    <div className="command-level-card">
+     <div className="command-level-ring"><span>LVL</span><b>{getLevel(data.xp)}</b></div>
+     <small>OPERATOR LEVEL</small><strong>{levelProgress} <span>/ 500 XP</span></strong>
+     <div className="command-level-track"><i style={{width:(levelProgress/5)+'%'}}/></div>
+     <span className="command-level-caption">XP TO NEXT LEVEL</span>
+    </div>
+   </section>
+   <div className="command-date-row"><div><small>TODAY'S OPERATING WINDOW</small><b>{new Date().toLocaleDateString(undefined,{weekday:'long',day:'numeric',month:'long',year:'numeric'})}</b></div><span className="command-live"><i/> PRIVATE SYSTEM · LOCAL DATA</span></div>
+   <section className="command-metrics">
+    <article><span className="command-metric-icon"><CalendarDays size={17}/></span><div><small>TASKS FOR TODAY</small><b>{tasksToday.length}</b><span>{tasksToday.length-doneToday} remaining</span></div></article>
+    <article><span className="command-metric-icon"><Check size={17}/></span><div><small>COMPLETED TODAY</small><b>{doneToday} <em>/ {tasksToday.length}</em></b><span>{tasksToday.length?Math.round(doneToday/tasksToday.length*100)+'% execution':'No tasks scheduled'}</span></div></article>
+    <article><span className="command-metric-icon"><Target size={17}/></span><div><small>ACTIVE MISSIONS</small><b>{openMissions.length}</b><span>{data.missions.filter(x=>x.done).length} completed overall</span></div></article>
+    <article><span className="command-metric-icon"><Compass size={17}/></span><div><small>ACTIVE GOALS</small><b>{activeGoals.length}</b><span>{data.goals.filter(x=>(x.progress||0)>=100).length} achieved</span></div></article>
+   </section>
+   <div className="command-main-grid">
+    <section className="command-panel command-today">
+     <div className="command-panel-head"><div><small>EXECUTION / 01</small><h2>Today's plan</h2><p>Turn your priorities into completed actions.</p></div><button className="command-text-action" onClick={()=>setPage('Planner')}>OPEN PLANNER ↗</button></div>
+     <div className="command-execution"><div><span>DAILY EXECUTION</span><b>{tasksToday.length?Math.round(doneToday/tasksToday.length*100):0}%</b></div><div className="command-execution-track"><i style={{width:(tasksToday.length?doneToday/tasksToday.length*100:0)+'%'}}/></div></div>
+     {tasksToday.length?tasksToday.map(t=><div className="command-task-row" key={t.id}><Task item={t} toggle={()=>setData(d=>({...d,tasks:d.tasks.map(x=>x.id===t.id?{...x,done:!x.done}:x),activity:[activityEvent(t.done?'task-reopened':'task-completed',t.done?'Task reopened':'Task completed',t.title),...d.activity].slice(0,500)}))}/><span className={t.done?'command-task-status done':'command-task-status'}>{t.done?'COMPLETE':t.priority||'SCHEDULED'}</span></div>):<div className="command-empty"><div className="command-empty-symbol"><CalendarDays size={21}/></div><b>Your day is open.</b><p>Add a task to create a clear plan and track your execution here.</p><button className="primary mini" onClick={()=>open('Planner')}><Plus size={13}/> ADD FIRST TASK</button></div>}
+    </section>
+    <div className="command-side-stack">
+     <section className="command-panel command-focus">
+      <div className="command-panel-head"><div><small>INTELLIGENCE / 02</small><h2>Next best move</h2></div><span className="command-focus-mark"><Sparkles size={17}/></span></div>
+      <b>{focusTask?focusTask.title:openMissions[0]?.title||(activeGoals[0]?.title)||'Choose your first priority'}</b>
+      <p>{focusTask?'This is your next unfinished task scheduled for today. Complete it before adding more commitments.':openMissions.length?'Your schedule is clear. Make progress on one active mission.':activeGoals.length?'Your day is open. Take one concrete step toward an active goal.':'Create a mission or goal to give your effort a direction.'}</p>
+      <button className="command-focus-action" onClick={()=>focusTask?setPage('Planner'):openMissions.length?setPage('Missions'):open('Missions')}>{focusTask?'VIEW TODAY’S TASK':openMissions.length?'OPEN MISSION CONTROL':'CREATE A MISSION'} <span>↗</span></button>
+     </section>
+     <section className="command-panel command-missions">
+      <div className="command-panel-head"><div><small>LONG-TERM EXECUTION / 03</small><h2>Active missions</h2></div><button className="command-text-action" onClick={()=>setPage('Missions')}>VIEW ALL ↗</button></div>
+      {openMissions.slice(0,3).map(m=><div className="command-mission-row" key={m.id}><span><Target size={15}/></span><div><b>{m.title}</b><small>{m.category||'MISSION'} · {m.xp||0} XP</small></div></div>)}
+      {!openMissions.length&&<div className="command-inline-empty">No active missions yet. Define an outcome worth working toward.</div>}
+     </section>
+    </div>
+   </div>
+   <div className="command-lower-grid">
+    <section className="command-panel">
+     <div className="command-panel-head"><div><small>VISION / 04</small><h2>Long-range direction</h2><p>Your goals, translated into visible progress.</p></div><button className="command-text-action" onClick={()=>setPage('Dream Life')}>VIEW GOALS ↗</button></div>
+     {activeGoals.slice(0,3).map(g=><div className="command-goal-row" key={g.id}><div><b>{g.title}</b><span>{g.progress||0}%</span></div><div className="command-execution-track"><i style={{width:(g.progress||0)+'%'}}/></div></div>)}
+     {!activeGoals.length&&<div className="command-inline-empty">Your vision board is waiting. Add a goal to start tracking your direction.</div>}
+    </section>
+    <section className="command-panel">
+     <div className="command-panel-head"><div><small>SYSTEM LOG / 05</small><h2>Recent activity</h2><p>A record of actions saved in this browser.</p></div><button className="command-text-action" onClick={()=>setPage('Reports')}>REPORTS ↗</button></div>
+     {data.activity.slice(0,4).map(e=><div className="command-activity-row" key={e.id}><i/><div><b>{e.title}</b><span>{e.detail||e.type}</span></div><time>{new Date(e.created).toLocaleDateString()}</time></div>)}
+     {!data.activity.length&&<div className="command-inline-empty">Your activity log will appear here as you use ARVENA.</div>}
+    </section>
+   </div>
+  </div>}
  {page==='Missions'&&<><Head page={page} onAdd={()=>open(page)}/>{list(page).map(m=><Record key={m.id} item={m} onEdit={()=>open(page,m)} onDelete={()=>remove(page,m)} extra={<><small>{m.category} · {m.difficulty} · {m.xp} XP</small>{!m.done&&<button className="primary mini" onClick={()=>completeMission(m)}>COMPLETE</button>}{m.done&&<b className="green">COMPLETED</b>}</>}/>)}{!data.missions.length&&<Empty text="No missions yet." onAdd={()=>open(page)}/>}</>}
  {page==='Planner'&&<><Head page={page} onAdd={()=>open(page)}/>{list(page).sort((a,b)=>a.date.localeCompare(b.date)).map(t=><div className="record" key={t.id}><Task item={t} toggle={()=>setData(d=>({...d,tasks:d.tasks.map(x=>x.id===t.id?{...x,done:!x.done}:x),activity:[activityEvent(t.done?'task-reopened':'task-completed',t.done?'Task reopened':'Task completed',t.title),...d.activity].slice(0,500)}))}/><small>{t.date} · {t.category} · {t.priority}</small><Actions edit={()=>open(page,t)} del={()=>remove(page,t)}/></div>)}{!data.tasks.length&&<Empty text="Your planner is empty." onAdd={()=>open(page)}/>}</>}
  {page==='Dream Life'&&<><Head page={page} onAdd={()=>open(page)}/><div className="grid">{list(page).map(g=><article className="panel" key={g.id}><Actions edit={()=>open(page,g)} del={()=>remove(page,g)}/><span className="tag">{g.area}</span><h3>{g.title}</h3><p>{g.description}</p><div className="bar"><i style={{width:g.progress+'%'}}/></div><small>{g.progress}% · {g.target||'No target date'}</small><input type="range" min="0" max="100" value={g.progress} onChange={e=>setData(d=>({...d,goals:d.goals.map(x=>x.id===g.id?{...x,progress:+e.target.value}:x)}))}/></article>)}</div>{!data.goals.length&&<Empty text="Define the life you want to build." onAdd={()=>open(page)}/>}</>}
