@@ -45,7 +45,7 @@ export function normalizeKnowledgeCourse(value: unknown): KnowledgeCourse | null
     id: value.id, title: value.title.trim(), created: str(value.created), subject: str(value.subject, "General"),
     level: str(value.level, "Beginner"), description: str(value.description), objectives: strings(value.objectives),
     prerequisiteCourseId: str(value.prerequisiteCourseId), unlockCost: num(value.unlockCost, 0, 100000, 0),
-    unlocked: value.unlocked === true || legacy || !str(value.prerequisiteCourseId),
+    unlocked: typeof value.unlocked === "boolean" ? value.unlocked : legacy || !str(value.prerequisiteCourseId),
     lessons, done, ...(typeof value.completedAt === "string" ? { completedAt: value.completedAt } : {}),
     updatedAt: str(value.updatedAt, str(value.created)),
   };
