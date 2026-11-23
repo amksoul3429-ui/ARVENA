@@ -1,14 +1,14 @@
 /**
- * ARVENA — Core Engine
+ * Universal Life System — Core Engine
  * Central rules for progression and reward integrity.
  */
 
 export const SYSTEM_CONFIG = {
-  name: "ARVENA",
+  name: "Universal Life System",
   version: "1.1.0",
   xpPerLevel: 500,
-  creditsPerXp: 1,
-  minimumMissionCredits: 0,
+  creditsPerTenXp: 1,
+  minimumMissionCredits: 1,
 } as const;
 
 export type MissionRecord = {
@@ -61,8 +61,12 @@ const rewardXp = Number.isFinite(rawXp)
   ? Math.max(0, Math.floor(rawXp))
   : 0;
 
-// ARVENA economy rule: every earned XP is matched by one earned Credit.
-const earnedCredits = Math.max(0, Math.floor(rewardXp * SYSTEM_CONFIG.creditsPerXp));
+const earnedCredits = Math.max(
+  SYSTEM_CONFIG.minimumMissionCredits,
+  Math.floor(
+    (rewardXp / 10) * SYSTEM_CONFIG.creditsPerTenXp
+  )
+);
 
   return {
     awarded: true,
