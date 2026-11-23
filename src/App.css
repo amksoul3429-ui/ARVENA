@@ -162,3 +162,11 @@
 @media (prefers-reduced-motion: reduce) {
   .shell > aside.sidebar { transition: none !important; }
 }
+
+
+/* Navigation overlay: centre the menu in the viewport on every device. */
+.navigation-layer{position:fixed!important;inset:0!important;z-index:1000!important;display:grid!important;place-items:center!important;padding:14px!important;background:rgba(2,7,19,.72)!important;backdrop-filter:blur(4px)!important;}
+.navigation-layer>.navigation-panel{position:relative!important;inset:auto!important;top:auto!important;right:auto!important;bottom:auto!important;left:auto!important;width:min(380px,calc(100vw - 28px))!important;height:auto!important;max-height:calc(100dvh - 28px)!important;overflow-x:hidden!important;overflow-y:auto!important;display:flex!important;flex-direction:column!important;margin:0!important;padding:22px 15px!important;border:1px solid #3a4b68!important;border-radius:20px!important;transform:none!important;visibility:visible!important;opacity:1!important;pointer-events:auto!important;z-index:1001!important;box-shadow:0 24px 80px rgba(0,0,0,.42)!important;}
+.navigation-layer>.navigation-panel .close{display:grid!important;place-items:center!important;}
+:root[data-theme="light"] .navigation-layer{background:rgba(24,36,58,.34)!important;}
+:root[data-theme="light"] .navigation-layer>.navigation-panel{background:rgba(255,255,255,.99)!important;border-color:#dce3ef!important;}
