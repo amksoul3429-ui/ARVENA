@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import { ArrowLeft, BookOpen, CheckCircle2, ChevronRight, Clock, ExternalLink, GraduationCap, Lock, Plus, Search, SlidersHorizontal, Sparkles, Trophy, Unlock, X } from "lucide-react";
+import { ArrowLeft, BookOpen, CheckCircle2, ChevronRight, Clock, ExternalLink, GraduationCap, Lock, Plus, Search, Trophy, Unlock, X } from "lucide-react";
 import {
   completeKnowledgeLesson, evaluateKnowledgeAnswer, knowledgeProgress, knowledgeSummary,
   normalizeKnowledgeCourse, unlockKnowledgeCourse,
