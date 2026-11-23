@@ -200,3 +200,45 @@
   .sidebar.show{transform:translate(-50%,-50%) scale(1)}
   .hamb{display:grid}
 }
+
+
+/* FINAL NAVIGATION POSITION FIX: keep the navigation panel centered on every viewport. */
+.shell > aside.sidebar {
+  position: fixed !important;
+  inset: auto !important;
+  top: 50% !important;
+  left: 50% !important;
+  right: auto !important;
+  bottom: auto !important;
+  width: min(292px, calc(100vw - 28px)) !important;
+  max-height: calc(100dvh - 32px) !important;
+  margin: 0 !important;
+  transform: translate(-50%, -50%) scale(.97) !important;
+  z-index: 50 !important;
+  overflow-y: auto;
+  border: 1px solid #3a4b68;
+  border-radius: 20px;
+  box-shadow: 0 24px 90px #000b;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+.shell > aside.sidebar.show {
+  transform: translate(-50%, -50%) scale(1) !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  pointer-events: auto !important;
+}
+.shell > aside.sidebar .close { display: grid !important; place-items: center; }
+.shell > main header .hamb { display: grid !important; place-items: center; }
+.shell > button.scrim {
+  position: fixed !important;
+  inset: 0 !important;
+  z-index: 40 !important;
+  display: block !important;
+}
+:root[data-theme="light"] .shell > aside.sidebar {
+  background: rgba(255,255,255,.98);
+  border-color: #dce3ef;
+  box-shadow: 0 24px 80px #25324b30;
+}
