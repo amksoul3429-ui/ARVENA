@@ -199,3 +199,41 @@
 @media (prefers-reduced-motion: reduce) {
   .shell > aside.sidebar { transition: none; }
 }
+
+
+/* Final navigation placement override: centre the menu panel on every viewport. */
+.shell > aside.sidebar,
+.shell > aside.sidebar.show {
+  position: fixed !important;
+  inset: 50% auto auto 50% !important;
+  width: min(380px, calc(100vw - 28px)) !important;
+  max-height: calc(100dvh - 28px) !important;
+  height: auto !important;
+  margin: 0 !important;
+  overflow-x: hidden !important;
+  overflow-y: auto !important;
+  border: 1px solid #3a4b68 !important;
+  border-radius: 20px !important;
+  transform: translate3d(-50%, -50%, 0) scale(.97) !important;
+  transform-origin: center !important;
+  z-index: 80 !important;
+}
+.shell > aside.sidebar.show {
+  transform: translate3d(-50%, -50%, 0) scale(1) !important;
+}
+.shell > button.scrim {
+  position: fixed !important;
+  inset: 0 !important;
+  z-index: 70 !important;
+}
+.shell > main > header .hamb {
+  display: grid !important;
+  place-items: center !important;
+}
+.shell > aside.sidebar .close {
+  display: grid !important;
+  place-items: center !important;
+}
+@media (prefers-reduced-motion: reduce) {
+  .shell > aside.sidebar { transition: none !important; }
+}
