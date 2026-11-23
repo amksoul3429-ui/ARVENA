@@ -33,9 +33,29 @@ export default function KnowledgeLibrary({ courses, credits, onChange, onEconomy
   const [feedback, setFeedback] = useState<Record<string, string>>({});
   useEffect(() => {
     const starter = createUniversalKnowledgeCourses();
-    const existing = new Set(normalized.map(course => course.id));
-    const missing = starter.filter(course => !existing.has(course.id));
-    if (missing.length) onChange([...normalized, ...missing]);
+    const starterIds = new Set(starter.map(course => course.id));
+    const existingById = new Map(normalized.map(course => [course.id, course]));
+    const refreshed = starter.map(seed => {
+      const previous = existingById.get(seed.id);
+      if (!previous) return seed;
+      const previousLessons = new Map(previous.lessons.map(item => [item.id, item]));
+      const lessons = seed.lessons.map(item => {
+        const saved = previousLessons.get(item.id);
+        return saved ? { ...item, done: saved.done, ...(saved.completedAt ? { completedAt: saved.completedAt } : {}) } : item;
+      });
+      return {
+        ...seed,
+        created: previous.created || seed.created,
+        unlocked: previous.unlocked || seed.unlocked,
+        lessons,
+        done: lessons.length > 0 && lessons.every(item => item.done),
+        ...(lessons.length > 0 && lessons.every(item => item.done) && previous.completedAt ? { completedAt: previous.completedAt } : {}),
+        updatedAt: previous.updatedAt || seed.updatedAt
+      };
+    });
+    const customCourses = normalized.filter(course => !starterIds.has(course.id));
+    const merged = [...refreshed, ...customCourses];
+    if (JSON.stringify(merged) !== JSON.stringify(normalized)) onChange(merged);
   }, [normalized, onChange]);
   const summary = knowledgeSummary(normalized);
   const current = normalized.find(c => c.id === selectedId) || null;
