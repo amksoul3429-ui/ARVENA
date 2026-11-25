@@ -7,7 +7,8 @@ Release 1 brings together open-topic discovery, a structured learning library, e
 ## Release 1 features currently implemented
 
 - **Discover:** open-ended search through Wikipedia's live encyclopedia index; open and read source articles; save an article into the learning library as a source-based reading lesson.
-- **Learn:** curated learning paths across broad disciplines, full lesson text, learning objectives, lesson checks, completion tracking and persistent progress. Starter pathways are open in Release 1.
+- **AI Teacher:** Gemini-powered arbitrary-topic course generation (8–12 progressive lessons with objectives and checks), plus contextual tutor Q&A. Requires the user's own Google AI Studio API key; the key stays in browser local storage and is not included in backups.
+- **Learn:** curated learning paths across broad disciplines, full lesson text, learning objectives, lesson checks, completion tracking and persistent progress. AI-generated courses can be saved into the same library.
 - **Practice:** persistent flashcards with reveal/hide answers, exercise and project checklists, completion tracking and migrated practice records from the first prototype.
 - **Watch:** the existing Video Learning Studio, including YouTube Data API discovery (up to 50 ranked results, English/Hindi/both), video library, saved links, notes and supported embedded playback.
 - **Read:** live book search through Open Library and scholarly work search through Crossref.
@@ -18,14 +19,14 @@ Release 1 brings together open-topic discovery, a structured learning library, e
 
 ## Important limits — not yet Release 1 acceptance
 
-- The curated curriculum is a substantial starter library, not an infinite catalogue. Arbitrary topics can be searched and saved as source-reading lessons, but a universal AI teacher that generates complete, adaptive, beginner-to-expert textbooks is **not connected yet**.
+- AI Teacher uses a bring-your-own-key Gemini connection. It is not a bundled or private server-side AI service. The user must create and enter a key, check model availability and quotas, and accept Google's applicable data terms. API keys stored in browser storage are not secret from someone with access to that browser.
 - Wikipedia search and extracts, Open Library and Crossref are live external sources. Availability, coverage and response times depend on those services; source content should be checked against independent references.
 - YouTube Data API discovery requires the user's own API key. The current studio stores that key in this browser's local storage. Restrict the key to the app's website origin and the YouTube Data API v3 in Google Cloud; never commit it to GitHub or share it. A secure server-side proxy is preferable for a production deployment.
 - Video playback depends on the video's embed permissions and YouTube/Vimeo availability.
 - Knowledge data is local to this browser/device. There is no account or automatic cross-device sync, encrypted cloud storage or native Android background service.
 - The approved Sacred Bloom logo asset has not yet been added to this branch; the current header mark is a temporary icon.
 - Offline mode caches the app shell and assets. Live search and external source retrieval still require an internet connection.
-- AI tutoring, adaptive generated curricula, full citation-backed synthesis and universal subject coverage require a configured AI service and a secure backend. The app does not pretend those capabilities exist.
+- AI course generation and tutoring become available after the user configures Gemini. A secure backend is still recommended before a public multi-user production launch; direct browser key use is a personal-use integration, not a production secret-management design. AI-generated content can be inaccurate and must be checked.
 
 ## Run locally
 
