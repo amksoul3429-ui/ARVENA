@@ -1,10 +1,10 @@
 /**
- * ARVENA — Core Engine
+ * ASTRELIA AND AERIS — Core Engine
  * Central rules for progression and reward integrity.
  */
 
 export const SYSTEM_CONFIG = {
-  name: "ARVENA — Universal Knowledge & Personal Intelligence System",
+  name: "ASTRELIA AND AERIS — Celestial Knowledge Universe & Personal Intelligence System",
   version: "1.1.0",
   xpPerLevel: 500,
   creditsPerTenXp: 1,
