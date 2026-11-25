@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { BookOpen, BrainCircuit, CheckCircle2, Eye, EyeOff, GraduationCap, LoaderCircle, MessageCircle, Plus, Save, Settings2, Sparkles } from "lucide-react";
+import { BrainCircuit, CheckCircle2, Eye, EyeOff, LoaderCircle, MessageCircle, Plus, Save, Settings2, Sparkles } from "lucide-react";
 import { AI_MODELS, AI_TEACHER_SETTINGS_KEY, DEFAULT_AI_MODEL, askAITutor, generateAICourse, testAITeacherConnection, type AICourse, type AITeacherSettings } from "../core/aiTeacher";
 import "./AITeacher.css";
 
