@@ -37,7 +37,6 @@ function loadInitialData(): AstreliaData {
 }
 const safeText = (value:string) => value.replace(/<[^>]*>/g," ").replace(/&quot;/g,'"').replace(/&#039;/g,"'").replace(/&amp;/g,"&").replace(/\s+/g," ").trim();
 const wikiUrl = (title:string) => "https://en.wikipedia.org/wiki/" + encodeURIComponent(title.replace(/ /g,"_"));
-const externalSearch = (base:string,query:string) => base + encodeURIComponent(query);
 
 export default function AstreliaApp() {
   const [data,setData] = useState<AstreliaData>(loadInitialData);
