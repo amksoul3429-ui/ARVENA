@@ -1,0 +1,39 @@
+.ast-ai-teacher{display:grid;gap:18px;max-width:1040px;margin:0 auto}
+.ast-ai-hero,.ast-ai-settings,.ast-ai-create,.ast-ai-preview,.ast-ai-tutor{border:1px solid var(--ast-line);border-radius:15px;background:var(--ast-surface);padding:clamp(16px,3vw,24px)}
+.ast-ai-hero{display:flex;align-items:center;gap:16px;background:linear-gradient(120deg,color-mix(in srgb,var(--ast-accent) 12%,var(--ast-surface)),var(--ast-surface))}
+.ast-ai-orb{width:54px;height:54px;flex:none;border:1px solid var(--ast-line);border-radius:50%;display:grid;place-items:center;color:var(--ast-accent);background:var(--ast-surface2)}
+.ast-ai-hero>div:nth-child(2){flex:1;min-width:0}
+.ast-ai-hero h2{margin:7px 0;font:500 clamp(20px,3vw,27px) 'Playfair Display',serif}
+.ast-ai-hero p,.ast-ai-settings p,.ast-ai-section-title p{margin:0;color:var(--ast-muted);font-size:11px;line-height:1.7}
+.ast-ai-settings-toggle,.ast-ai-settings-head a{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--ast-line);border-radius:8px;padding:9px 11px;background:var(--ast-surface2);color:var(--ast-text);font-size:9px;text-decoration:none;white-space:nowrap}
+.ast-ai-settings{display:grid;gap:13px}
+.ast-ai-settings-head{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}
+.ast-ai-settings-head b{font-size:13px}
+.ast-ai-settings label,.ast-ai-create label{display:grid;gap:7px;color:var(--ast-muted);font-size:10px}
+.ast-ai-key{display:flex;gap:8px}
+.ast-ai-key input,.ast-ai-settings select,.ast-ai-create input,.ast-ai-create select,.ast-ai-tutor textarea{width:100%;min-width:0;border:1px solid var(--ast-line);border-radius:8px;padding:11px;background:var(--ast-surface2);color:var(--ast-text);font:11px 'DM Sans',sans-serif}
+.ast-ai-key button{border:1px solid var(--ast-line);border-radius:8px;padding:0 12px;background:var(--ast-surface2);color:var(--ast-muted)}
+.ast-ai-setting-actions{display:flex;gap:9px;flex-wrap:wrap}
+.ast-ai-privacy,.ast-ai-hint,.ast-ai-disclaimer{font-size:9px!important;line-height:1.7!important;color:var(--ast-muted)!important}
+.ast-ai-section-title{margin-bottom:17px}
+.ast-ai-section-title h3{margin:7px 0;font:500 clamp(20px,3vw,25px) 'Playfair Display',serif}
+.ast-ai-create form{display:grid;gap:13px}
+.ast-ai-fields{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.ast-ai-generate{justify-content:center;width:100%;padding:13px}
+.ast-ai-error,.ast-ai-status{padding:12px 14px;border:1px solid var(--ast-line);border-radius:9px;background:var(--ast-surface);font-size:11px;line-height:1.6}
+.ast-ai-error{border-color:#b95c6b;color:#d98796}
+.ast-ai-status{color:var(--ast-teal)}
+.ast-ai-objectives{display:grid;gap:8px;padding:14px;margin-bottom:14px;border-radius:10px;background:var(--ast-surface2);font-size:11px}
+.ast-ai-objectives span{color:var(--ast-muted);line-height:1.5}
+.ast-ai-lesson-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;margin-bottom:16px}
+.ast-ai-lesson-list article{padding:13px;border:1px solid var(--ast-line);border-radius:9px}
+.ast-ai-lesson-list article>span{font-size:8px;letter-spacing:1px;color:var(--ast-accent)}
+.ast-ai-lesson-list article>b{display:block;margin:7px 0;font-size:11px}
+.ast-ai-lesson-list article>p{margin:0;color:var(--ast-muted);font-size:10px;line-height:1.6}
+.ast-ai-tutor form{display:grid;gap:10px}
+.ast-ai-tutor textarea{resize:vertical}
+.ast-ai-tutor form button{justify-content:center;width:max-content}
+.ast-ai-answer{margin-top:15px;padding:15px;border-radius:10px;background:var(--ast-surface2)}
+.ast-ai-answer>b{font-size:9px;letter-spacing:1px;color:var(--ast-accent)}
+.ast-ai-answer>div{white-space:pre-wrap;font-size:12px;line-height:1.8;margin-top:10px}
+@media(max-width:720px){.ast-ai-hero{align-items:flex-start;flex-wrap:wrap}.ast-ai-settings-toggle{margin-left:auto}.ast-ai-fields,.ast-ai-lesson-list{grid-template-columns:1fr}.ast-ai-settings-head{flex-direction:column}}

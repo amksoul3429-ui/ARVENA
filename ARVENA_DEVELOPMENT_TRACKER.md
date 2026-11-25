@@ -1,29 +1,69 @@
-# ASTRELIA AND AERIS Rebuild — 12-Phase Development Tracker
+# ASTRELIA AND AERIS — 15-Phase Development Tracker
 
-**Standard:** Never mark a phase complete based solely on compilation. Verify the implemented behavior and record tests.
+**Release 1 = Phases 01–09. Release 2 = Phases 10–11. Release 3 = Phases 12–15.**
+**Quality rule:** a phase is complete only after implementation, integration, automated tests and manual acceptance. A successful compile alone is insufficient.
 
-- [ ] **Phase 01 — Foundation & Architecture:** system blueprint, boundaries, data migration, core contracts and safeguards.
-- [ ] **Phase 02 — Brand & UI System:** Sacred Bloom assets, color tokens, typography, themes, component and motion/accessibility standards.
-- [ ] **Phase 03 — Core Interface:** mobile-first shell, universal home, navigation and adaptive layouts.
-- [ ] **Phase 04 — Universal Search Engine:** arbitrary queries, history, suggestions, intent handling and discovery.
-- [ ] **Phase 05 — Universal Learning Engine:** dynamic curriculum, complete teaching, adaptive depth, prerequisite support and lesson persistence.
-- [ ] **Phase 06 — Research & Discovery:** source retrieval, citations, source management, related concepts and saved research.
-- [ ] **Phase 07 — Media & Resources:** relevant videos, books, articles and media integrations.
-- [ ] **Phase 08 — Practice & Mastery:** exercises, quizzes, assessment feedback, review and mastery tracking.
-- [ ] **Phase 09 — Knowledge Memory:** notes, bookmarks, history, knowledge connections, export/import and recovery.
-- [ ] **Phase 10 — Personal Intelligence System:** goals, missions, planning, health, finance, business and journal subsystems.
-- [ ] **Phase 11 — Integration & Intelligence:** system-wide connections, analytics, configurable automation, progression and insight rules.
-- [ ] **Phase 12 — Testing & Production:** end-to-end tests, responsive/accessibility checks, service dependency checks, PWA/offline verification and deployment validation.
+## Release 1 — Universal Knowledge Universe
 
-## Phase 01 checklist
-- [x] Inspect current repository and identify existing modules/data/storage.
-- [x] Define product purpose and principles.
-- [x] Define target engine architecture and search-to-learning flow.
-- [x] Document data migration and safety principles.
-- [ ] Inventory existing AERIS code, settings and stored configuration.
-- [ ] Define AERIS integration boundaries, three personality modes and shared-memory permissions.
-- [ ] Define AERIS JARVIS-inspired capabilities: conversational interface, system awareness, reasoning, authorised tool execution, memory and transparent activity history.
-- [ ] Define permission tiers and confirmation gates for consequential actions.
-- [ ] Separate initial PWA capabilities from advanced wake-word, background and device-wide integrations.
-- [ ] Preserve AERIS behavior and data during ASTRELIA integration.
-- [ ] Validate Phase 01 implementation and tests.
+- [ ] **01 — Foundation & Architecture:** product boundaries, knowledge data model, storage contracts, migrations, privacy and recovery.
+- [ ] **02 — Brand & UI System:** approved Sacred Bloom identity, typography, celestial tokens, light/dark themes, contrast and accessibility.
+- [ ] **03 — Core Interface:** mobile-first knowledge home, universal search entry, workspace navigation and responsive layouts.
+- [ ] **04 — Universal Search Engine:** arbitrary natural-language topics, history, source results, saved history and intent routing.
+- [ ] **05 — Universal Learning Engine:** topic-specific curriculum, beginner-to-advanced teaching, adaptive explanations, prerequisites and lesson persistence. (Gemini course-generation and tutor UI integrated; live key/model verification and curriculum quality acceptance remain.)
+- [ ] **06 — Research & Discovery:** live source retrieval, source quality, citations, related concepts and saved research.
+- [ ] **07 — Media & Resources:** YouTube discovery, top relevant results, language filters, books, articles and in-app resource handling.
+- [ ] **08 — Practice & Mastery:** exercises, quizzes, assessment feedback, review and mastery tracking.
+- [ ] **09 — Knowledge Memory:** notes, bookmarks, history, knowledge connections, export/import and recovery.
+
+## Release 2 — Personal Operating System
+
+- [ ] **10 — Personal Operating System:** goals, missions, projects, planning, health, business, finance and journal.
+- [ ] **11 — Intelligence & System Integration:** connect knowledge to life goals, insights, analytics, progression and approved workflows.
+
+## Release 3 — AERIS & Production
+
+- [ ] **12 — AERIS Intelligence Core:** conversational context, Commander/Companion/Strategist modes, reasoning and permission boundaries.
+- [ ] **13 — AERIS Actions & Voice:** approved actions, connected tools, user-initiated voice and capability validation.
+- [ ] **14 — Security, Testing & Optimization:** regression, accessibility, performance, privacy, recovery and device testing.
+- [ ] **15 — Production & Installation:** PWA release, Android installation, icon/branding, deployment and final acceptance.
+
+## Release 1 implementation record
+
+- [x] Isolated working branch: `release-1-universal-knowledge`.
+- [x] Integrated live Wikipedia search and source article reader.
+- [x] Added source-article-to-learning-library flow.
+- [x] Integrated the structured lesson library and knowledge checks.
+- [x] Integrated the YouTube Video Learning Studio and its English/Hindi search path.
+- [x] Added live Open Library and Crossref discovery.
+- [x] Added bookmarks, personal notes and recent search history.
+- [x] Added persistent flashcards, exercise checklists and completion tracking.
+- [x] Added a read-only migration path for first-prototype learning spaces, notes, flashcards and practice tasks.
+- [x] Added versioned JSON export and validated restore.
+- [x] Added read-only import of legacy knowledge/video records when creating the new store.
+- [x] Updated the PWA shell cache version.
+- [x] Verify current branch TypeScript build and full automated tests (91 tests passed; production build passed on commit `d2ecee19bbcbc30d77464af4a036d09451aa45de`).
+- [ ] Manually test Android and desktop workflows, persistence and backup restore.
+- [ ] Replace the temporary header mark with the approved Sacred Bloom logo asset.
+- [x] Integrate Gemini AI Teacher for arbitrary-topic course generation and contextual tutor Q&A (bring-your-own-key; API adapter and validation tests added).
+- [ ] Verify Gemini with a real user API key and review generated course quality across several unrelated topics.
+- [ ] Verify YouTube API key restrictions, quota and live English/Hindi results.
+- [ ] Improve citations, research-source quality controls and offline behavior.
+- [ ] Complete the full Release 1 acceptance run before marking phases complete.
+
+## Release 1 acceptance checklist
+
+- [ ] Search any user-entered topic without a fixed subject catalogue.
+- [x] Implement 8–12 lesson arbitrary-topic course generation, lesson assessments and save-to-Learn integration (live provider key verification remains pending).
+- [x] Implement contextual follow-up questions using the connected AI tutor (live provider key verification remains pending).
+- [ ] Open a real source article and add it to a saved learning space.
+- [ ] Learn mode has comprehensive topic-specific lessons from beginner to advanced.
+- [ ] Research mode retrieves and cites verifiable sources and supports source comparison.
+- [ ] Watch mode shows relevant videos with English/Hindi controls and reliable ranking.
+- [ ] Read mode supports useful book/article discovery.
+- [ ] Test mode supports quizzes, feedback and revision.
+- [ ] Practice mode supports exercises and progress tracking.
+- [ ] Notes, bookmarks, history and progress persist and can be exported/restored.
+- [ ] Existing user data remains intact.
+- [ ] Dark/light themes, contrast, accessibility and mobile layout pass manual testing.
+- [ ] PWA install and offline shell pass on Android.
+- [ ] All external-service requirements and limitations are documented.

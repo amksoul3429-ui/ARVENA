@@ -32,7 +32,7 @@ export default function KnowledgeLibrary({ courses, credits, onChange, onEconomy
   const [answers, setAnswers] = useState<Record<string, number>>({});
   const [feedback, setFeedback] = useState<Record<string, string>>({});
   useEffect(() => {
-    const starter = createUniversalKnowledgeCourses();
+    const starter = createUniversalKnowledgeCourses().map(course => ({ ...course, unlockCost: 0, unlocked: true }));
     const starterIds = new Set(starter.map(course => course.id));
     const existingById = new Map(normalized.map(course => [course.id, course]));
     const refreshed = starter.map(seed => {
@@ -85,9 +85,9 @@ export default function KnowledgeLibrary({ courses, credits, onChange, onEconomy
 
   return <div className="knowledge-library km">
     {!current ? <>
-      <section className="km-intro"><div><span>UNIVERSAL KNOWLEDGE MARKETPLACE</span><h2>Explore the world of knowledge.</h2><p>A curated library of ready-made learning paths across science, technology, mathematics, health, society, business, arts and more. Start with foundations, build understanding and progress toward advanced mastery.</p></div><div className="km-emblem"><GraduationCap size={34}/></div></section>
+      <section className="km-intro"><div><span>UNIVERSAL KNOWLEDGE MARKETPLACE</span><h2>Explore the world of knowledge.</h2><p>A growing library of ready-made learning paths across science, technology, mathematics, health, society, business, arts and more. Release 1 makes the foundational pathways available without credit barriers. Start with foundations, build understanding and progress toward advanced mastery.</p></div><div className="km-emblem"><GraduationCap size={34}/></div></section>
       <div className="km-search"><Search size={18}/><input value={query} onChange={e => setQuery(e.target.value)} placeholder="Search the knowledge universe — science, history, finance, psychology..."/>{query && <button onClick={() => setQuery("")} aria-label="Clear search">×</button>}</div>
-      <div className="km-policy"><BookOpen size={18}/><p><b>Ready-made courses. Complete learning paths.</b><br/>Preview the curriculum, unlock a course once, and keep permanent access. Lessons and knowledge checks are included.</p></div>
+      <div className="km-policy"><BookOpen size={18}/><p><b>Ready-made courses. Complete learning paths.</b><br/>Explore structured learning paths, keep your progress and revisit lessons. Foundational courses are open during Release 1; assessments and retests are free.</p></div>
       <div className="km-filters"><div className="km-cats">{categories.map(item => <button key={item} className={category === item ? "active" : ""} onClick={() => setCategory(item)}>{item}</button>)}</div><select value={level} onChange={e => setLevel(e.target.value)} aria-label="Filter by learning depth">{levels.map(item => <option key={item}>{item}</option>)}</select></div>
       <div className="km-market-stats"><span><BookOpen size={14}/> {summary.courses} curated courses</span><span><Unlock size={14}/> {summary.unlocked} permanently unlocked</span><span><Trophy size={14}/> {summary.completedCourses} mastered</span><b>{credits} credits available</b></div>
       <div className="km-heading"><div><h3>{category === "All subjects" ? "YOUR COURSE MARKETPLACE" : category.toUpperCase()}</h3><p>Explore curated subjects and structured learning paths</p></div></div>
