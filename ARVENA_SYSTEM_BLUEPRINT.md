@@ -23,6 +23,31 @@ The primary purpose is to let a user search for virtually any topic, question, s
 - **Unified experience:** one app, shared user-approved memory and connected capabilities. Preserve AERIS configuration and behavior while integrating it safely; never silently execute consequential actions.
 - **Voice and wake-word scope:** text and user-initiated voice are planned; always-on wake-word behavior must be validated against browser/PWA permissions and device constraints before being promised.
 
+## AERIS — Personal Intelligence Assistant
+
+AERIS is a JARVIS-inspired, system-integrated personal intelligence assistant. The inspiration is the experience of a capable, context-aware, conversational assistant that can understand the user's intent, reason across the ASTRELIA system, coordinate tools and perform authorised actions. AERIS must have its own identity and interaction layer; it is not merely a chat window.
+
+### Core capabilities
+- **Conversational intelligence:** natural-language text and user-initiated voice interaction; understand follow-up context and clarify ambiguous or consequential requests.
+- **System awareness:** with permission, read relevant ASTRELIA state such as plans, missions, learning progress, saved knowledge and user-defined priorities.
+- **Reasoning and strategy:** analyse information, compare options, identify dependencies, explain trade-offs and create actionable plans.
+- **Task execution:** operate supported ASTRELIA features and connected tools only within granted permissions; preview consequential changes and ask for confirmation before execution.
+- **Personal assistance:** help organise schedules, reminders, projects, learning sessions and workflows; report what it did and what remains.
+- **Three operating modes:** Commander (execution, discipline and accountability), Companion (supportive conversation and wellbeing-aware encouragement), Strategist (analysis, teaching, research and planning). Modes change tone and priorities, not safety or permission rules.
+- **Memory and continuity:** use user-approved memory and ASTRELIA records, with clear controls for what is remembered and used.
+- **Status and transparency:** communicate capability limits, service/API dependencies, action status and errors honestly.
+
+### Interaction and autonomy rules
+- AERIS may recommend and prepare actions proactively when relevant context and permissions allow.
+- It must not silently perform consequential actions, spend credits, send messages, modify important records or access sensitive integrations.
+- Ask for confirmation when intent, scope or impact is unclear; show a concise action summary before consequential execution.
+- Provide an understandable activity history for actions performed through ASTRELIA.
+
+### Delivery constraints
+- Build the reliable core first: in-app text assistant, explicit user-initiated voice where supported, ASTRELIA context access and a permissioned action layer.
+- Treat always-listening wake-word activation, background operation, device-wide control and autonomous access to external apps as separate advanced capabilities. Validate platform, browser/PWA, Android permission, security and API constraints before promising them.
+- Do not imply movie-level unrestricted intelligence or device control. Distinguish implemented capabilities from planned integrations and paid-service dependencies.
+
 ## Core architecture (target)
 - **Core shell:** app navigation, theming, responsive UI, routing, error states, accessibility.
 - **Universal Search:** query entry, suggestions, history, intent handling and discovery without topic restrictions.
