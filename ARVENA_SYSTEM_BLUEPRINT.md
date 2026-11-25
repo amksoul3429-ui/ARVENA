@@ -17,7 +17,13 @@ The primary purpose is to let a user search for virtually any topic, question, s
 9. The Sacred Bloom logo is the brand mark; UI should be elegant, mysterious, premium, restrained and readable.
 10. Build honestly: distinguish locally available features, external-service dependencies and unavailable capabilities. No fake search results or fabricated citations.
 
-## Product identity and integrated intelligence\n- **ASTRELIA:** the celestial, elegant, mysterious knowledge universe and primary platform. It is the home for universal learning, research, personal intelligence and personal evolution.\n- **AERIS:** the hybrid intelligence integrated into ASTRELIA, not a separate app. Its three modes are Commander (missions, discipline and accountability), Companion (understanding, support and encouragement), and Strategist (analysis, teaching, planning and problem-solving).\n- **Unified experience:** one app, shared user-approved memory and connected capabilities. Preserve AERIS configuration and behavior while integrating it safely; never silently execute consequential actions.\n- **Voice and wake-word scope:** text and user-initiated voice are planned; always-on wake-word behavior must be validated against browser/PWA permissions and device constraints before being promised.\n\n## Core architecture (target)
+## Product identity and integrated intelligence
+- **ASTRELIA:** the celestial, elegant, mysterious knowledge universe and primary platform. It is the home for universal learning, research, personal intelligence and personal evolution.
+- **AERIS:** the hybrid intelligence integrated into ASTRELIA, not a separate app. Its three modes are Commander (missions, discipline and accountability), Companion (understanding, support and encouragement), and Strategist (analysis, teaching, planning and problem-solving).
+- **Unified experience:** one app, shared user-approved memory and connected capabilities. Preserve AERIS configuration and behavior while integrating it safely; never silently execute consequential actions.
+- **Voice and wake-word scope:** text and user-initiated voice are planned; always-on wake-word behavior must be validated against browser/PWA permissions and device constraints before being promised.
+
+## Core architecture (target)
 - **Core shell:** app navigation, theming, responsive UI, routing, error states, accessibility.
 - **Universal Search:** query entry, suggestions, history, intent handling and discovery without topic restrictions.
 - **Learning Engine:** adaptive explanations, dynamically constructed paths, chapters, prerequisite handling and teaching modes.
