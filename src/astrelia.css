@@ -117,3 +117,23 @@ button{cursor:pointer}
 .astrelia-light .video-studio .vs-video-heading p,.astrelia-light .video-studio .vs-discovery-heading p,.astrelia-light .video-studio .vs-item-copy small,.astrelia-light .video-studio .vs-transcript div,.astrelia-light .video-studio .vs-detail-grid p{color:#514b66!important}
 .astrelia-light .video-studio .vs-search,.astrelia-light .video-studio .vs-filters button,.astrelia-light .video-studio .vs-chapter,.astrelia-light .video-studio .vs-discovery-form input,.astrelia-light .video-studio .vs-discovery-form select,.astrelia-light .video-studio .vs-key-setup input,.astrelia-light .video-studio .vs-detail-grid textarea{background:#f2eef9!important;border-color:#dcd5e9!important;color:#171329!important}
 .astrelia-light .video-studio .vs-discovery-form label,.astrelia-light .video-studio .vs-key-setup label{color:#514b66!important}
+
+.ast-practice-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;align-items:start}
+.ast-practice-panel{min-width:0;padding:20px;border:1px solid var(--ast-line);border-radius:14px;background:var(--ast-surface)}
+.ast-flash-form{display:grid;gap:9px;margin-bottom:16px}
+.ast-flash-form input,.ast-flash-form textarea,.ast-practice-form input{width:100%;min-width:0;border:1px solid var(--ast-line);border-radius:8px;padding:11px;background:var(--ast-surface2);color:var(--ast-text);font:11px/1.6 'DM Sans',sans-serif}
+.ast-flash-form textarea{resize:vertical}
+.ast-flash-form .ast-primary{width:max-content}
+.ast-flash-card{padding:14px 0;border-top:1px solid var(--ast-line)}
+.ast-flash-card>span{font-size:8px;letter-spacing:1px;color:var(--ast-accent)}
+.ast-flash-card>b{display:block;margin:8px 0;font-size:12px}
+.ast-flash-card p{padding:11px;border-radius:8px;background:var(--ast-surface2);font-size:11px;line-height:1.6}
+.ast-flash-card>div{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.ast-practice-form{display:flex;gap:8px;margin-bottom:15px}
+.ast-practice-form .ast-primary{white-space:nowrap}
+.ast-practice-item{display:flex;align-items:center;gap:10px;padding:12px 0;border-top:1px solid var(--ast-line);font-size:11px}
+.ast-practice-item>input{accent-color:var(--ast-accent)}
+.ast-practice-item>span{flex:1;line-height:1.5}
+.ast-practice-item.done>span{text-decoration:line-through;color:var(--ast-muted)}
+.ast-practice-item .ast-remove{position:static;flex:none}
+@media(max-width:760px){.ast-practice-grid{grid-template-columns:1fr}}
