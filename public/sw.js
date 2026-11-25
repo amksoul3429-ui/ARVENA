@@ -1,4 +1,4 @@
-const CACHE = 'arvena-shell-v4';
+const CACHE = 'astrelia-knowledge-shell-v5';
 const BASE = new URL('./', self.location).pathname;
 const SHELL = [BASE, BASE + 'index.html', BASE + 'manifest.webmanifest', BASE + 'favicon.svg'];
 
