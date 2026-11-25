@@ -1,10 +1,10 @@
 /**
- * Universal Life System — Core Engine
+ * ARVENA — Core Engine
  * Central rules for progression and reward integrity.
  */
 
 export const SYSTEM_CONFIG = {
-  name: "Universal Life System",
+  name: "ARVENA — Personal Intelligence System",
   version: "1.1.0",
   xpPerLevel: 500,
   creditsPerTenXp: 1,
