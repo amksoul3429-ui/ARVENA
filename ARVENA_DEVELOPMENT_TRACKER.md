@@ -9,7 +9,7 @@
 - [ ] **02 — Brand & UI System:** approved Sacred Bloom identity, typography, celestial tokens, light/dark themes, contrast and accessibility.
 - [ ] **03 — Core Interface:** mobile-first knowledge home, universal search entry, workspace navigation and responsive layouts.
 - [ ] **04 — Universal Search Engine:** arbitrary natural-language topics, history, source results, saved history and intent routing.
-- [ ] **05 — Universal Learning Engine:** topic-specific curriculum, beginner-to-advanced teaching, adaptive explanations, prerequisites and lesson persistence.
+- [ ] **05 — Universal Learning Engine:** topic-specific curriculum, beginner-to-advanced teaching, adaptive explanations, prerequisites and lesson persistence. (Gemini course-generation and tutor UI integrated; live key/model verification and curriculum quality acceptance remain.)
 - [ ] **06 — Research & Discovery:** live source retrieval, source quality, citations, related concepts and saved research.
 - [ ] **07 — Media & Resources:** YouTube discovery, top relevant results, language filters, books, articles and in-app resource handling.
 - [ ] **08 — Practice & Mastery:** exercises, quizzes, assessment feedback, review and mastery tracking.
@@ -44,7 +44,8 @@
 - [x] Verify current branch TypeScript build and full automated tests (87 tests passed; production build passed on commit `d2ecee19bbcbc30d77464af4a036d09451aa45de`).
 - [ ] Manually test Android and desktop workflows, persistence and backup restore.
 - [ ] Replace the temporary header mark with the approved Sacred Bloom logo asset.
-- [ ] Connect a secure AI service for complete, adaptive, topic-specific teaching.
+- [x] Integrate Gemini AI Teacher for arbitrary-topic course generation and contextual tutor Q&A (bring-your-own-key; API adapter and validation tests added).
+- [ ] Verify Gemini with a real user API key and review generated course quality across several unrelated topics.
 - [ ] Verify YouTube API key restrictions, quota and live English/Hindi results.
 - [ ] Improve citations, research-source quality controls and offline behavior.
 - [ ] Complete the full Release 1 acceptance run before marking phases complete.
@@ -52,6 +53,8 @@
 ## Release 1 acceptance checklist
 
 - [ ] Search any user-entered topic without a fixed subject catalogue.
+- [ ] Generate an 8–12 lesson course for an arbitrary topic using a configured Gemini key and save it into Learn.
+- [ ] Ask contextual follow-up questions using the connected AI tutor.
 - [ ] Open a real source article and add it to a saved learning space.
 - [ ] Learn mode has comprehensive topic-specific lessons from beginner to advanced.
 - [ ] Research mode retrieves and cites verifiable sources and supports source comparison.
