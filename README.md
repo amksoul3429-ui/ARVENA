@@ -43,7 +43,7 @@ npm run build
 npm run preview
 ```
 
-The current GitHub Actions run passes all 87 automated tests and the production build. Automated tests and a successful build are necessary, not sufficient. Manual acceptance is still required on Android and desktop: topic search, course completion, YouTube key validation, language filters, playback, book/paper results, bookmarks, note persistence, export/restore, light/dark contrast, install and offline shell.
+The current GitHub Actions run passes all 91 automated tests and the production build. Automated tests and a successful build are necessary, not sufficient. Manual acceptance is still required on Android and desktop: topic search, course completion, YouTube key validation, language filters, playback, book/paper results, bookmarks, note persistence, export/restore, light/dark contrast, install and offline shell.
 
 ## Data and privacy
 
