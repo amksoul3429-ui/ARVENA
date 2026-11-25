@@ -1,22 +1,25 @@
-# ARVENA — Personal Intelligence System
+# ASTRELIA — The Knowledge Universe
 
-**Think beyond. Evolve beyond.**
+**Curiosity has no boundaries.**
 
-ARVENA is a local-first personal operating system built as an installable Progressive Web App (PWA). It combines life planning, learning, personal development, rewards and reporting in one responsive workspace.
+ASTRELIA is being rebuilt around a universal knowledge experience: enter any topic, question, skill, concept or idea and create a persistent learning space with six connected modes — Learn, Explore, Watch, Read, Test and Practice.
 
-## Workspaces
+## Release 1 scope
 
-- Command Center
-- Mission Control
-- Daily Planner
-- Dream Life goals and milestones
-- Universal Knowledge Library
-- Video Learning Studio (YouTube discovery requires the user's own restricted YouTube Data API key)
-- Personal Evolution (habits, skills, identity and reflections)
-- Rewards & Achievements
-- Personal Journal
-- System Reports
-- Settings & Security
+Release 1 establishes the knowledge foundation:
+- A mobile-first, installable PWA with celestial dark and high-contrast light themes.
+- Open-ended topic workspaces, not a fixed subject catalogue.
+- A seven-stage learning roadmap for each topic, with local progress and notes.
+- Discovery directions and direct searches for academic research, reference material and the wider web.
+- Direct YouTube topic search and book/article discovery.
+- User-created flashcards and practice checklists.
+- Local knowledge-space persistence.
+
+**Honest capability boundary:** the current learning roadmap is a structured framework, not an AI-generated textbook. Research and media links open their source services; this build does not yet provide in-app ranked search results, video playback, source verification, AI tutoring or live citations. Those require dedicated integrations and will not be simulated with invented results.
+
+## Existing data protection
+
+The new knowledge workspace uses its own `astrelia-knowledge-v1` browser key. The previous `uls-data-v1` data and legacy modules are not deleted or migrated by this first interface switch. Keep existing browser data and backups until a deliberate, tested migration is delivered.
 
 ## Run locally
 
@@ -25,7 +28,7 @@ npm ci
 npm run dev
 ```
 
-## Verify and build
+## Verify
 
 ```bash
 npm test
@@ -33,21 +36,8 @@ npm run build
 npm run preview
 ```
 
-GitHub Actions runs the automated regression suite and production build, then deploys the production artifact to GitHub Pages from `main`.
+Automated build success is not release acceptance. Test topic creation, reload persistence, note saving, flashcards, practice checklists, external links, mobile layouts, light/dark contrast, PWA installation and offline shell behavior on a real device.
 
-## Install the PWA
+## Current platform limits
 
-Open [ARVENA](https://amksoul3429-ui.github.io/ARVENA/) in Chrome on Android or a supported desktop browser, then choose **Install app** or **Add to Home Screen**. The app shell is cached by a service worker for offline startup. A device-level offline test is still required after each release.
-
-## Data and privacy
-
-- App records are stored in browser local storage under the backward-compatible `uls-data-v1` key.
-- Records are local to each browser/device. There is no account or cross-device cloud synchronization.
-- Versioned JSON backup and restore are available in Settings & Security. Keep exported backups private.
-- Local storage and exported backups are not encrypted by this build.
-- AI model access, remote AI processing, login/authentication, encrypted cloud storage, Health Connect and external actions are not connected.
-- The YouTube API key is stored in the browser only and excluded from app backups. Never commit or share it. Use a restricted key and rotate any key previously pasted into chat or exposed.
-
-## Release acceptance
-
-Automated tests and production builds are necessary but do not replace manual acceptance on Android and desktop. Confirm navigation, data persistence, backup/restore, PWA installation, offline shell behavior and update delivery on the actual devices before calling a release fully accepted.
+Knowledge spaces are stored locally in this browser and do not sync across devices. AI model access, accounts, cloud sync, encrypted storage and native Android background capabilities are not connected in this release.
