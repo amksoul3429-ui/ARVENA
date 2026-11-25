@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import { Activity, ArrowUpRight, BookOpen, Bookmark, Check, ChevronRight, Download, ExternalLink, FileText, Globe2, Library, LoaderCircle, Moon, Search, ShieldCheck, Sparkles, Sun, Video, X } from "lucide-react";
+import { ArrowUpRight, BookOpen, Bookmark, ChevronRight, Download, ExternalLink, FileText, Globe2, Library, LoaderCircle, Moon, Search, ShieldCheck, Sparkles, Sun, Video, X } from "lucide-react";
 import KnowledgeLibrary from "./components/KnowledgeLibrary";
 import VideoLearningStudio from "./components/VideoLearningStudio";
 import { createUniversalKnowledgeCourses } from "./core/knowledgeCatalog";
@@ -57,8 +57,6 @@ export default function AstreliaApp() {
   const [busy,setBusy] = useState(false);
   const [importError,setImportError] = useState("");
   const importRef = useRef<HTMLInputElement>(null);
-  const [activeNote,setActiveNote] = useState("");
-  const [noteDraft,setNoteDraft] = useState("");
   useEffect(()=>{try{localStorage.setItem(ASTRELIA_STORAGE_KEY,JSON.stringify(data));}catch{setNotice("Browser storage is full. Export a backup before making more changes.");}},[data]);
   useEffect(()=>{document.documentElement.dataset.theme=theme;localStorage.setItem("astrelia-theme",theme);},[theme]);
   const courses = useMemo(()=>data.courses as KnowledgeCourse[],[data.courses]);
@@ -139,10 +137,7 @@ export default function AstreliaApp() {
     }catch{setImportError("This file could not be read as a valid ASTRELIA backup. Your current data has not been changed.");}
     finally{if(importRef.current)importRef.current.value="";}
   };
-  const saveNote = (id:string) => {setData(old=>({...old,notes:{...old.notes,[id]:noteDraft},updatedAt:new Date().toISOString()}));setActiveNote("");setNotice("Note saved.");};
   const removeBookmark = (id:string) => setData(old=>({...old,bookmarks:old.bookmarks.filter(item=>item.id!==id),updatedAt:new Date().toISOString()}));
-  const activeNoteText = activeNote ? data.notes[activeNote]||"" : "";
-  useEffect(()=>{setNoteDraft(activeNoteText);},[activeNote]);
   return <div className={"astrelia-app "+(theme==="light"?"astrelia-light":"astrelia-dark")}>
     <header className="ast-header">
       <div className="ast-brand"><div className="ast-brand-mark"><Sparkles size={22}/></div><div><strong>ASTRELIA</strong><span>THE KNOWLEDGE UNIVERSE</span></div></div>
