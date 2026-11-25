@@ -22,5 +22,8 @@
 - [x] Document data migration and safety principles.
 - [ ] Inventory existing AERIS code, settings and stored configuration.
 - [ ] Define AERIS integration boundaries, three personality modes and shared-memory permissions.
+- [ ] Define AERIS JARVIS-inspired capabilities: conversational interface, system awareness, reasoning, authorised tool execution, memory and transparent activity history.
+- [ ] Define permission tiers and confirmation gates for consequential actions.
+- [ ] Separate initial PWA capabilities from advanced wake-word, background and device-wide integrations.
 - [ ] Preserve AERIS behavior and data during ASTRELIA integration.
 - [ ] Validate Phase 01 implementation and tests.
