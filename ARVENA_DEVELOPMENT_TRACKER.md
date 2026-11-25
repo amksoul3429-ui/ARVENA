@@ -20,4 +20,7 @@
 - [x] Define product purpose and principles.
 - [x] Define target engine architecture and search-to-learning flow.
 - [x] Document data migration and safety principles.
-- [ ] Inventory existing AERIS code, settings and stored configuration.\n- [ ] Define AERIS integration boundaries, three personality modes and shared-memory permissions.\n- [ ] Preserve AERIS behavior and data during ASTRELIA integration.\n- [ ] Validate Phase 01 implementation and tests.
+- [ ] Inventory existing AERIS code, settings and stored configuration.
+- [ ] Define AERIS integration boundaries, three personality modes and shared-memory permissions.
+- [ ] Preserve AERIS behavior and data during ASTRELIA integration.
+- [ ] Validate Phase 01 implementation and tests.
