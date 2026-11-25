@@ -36,10 +36,12 @@
 - [x] Integrated the YouTube Video Learning Studio and its English/Hindi search path.
 - [x] Added live Open Library and Crossref discovery.
 - [x] Added bookmarks, personal notes and recent search history.
+- [x] Added persistent flashcards, exercise checklists and completion tracking.
+- [x] Added a read-only migration path for first-prototype learning spaces, notes, flashcards and practice tasks.
 - [x] Added versioned JSON export and validated restore.
 - [x] Added read-only import of legacy knowledge/video records when creating the new store.
 - [x] Updated the PWA shell cache version.
-- [ ] Verify current branch TypeScript build and full automated tests.
+- [x] Verify current branch TypeScript build and full automated tests (87 tests passed; production build passed on commit `d2ecee19bbcbc30d77464af4a036d09451aa45de`).
 - [ ] Manually test Android and desktop workflows, persistence and backup restore.
 - [ ] Replace the temporary header mark with the approved Sacred Bloom logo asset.
 - [ ] Connect a secure AI service for complete, adaptive, topic-specific teaching.
