@@ -1,4 +1,4 @@
-# ARVENA Rebuild — 12-Phase Development Tracker
+# ASTRELIA AND AERIS Rebuild — 12-Phase Development Tracker
 
 **Standard:** Never mark a phase complete based solely on compilation. Verify the implemented behavior and record tests.
 
@@ -20,4 +20,4 @@
 - [x] Define product purpose and principles.
 - [x] Define target engine architecture and search-to-learning flow.
 - [x] Document data migration and safety principles.
-- [ ] Validate Phase 01 implementation and tests.
+- [ ] Inventory existing AERIS code, settings and stored configuration.\n- [ ] Define AERIS integration boundaries, three personality modes and shared-memory permissions.\n- [ ] Preserve AERIS behavior and data during ASTRELIA integration.\n- [ ] Validate Phase 01 implementation and tests.
