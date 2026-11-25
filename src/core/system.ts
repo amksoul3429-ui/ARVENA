@@ -4,7 +4,7 @@
  */
 
 export const SYSTEM_CONFIG = {
-  name: "ARVENA — Personal Intelligence System",
+  name: "ARVENA — Universal Knowledge & Personal Intelligence System",
   version: "1.1.0",
   xpPerLevel: 500,
   creditsPerTenXp: 1,
