@@ -59,9 +59,9 @@ export default function AstreliaApp() {
   const importRef = useRef<HTMLInputElement>(null);
   useEffect(()=>{try{localStorage.setItem(ASTRELIA_STORAGE_KEY,JSON.stringify(data));}catch{setNotice("Browser storage is full. Export a backup before making more changes.");}},[data]);
   useEffect(()=>{document.documentElement.dataset.theme=theme;localStorage.setItem("astrelia-theme",theme);},[theme]);
-  const courses = useMemo(()=>data.courses as KnowledgeCourse[],[data.courses]);
+  const courses = useMemo(()=>data.courses as unknown as KnowledgeCourse[],[data.courses]);
   const updateCourses = (next:KnowledgeCourse[]) => setData(old=>({...old,courses:next as unknown as Record<string,unknown>[],updatedAt:new Date().toISOString()}));
-  const updateVideos = (next:unknown[]) => setData(old=>({...old,videos:next as Record<string,unknown>[],updatedAt:new Date().toISOString()}));
+  const updateVideos = (next:unknown[]) => setData(old=>({...old,videos:next as unknown as Record<string,unknown>[],updatedAt:new Date().toISOString()}));
   const addHistory = (term:string) => setData(old=>({...old,history:[term,...old.history.filter(x=>x.toLowerCase()!==term.toLowerCase())].slice(0,100),updatedAt:new Date().toISOString()}));
   const searchKnowledge = async (term=query) => {
     const q=term.trim(); if(!q)return;
