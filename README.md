@@ -8,12 +8,13 @@ Release 1 brings together open-topic discovery, a structured learning library, e
 
 - **Discover:** open-ended search through Wikipedia's live encyclopedia index; open and read source articles; save an article into the learning library as a source-based reading lesson.
 - **Learn:** curated learning paths across broad disciplines, full lesson text, learning objectives, lesson checks, completion tracking and persistent progress. Starter pathways are open in Release 1.
+- **Practice:** persistent flashcards with reveal/hide answers, exercise and project checklists, completion tracking and migrated practice records from the first prototype.
 - **Watch:** the existing Video Learning Studio, including YouTube Data API discovery (up to 50 ranked results, English/Hindi/both), video library, saved links, notes and supported embedded playback.
 - **Read:** live book search through Open Library and scholarly work search through Crossref.
 - **My Library:** saved books, papers and articles, private notes, and recent search history.
 - **Data & Backup:** versioned JSON export and validated restore for courses, videos, bookmarks, notes and history.
 - **PWA shell:** mobile-responsive interface, dark/light themes, install metadata and versioned offline shell cache.
-- **Legacy protection:** on first launch, existing ULS/ARVENA knowledge and video records can be copied into the new ASTRELIA store. The original `uls-data-v1` key is not erased or rewritten by ASTRELIA.
+- **Legacy protection:** on first launch, existing ULS/ARVENA knowledge and video records can be copied into the new ASTRELIA store. The original `uls-data-v1` and first-prototype `astrelia-knowledge-v1` keys are not erased or rewritten by ASTRELIA; the new app reads and copies compatible records into its own store.
 
 ## Important limits — not yet Release 1 acceptance
 
@@ -41,7 +42,7 @@ npm run build
 npm run preview
 ```
 
-Automated tests and a successful build are necessary, not sufficient. Manual acceptance is still required on Android and desktop: topic search, course completion, YouTube key validation, language filters, playback, book/paper results, bookmarks, note persistence, export/restore, light/dark contrast, install and offline shell.
+The current GitHub Actions run passes all 87 automated tests and the production build. Automated tests and a successful build are necessary, not sufficient. Manual acceptance is still required on Android and desktop: topic search, course completion, YouTube key validation, language filters, playback, book/paper results, bookmarks, note persistence, export/restore, light/dark contrast, install and offline shell.
 
 ## Data and privacy
 
