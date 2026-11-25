@@ -1,18 +1,21 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import { Activity, ArrowUpRight, BookOpen, Bookmark, ChevronRight, Download, ExternalLink, FileText, Globe2, Library, LoaderCircle, Moon, Search, ShieldCheck, Sparkles, Sun, Video, X } from "lucide-react";
+import { Activity, ArrowUpRight, BookOpen, Bookmark, BrainCircuit, ChevronRight, Download, ExternalLink, FileText, Globe2, Library, LoaderCircle, Moon, Search, ShieldCheck, Sparkles, Sun, Video, X } from "lucide-react";
 import KnowledgeLibrary from "./components/KnowledgeLibrary";
+import AITeacher from "./components/AITeacher";
+import type { AICourse } from "./core/aiTeacher";
 import VideoLearningStudio from "./components/VideoLearningStudio";
 import { createUniversalKnowledgeCourses } from "./core/knowledgeCatalog";
 import type { KnowledgeCourse } from "./core/knowledge";
 import { ASTRELIA_STORAGE_KEY, createAstreliaBackup, normalizeAstreliaData, parseAstreliaBackup, readLegacyKnowledge, readPrototypeWorkspaces, type AstreliaData, type AstreliaReference } from "./core/astrelia";
 import "./astrelia.css";
 
-type Page = "Discover" | "Learn" | "Practice" | "Watch" | "Read" | "Library" | "Backup";
+type Page = "Discover" | "AI Teacher" | "Learn" | "Practice" | "Watch" | "Read" | "Library" | "Backup";
 type WikiHit = { pageid: number; title: string; snippet: string };
 type BookHit = { key: string; title: string; author_name?: string[]; first_publish_year?: number; edition_count?: number };
 type PaperHit = { DOI?: string; title?: string[]; author?: { given?: string; family?: string }[]; published?: { "date-parts"?: number[][] }; "container-title"?: string[]; URL?: string; publisher?: string };
 const nav: {id:Page;label:string;icon:typeof Search;description:string}[] = [
   {id:"Discover",label:"Discover",icon:Globe2,description:"Search the open knowledge web"},
+  {id:"AI Teacher",label:"AI Teacher",icon:BrainCircuit,description:"Create courses for any topic and ask a tutor"},
   {id:"Learn",label:"Learn",icon:BookOpen,description:"Structured learning paths"},
   {id:"Practice",label:"Practice",icon:Activity,description:"Flashcards and practice plans"},
   {id:"Watch",label:"Watch",icon:Video,description:"Video learning studio"},
@@ -174,6 +177,7 @@ export default function AstreliaApp() {
         {busy&&<div className="ast-loading"><LoaderCircle className="ast-spin"/> Loading source article…</div>}
         {!wikiHits.length&&!selectedArticle&&<div className="ast-popular"><span>POPULAR STARTING POINTS</span>{["Vectors and 3D geometry","Artificial intelligence","Human psychology","Personal finance","Astronomy","World history","Biology","Entrepreneurship"].map(term=><button key={term} onClick={()=>{setQuery(term);void searchKnowledge(term);}}>{term}<ChevronRight size={13}/></button>)}</div>}
       </section>}
+      {page==="AI Teacher"&&<section className="ast-page"><div className="ast-page-heading"><span className="ast-eyebrow">UNIVERSAL INTELLIGENCE</span><h1>Your curiosity becomes a curriculum.</h1><p>Generate topic-specific lessons and ask follow-up questions. Connect your own AI provider key to activate this feature.</p></div><AITeacher onCreateCourse={(course:AICourse)=>{updateCourses([course as unknown as KnowledgeCourse,...courses]);setPage("Learn");setNotice("Your AI-generated course is now in Learn.");}}/></section>}
       {page==="Learn"&&<section className="ast-page"><div className="ast-page-heading"><span className="ast-eyebrow">YOUR LEARNING UNIVERSE</span><h1>Learn without limits.</h1><p>Explore complete ready-made pathways, open your saved source readings and check your understanding as you progress.</p></div><KnowledgeLibrary courses={courses} credits={0} onChange={updateCourses} onEconomy={(next)=>updateCourses(next)}/></section>}
       {page==="Practice"&&<section className="ast-page"><div className="ast-page-heading"><span className="ast-eyebrow">ACTIVE RECALL & APPLICATION</span><h1>Turn knowledge into mastery.</h1><p>Build your own recall deck, practise retrieval and track the exercises that turn understanding into skill.</p></div>
         <div className="ast-library-stats"><article><b>{data.flashcards.length}</b><span>RECALL CARDS</span></article><article><b>{data.practice.length}</b><span>PRACTICE TASKS</span></article><article><b>{data.practice.filter(item=>item.done).length}</b><span>COMPLETED</span></article></div>
