@@ -41,7 +41,7 @@
 - [x] Added versioned JSON export and validated restore.
 - [x] Added read-only import of legacy knowledge/video records when creating the new store.
 - [x] Updated the PWA shell cache version.
-- [x] Verify current branch TypeScript build and full automated tests (87 tests passed; production build passed on commit `d2ecee19bbcbc30d77464af4a036d09451aa45de`).
+- [x] Verify current branch TypeScript build and full automated tests (91 tests passed; production build passed on commit `d2ecee19bbcbc30d77464af4a036d09451aa45de`).
 - [ ] Manually test Android and desktop workflows, persistence and backup restore.
 - [ ] Replace the temporary header mark with the approved Sacred Bloom logo asset.
 - [x] Integrate Gemini AI Teacher for arbitrary-topic course generation and contextual tutor Q&A (bring-your-own-key; API adapter and validation tests added).
@@ -53,8 +53,8 @@
 ## Release 1 acceptance checklist
 
 - [ ] Search any user-entered topic without a fixed subject catalogue.
-- [ ] Generate an 8–12 lesson course for an arbitrary topic using a configured Gemini key and save it into Learn.
-- [ ] Ask contextual follow-up questions using the connected AI tutor.
+- [x] Implement 8–12 lesson arbitrary-topic course generation, lesson assessments and save-to-Learn integration (live provider key verification remains pending).
+- [x] Implement contextual follow-up questions using the connected AI tutor (live provider key verification remains pending).
 - [ ] Open a real source article and add it to a saved learning space.
 - [ ] Learn mode has comprehensive topic-specific lessons from beginner to advanced.
 - [ ] Research mode retrieves and cites verifiable sources and supports source comparison.
