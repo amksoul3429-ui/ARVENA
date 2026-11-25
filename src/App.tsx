@@ -1,6 +1,2 @@
-import KnowledgeUniverse from "./components/KnowledgeUniverse";
-import "./App.css";
-
-export default function App() {
-  return <KnowledgeUniverse />;
-}
+import AstreliaApp from "./AstreliaApp";
+export default function App() { return <AstreliaApp />; }
