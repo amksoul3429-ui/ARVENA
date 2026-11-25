@@ -144,6 +144,16 @@ export default function AstreliaApp() {
     finally{if(importRef.current)importRef.current.value="";}
   };
   const removeBookmark = (id:string) => setData(old=>({...old,bookmarks:old.bookmarks.filter(item=>item.id!==id),updatedAt:new Date().toISOString()}));
+  const addFlashcard = () => {
+    if(!flashQuestion.trim()||!flashAnswer.trim())return;
+    setData(old=>({...old,flashcards:[{id:uid(),question:flashQuestion.trim(),answer:flashAnswer.trim(),createdAt:new Date().toISOString()},...old.flashcards],updatedAt:new Date().toISOString()}));
+    setFlashQuestion("");setFlashAnswer("");setNotice("Flashcard added to your recall deck.");
+  };
+  const addPracticeItem = () => {
+    if(!practiceDraft.trim())return;
+    setData(old=>({...old,practice:[{id:uid(),text:practiceDraft.trim(),done:false,createdAt:new Date().toISOString()},...old.practice],updatedAt:new Date().toISOString()}));
+    setPracticeDraft("");
+  };
   return <div className={"astrelia-app "+(theme==="light"?"astrelia-light":"astrelia-dark")}>
     <header className="ast-header">
       <div className="ast-brand"><div className="ast-brand-mark"><Sparkles size={22}/></div><div><strong>ASTRELIA</strong><span>THE KNOWLEDGE UNIVERSE</span></div></div>
