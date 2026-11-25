@@ -1,19 +1,20 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import { ArrowUpRight, BookOpen, Bookmark, ChevronRight, Download, ExternalLink, FileText, Globe2, Library, LoaderCircle, Moon, Search, ShieldCheck, Sparkles, Sun, Video, X } from "lucide-react";
+import { Activity, ArrowUpRight, BookOpen, Bookmark, ChevronRight, Download, ExternalLink, FileText, Globe2, Library, LoaderCircle, Moon, Search, ShieldCheck, Sparkles, Sun, Video, X } from "lucide-react";
 import KnowledgeLibrary from "./components/KnowledgeLibrary";
 import VideoLearningStudio from "./components/VideoLearningStudio";
 import { createUniversalKnowledgeCourses } from "./core/knowledgeCatalog";
 import type { KnowledgeCourse } from "./core/knowledge";
-import { ASTRELIA_STORAGE_KEY, createAstreliaBackup, normalizeAstreliaData, parseAstreliaBackup, readLegacyKnowledge, type AstreliaData, type AstreliaReference } from "./core/astrelia";
+import { ASTRELIA_STORAGE_KEY, createAstreliaBackup, normalizeAstreliaData, parseAstreliaBackup, readLegacyKnowledge, readPrototypeWorkspaces, type AstreliaData, type AstreliaReference } from "./core/astrelia";
 import "./astrelia.css";
 
-type Page = "Discover" | "Learn" | "Watch" | "Read" | "Library" | "Backup";
+type Page = "Discover" | "Learn" | "Practice" | "Watch" | "Read" | "Library" | "Backup";
 type WikiHit = { pageid: number; title: string; snippet: string };
 type BookHit = { key: string; title: string; author_name?: string[]; first_publish_year?: number; edition_count?: number };
 type PaperHit = { DOI?: string; title?: string[]; author?: { given?: string; family?: string }[]; published?: { "date-parts"?: number[][] }; "container-title"?: string[]; URL?: string; publisher?: string };
 const nav: {id:Page;label:string;icon:typeof Search;description:string}[] = [
   {id:"Discover",label:"Discover",icon:Globe2,description:"Search the open knowledge web"},
   {id:"Learn",label:"Learn",icon:BookOpen,description:"Structured learning paths"},
+  {id:"Practice",label:"Practice",icon:Activity,description:"Flashcards and practice plans"},
   {id:"Watch",label:"Watch",icon:Video,description:"Video learning studio"},
   {id:"Read",label:"Read",icon:FileText,description:"Books and research papers"},
   {id:"Library",label:"My Library",icon:Library,description:"Saved knowledge and bookmarks"},
@@ -32,8 +33,10 @@ function loadInitialData(): AstreliaData {
     }
   } catch { /* Keep the source data untouched and fall back to a safe fresh state. */ }
   let legacy = {courses:[] as Record<string,unknown>[],videos:[] as Record<string,unknown>[]};
+  let prototype = {courses:[] as Record<string,unknown>[],flashcards:[] as {id:string;question:string;answer:string;createdAt:string}[],practice:[] as {id:string;text:string;done:boolean;createdAt:string}[]};
   try { legacy = readLegacyKnowledge(JSON.parse(localStorage.getItem("uls-data-v1") || "null")); } catch { /* A corrupt legacy record is never overwritten. */ }
-  return normalizeAstreliaData({courses:[...starterCourses(),...legacy.courses],videos:legacy.videos,bookmarks:[],history:[],notes:{}});
+  try { prototype = readPrototypeWorkspaces(JSON.parse(localStorage.getItem("astrelia-knowledge-v1") || "null")); } catch { /* Earlier prototype data remains untouched if it cannot be read. */ }
+  return normalizeAstreliaData({courses:[...starterCourses(),...prototype.courses,...legacy.courses],videos:legacy.videos,bookmarks:[],history:[],notes:{},flashcards:prototype.flashcards,practice:prototype.practice});
 }
 const safeText = (value:string) => value.replace(/<[^>]*>/g," ").replace(/&quot;/g,'"').replace(/&#039;/g,"'").replace(/&amp;/g,"&").replace(/\s+/g," ").trim();
 const wikiUrl = (title:string) => "https://en.wikipedia.org/wiki/" + encodeURIComponent(title.replace(/ /g,"_"));
@@ -55,6 +58,10 @@ export default function AstreliaApp() {
   const [notice,setNotice] = useState("");
   const [busy,setBusy] = useState(false);
   const [importError,setImportError] = useState("");
+  const [flashQuestion,setFlashQuestion] = useState("");
+  const [flashAnswer,setFlashAnswer] = useState("");
+  const [practiceDraft,setPracticeDraft] = useState("");
+  const [revealedCards,setRevealedCards] = useState<Record<string,boolean>>({});
   const importRef = useRef<HTMLInputElement>(null);
   useEffect(()=>{try{localStorage.setItem(ASTRELIA_STORAGE_KEY,JSON.stringify(data));}catch{setNotice("Browser storage is full. Export a backup before making more changes.");}},[data]);
   useEffect(()=>{document.documentElement.dataset.theme=theme;localStorage.setItem("astrelia-theme",theme);},[theme]);
