@@ -58,12 +58,26 @@ export function normalizeAstreliaData(value: unknown, now = new Date().toISOStri
   const history = Array.isArray(source.history)
     ? [...new Set(source.history.filter((item): item is string => typeof item === "string").map(item => item.trim().slice(0, 300)).filter(Boolean))].slice(0, 100)
     : [];
+  const flashcards = Array.isArray(source.flashcards) ? source.flashcards.filter(isObject).map((item,index)=>({
+    id: cleanString(item.id,180) || "flashcard-"+index,
+    question: cleanString(item.question,3000),
+    answer: cleanString(item.answer,10000),
+    createdAt: cleanString(item.createdAt,80) || now,
+  })).filter(item=>!!item.question&&!!item.answer).slice(0,5000) : [];
+  const practice = Array.isArray(source.practice) ? source.practice.filter(isObject).map((item,index)=>({
+    id: cleanString(item.id,180) || "practice-"+index,
+    text: cleanString(item.text,3000),
+    done: item.done === true,
+    createdAt: cleanString(item.createdAt,80) || now,
+  })).filter(item=>!!item.text).slice(0,5000) : [];
   return {
     courses: cleanRecords(source.courses),
     videos: cleanRecords(source.videos),
     bookmarks,
     history,
     notes,
+    flashcards,
+    practice,
     updatedAt: cleanString(source.updatedAt, 80) || now,
   };
 }
