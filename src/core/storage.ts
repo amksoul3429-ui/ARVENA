@@ -4,7 +4,7 @@
  * Keeps the historical uls-data-v1 key so existing installations migrate in place.
  */
 export const STORAGE_KEY = "uls-data-v1";
-export const BACKUP_FORMAT = "arvena-backup"; // Retained for backwards-compatible imports and existing installations.
+export const BACKUP_FORMAT = "arvena-backup"; // Retained for backwards-compatible imports and existing installations. // Retained for backwards-compatible imports and existing installations.
 export const BACKUP_VERSION = 1;
 
 export type CoreRecord = { id: string; title: string; created: string; [key: string]: unknown };
@@ -112,7 +112,7 @@ export function saveAppData(value: unknown): StorageResult<AppData> {
         const parsedExisting: unknown = JSON.parse(existingRaw);
         if (isObject(parsedExisting) && parsedExisting.format === BACKUP_FORMAT) {
           if (parsedExisting.version !== BACKUP_VERSION) {
-            return { ok: false, error: "Saved data was created by a newer ARVENA version. It was left untouched; open it with a compatible version or explicitly reset local data." };
+            return { ok: false, error: "Saved data was created by a newer ASTERIA version. It was left untouched; open it with a compatible version or explicitly reset local data." };
           }
           const existing = parseStoredValue(existingRaw);
           if (JSON.stringify(existing) === JSON.stringify(data)) return { ok: true, value: data };
