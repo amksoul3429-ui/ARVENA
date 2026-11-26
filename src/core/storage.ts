@@ -1,10 +1,10 @@
 /**
- * ARVENA Core Storage
+ * ASTERIA Core Storage (legacy data compatibility)
  * Backward-compatible, validated local persistence and portable backups.
  * Keeps the historical uls-data-v1 key so existing installations migrate in place.
  */
 export const STORAGE_KEY = "uls-data-v1";
-export const BACKUP_FORMAT = "arvena-backup";
+export const BACKUP_FORMAT = "arvena-backup"; // Retained for backwards-compatible imports and existing installations.
 export const BACKUP_VERSION = 1;
 
 export type CoreRecord = { id: string; title: string; created: string; [key: string]: unknown };
@@ -31,7 +31,7 @@ export type StorageResult<T> = { ok: true; value: T; warning?: string } | { ok: 
 export type BackupEnvelope = {
   format: typeof BACKUP_FORMAT;
   version: typeof BACKUP_VERSION;
-  app: "ARVENA";
+  app: "ASTERIA";
   exportedAt: string;
   data: AppData;
 };
