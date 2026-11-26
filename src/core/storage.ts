@@ -120,7 +120,7 @@ export function saveAppData(value: unknown): StorageResult<AppData> {
       } catch { /* A deliberate valid save may replace malformed data after recovery. */ }
     }
     const envelope: BackupEnvelope = {
-      format: BACKUP_FORMAT, version: BACKUP_VERSION, app: "ARVENA",
+      format: BACKUP_FORMAT, version: BACKUP_VERSION, app: "ASTERIA",
       exportedAt: new Date().toISOString(), data,
     };
     window.localStorage.setItem(STORAGE_KEY, JSON.stringify(envelope));
@@ -151,10 +151,10 @@ export function createBackup(value: unknown): BackupEnvelope {
 }
 
 export function parseBackup(value: unknown): StorageResult<AppData> {
-  if (!isObject(value)) return { ok: false, error: "This file is not a valid ARVENA backup." };
+  if (!isObject(value)) return { ok: false, error: "This file is not a valid ASTERIA backup." };
   if (value.format === BACKUP_FORMAT) {
     if (value.version !== BACKUP_VERSION || !isObject(value.data)) {
-      return { ok: false, error: "This backup version is not supported by this ARVENA build." };
+      return { ok: false, error: "This backup version is not supported by this ASTERIA build." };
     }
     const backupData = value.data;
     if (!isObject(backupData)) return { ok: false, error: "This backup does not contain a valid data object." };
@@ -168,7 +168,7 @@ export function parseBackup(value: unknown): StorageResult<AppData> {
   const looksLikeLegacy = ["missions", "tasks", "goals", "knowledge", "rewards", "journal", "videos", "evolution", "achievementClaims", "unlockedItems"].some(key => Array.isArray(value[key]));
   return looksLikeLegacy
     ? { ok: true, value: validateAppData(value), warning: "Legacy backup imported and upgraded to the ARVENA format." }
-    : { ok: false, error: "The JSON file does not contain recognizable ARVENA/ULS data." };
+    : { ok: false, error: "The JSON file does not contain recognizable ASTERIA/ULS data." };
 }
 
 export function subscribeToExternalChanges(onChange: (data: AppData) => void): () => void {
