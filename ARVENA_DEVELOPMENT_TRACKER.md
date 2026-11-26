@@ -9,6 +9,8 @@
 - [x] PWA manifest base/scope paths corrected to relative paths for repository hosting
 - [x] ASTERIA branding applied to app shell and PWA metadata
 - [x] Accessibility/contrast foundation overrides added for light and dark themes
+- [x] Light-theme contrast refinements for Command Center and controls
+- [x] Theme preference migration fallback for prior installations
 - [x] CI core tests passed on commit dd525fe24a59686e65bbc9c9fec2149168adfa24
 - [x] CI production build passed on commit dd525fe24a59686e65bbc9c9fec2149168adfa24
 - [ ] Visual validation on Android and desktop
