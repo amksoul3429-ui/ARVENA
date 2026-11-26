@@ -1,29 +1,48 @@
-# ASTRELIA AND AERIS Rebuild — 12-Phase Development Tracker
+# ASTERIA × AERIS — 5-Part Master Development Tracker
 
-**Standard:** Never mark a phase complete based solely on compilation. Verify the implemented behavior and record tests.
+**Completion standard:** Phases are not complete based on documentation or compilation alone. Verify behavior, compatibility, tests and deployed functionality.
 
-- [ ] **Phase 01 — Foundation & Architecture:** system blueprint, boundaries, data migration, core contracts and safeguards.
-- [ ] **Phase 02 — Brand & UI System:** Sacred Bloom assets, color tokens, typography, themes, component and motion/accessibility standards.
-- [ ] **Phase 03 — Core Interface:** mobile-first shell, universal home, navigation and adaptive layouts.
-- [ ] **Phase 04 — Universal Search Engine:** arbitrary queries, history, suggestions, intent handling and discovery.
-- [ ] **Phase 05 — Universal Learning Engine:** dynamic curriculum, complete teaching, adaptive depth, prerequisite support and lesson persistence.
-- [ ] **Phase 06 — Research & Discovery:** source retrieval, citations, source management, related concepts and saved research.
-- [ ] **Phase 07 — Media & Resources:** relevant videos, books, articles and media integrations.
-- [ ] **Phase 08 — Practice & Mastery:** exercises, quizzes, assessment feedback, review and mastery tracking.
-- [ ] **Phase 09 — Knowledge Memory:** notes, bookmarks, history, knowledge connections, export/import and recovery.
-- [ ] **Phase 10 — Personal Intelligence System:** goals, missions, planning, health, finance, business and journal subsystems.
-- [ ] **Phase 11 — Integration & Intelligence:** system-wide connections, analytics, configurable automation, progression and insight rules.
-- [ ] **Phase 12 — Testing & Production:** end-to-end tests, responsive/accessibility checks, service dependency checks, PWA/offline verification and deployment validation.
+## Part 01 — ASTERIA Foundation (Phases 01–04)
+- [ ] Phase 01 — System Architecture & Foundation
+- [ ] Phase 02 — ASTERIA Identity & Design System
+- [ ] Phase 03 — Core Interface & Navigation
+- [ ] Phase 04 — Personal Data & Storage Infrastructure
 
-## Phase 01 checklist
-- [x] Inspect current repository and identify existing modules/data/storage.
-- [x] Define product purpose and principles.
-- [x] Define target engine architecture and search-to-learning flow.
-- [x] Document data migration and safety principles.
-- [ ] Inventory existing AERIS code, settings and stored configuration.
-- [ ] Define AERIS integration boundaries, three personality modes and shared-memory permissions.
-- [ ] Define AERIS JARVIS-inspired capabilities: conversational interface, system awareness, reasoning, authorised tool execution, memory and transparent activity history.
-- [ ] Define permission tiers and confirmation gates for consequential actions.
-- [ ] Separate initial PWA capabilities from advanced wake-word, background and device-wide integrations.
-- [ ] Preserve AERIS behavior and data during ASTRELIA integration.
-- [ ] Validate Phase 01 implementation and tests.
+## Part 02 — AERIS Intelligence (Phases 05–09)
+- [ ] Phase 05 — AERIS Intelligence Core
+- [ ] Phase 06 — AERIS Personalities & Adaptive Interaction
+- [ ] Phase 07 — Voice Intelligence & Hands-Free Interaction
+- [ ] Phase 08 — AERIS Command & Action Engine
+- [ ] Phase 09 — Intelligence Memory & Context Engine
+
+## Part 03 — Universal Knowledge (Phases 10–15)
+- [ ] Phase 10 — Universal Search & Exploration
+- [ ] Phase 11 — Universal Learning Engine
+- [ ] Phase 12 — Research & Discovery Engine
+- [ ] Phase 13 — Media & Resource Intelligence
+- [ ] Phase 14 — Practice, Testing & Mastery
+- [ ] Phase 15 — Knowledge Library & Knowledge Graph
+
+## Part 04 — Personal Evolution & Intelligence (Phases 16–18)
+- [ ] Phase 16 — Personal Evolution & Life Systems
+- [ ] Phase 17 — Business, Finance & Strategic Systems
+- [ ] Phase 18 — Adaptive Personal Intelligence
+
+## Part 05 — Security, Integration & Production (Phases 19–20)
+- [ ] Phase 19 — Security, Integration & Performance
+- [ ] Phase 20 — Testing, Deployment & Production Evolution
+
+## Part 01 verification checklist
+- [ ] Architecture and module boundaries reviewed
+- [ ] Identity and design system applied consistently
+- [ ] Sacred Bloom asset committed and used (pending asset availability)
+- [ ] Navigation and responsive behavior checked
+- [ ] Theme preference works; old preference remains compatible
+- [ ] Existing data retention, load/save, backup/import tested
+- [ ] Build succeeds
+- [ ] Automated tests pass
+- [ ] Manual mobile/PWA validation completed
+- [ ] Part 01 completion reviewed and recorded
+
+## Work log
+- Initial identity and PWA branding cleanup started; legacy ARVENA codebase is not yet a finished ASTERIA experience.
