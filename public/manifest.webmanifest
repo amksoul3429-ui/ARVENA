@@ -1,15 +1,15 @@
 {
-  "id": "/ARVENA/",
-  "name": "ARVENA — Personal Intelligence System",
-  "short_name": "ARVENA",
-  "description": "Think beyond. Evolve beyond.",
-  "start_url": "/ARVENA/",
-  "scope": "/ARVENA/",
+  "id": "/ASTERIA/",
+  "name": "ASTERIA — Universal Intelligence & Knowledge System",
+  "short_name": "ASTERIA",
+  "description": "Explore anything. Understand everything.",
+  "start_url": "/ASTERIA/",
+  "scope": "/ASTERIA/",
   "display": "standalone",
   "orientation": "portrait",
   "background_color": "#101b32",
   "theme_color": "#101b32",
   "icons": [
-    { "src": "/ARVENA/favicon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }
+    { "src": "/ASTERIA/favicon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }
   ]
 }
