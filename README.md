@@ -37,7 +37,7 @@ GitHub Actions runs the automated regression suite and production build, then de
 
 ## Install the PWA
 
-Open [ASTERIA](https://amksoul3429-ui.github.io/ARVENA/) in Chrome on Android or a supported desktop browser, then choose **Install app** or **Add to Home Screen**. The app shell is cached by a service worker for offline startup. A device-level offline test is still required after each release.
+Open [ASTERIA](https://amksoul3429-ui.github.io/ASTERIA/) in Chrome on Android or a supported desktop browser, then choose **Install app** or **Add to Home Screen**. The app shell is cached by a service worker for offline startup. A device-level offline test is still required after each release.
 
 ## Data and privacy
 
@@ -51,3 +51,7 @@ Open [ASTERIA](https://amksoul3429-ui.github.io/ARVENA/) in Chrome on Android or
 ## Release acceptance
 
 Automated tests and production builds are necessary but do not replace manual acceptance on Android and desktop. Confirm navigation, data persistence, backup/restore, PWA installation, offline shell behavior and update delivery on the actual devices before calling a release fully accepted.
+
+
+## ASTERIA Foundation status
+The identity and shell branding work has begun. Core tests and production build passed in GitHub Actions for the latest foundation commit. Visual/manual PWA validation, the original Sacred Bloom asset integration and broader interface redesign remain outstanding before Part 01 is declared complete.
