@@ -1,0 +1,33 @@
+/* ASTERIA foundation UI: theme tokens, legibility, responsive shell */
+:root{--a-bg:#090d19;--a-surface:#11182a;--a-surface2:#182238;--a-border:#303b55;--a-text:#f2f4fb;--a-muted:#aeb8ce;--a-accent:#a78bfa;--a-accent2:#7dd3fc;--a-shadow:0 18px 55px rgba(0,0,0,.28)}
+:root[data-theme="light"]{--a-bg:#f5f3ff;--a-surface:#fff;--a-surface2:#ecebfa;--a-border:#d6d9e7;--a-text:#161927;--a-muted:#505a70;--a-accent:#6650bd;--a-accent2:#176a8c;--a-shadow:0 18px 55px rgba(35,27,70,.12)}
+:root,body{color:var(--a-text);background:var(--a-bg)}
+body{background:radial-gradient(ellipse at 85% -15%,rgba(127,91,201,.18),transparent 42%),var(--a-bg)}
+:root[data-theme="light"] body{background:radial-gradient(ellipse at 85% -15%,rgba(169,150,233,.18),transparent 42%),var(--a-bg)}
+.shell{color:var(--a-text)}
+.shell>main>header{background:color-mix(in srgb,var(--a-bg) 90%,transparent);border-color:var(--a-border);color:var(--a-muted)}
+.shell>main>header b{color:var(--a-text)}
+.content{color:var(--a-text)}
+.panel,.stat,.record,.operator,.modal,.sidebar,.navigation-panel{background:var(--a-surface);border-color:var(--a-border);color:var(--a-text)}
+.panel h4,.record h3,.panel h3,.stat b,.operator b,.brand b{color:var(--a-text)}
+.panel p,.record p,.record small,.stat small,.operator small,.nav,.muted{color:var(--a-muted)}
+.nav.active,.nav:hover{background:var(--a-surface2);color:var(--a-text)}
+:root[data-theme="light"] .hero{background:linear-gradient(115deg,#e7e3ff,#e9efff 65%,#f4e6ff);border-color:#d5d0ec}
+:root[data-theme="light"] .hero h1,:root[data-theme="light"] .hero p,:root[data-theme="light"] .head h1,:root[data-theme="light"] .head p{color:#171927}
+:root[data-theme="light"] .hero small,:root[data-theme="light"] .head small{color:#574b89}
+:root[data-theme="light"] .orb{color:#574b89;border-color:#7e70bd}
+:root[data-theme="light"] .primary{color:#fff}
+:root[data-theme="light"] .secondary{background:#ecebfa;color:#20243a;border-color:#d5d8e6}
+:root[data-theme="light"] .danger{color:#8b233c;background:#ffe8ee}
+:root[data-theme="light"] .task{border-color:var(--a-border)}
+:root[data-theme="light"] .task b{color:var(--a-text)}
+:root[data-theme="light"] .modal input,:root[data-theme="light"] .modal textarea,:root[data-theme="light"] .modal select{background:#fff;color:#171927;border-color:#cbd2e3}
+:root[data-theme="light"] .search{background:var(--a-surface);border-color:var(--a-border)}
+:root[data-theme="light"] .search input{color:var(--a-text)}
+:root[data-theme="light"] footer{color:var(--a-muted)}
+:root[data-theme="light"] .chips i{background:var(--a-surface);border-color:var(--a-border)}
+:root[data-theme="light"] .modal-backdrop,:root[data-theme="light"] .backdrop{background:rgba(26,31,48,.42)}
+:root[data-theme="light"] .modal{box-shadow:var(--a-shadow)}
+button,input,textarea,select{color:inherit}
+button:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible{outline:2px solid var(--a-accent2);outline-offset:2px}
+@media(max-width:700px){.content{padding:20px 15px}.shell>main>header{padding:0 14px}.shell>main>header>span{font-size:9px;letter-spacing:.5px}.hero{padding:24px 20px;min-height:210px}.orb{width:100px;height:100px;margin:0}.stats{gap:8px}.stat{padding:11px}.modal{padding:18px}}
