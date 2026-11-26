@@ -1,0 +1,7 @@
+/* ASTERIA shared design tokens — Phase 02 */
+:root{--asteria-bg:#090d18;--asteria-surface:#111a2a;--asteria-surface-raised:#17243a;--asteria-border:#2b3a54;--asteria-text:#edf1fa;--asteria-muted:#9aa9bf;--asteria-accent:#9a91f1;--asteria-accent-soft:#302d55;--asteria-radius:16px;--asteria-space:16px;--asteria-focus:0 0 0 3px #9588ed66}
+:root[data-theme="light"]{--asteria-bg:#f5f6fc;--asteria-surface:#fff;--asteria-surface-raised:#f0f1fa;--asteria-border:#dce2ed;--asteria-text:#202a3b;--asteria-muted:#58657c;--asteria-accent:#6357b5;--asteria-accent-soft:#e9e6ff}
+:focus-visible{outline:var(--asteria-focus);outline-offset:2px}
+.brand-mark img,.brand>span img{width:100%;height:100%;object-fit:contain}
+.brand>span{overflow:hidden}
+@media(max-width:700px){button,input,select,textarea{max-width:100%}}
