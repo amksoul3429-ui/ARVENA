@@ -1,5 +1,6 @@
 import {useEffect,useState} from 'react';
-import CommandCenter from './components/CommandCenter';\nimport UniversalExplorer from './UniversalExplorer';
+import CommandCenter from './components/CommandCenter';
+import UniversalExplorer from './UniversalExplorer';
 import MissionControl from './components/MissionControl';
 import DailyPlanner from './components/DailyPlanner';
 import DreamLife from './components/DreamLife';
@@ -84,7 +85,8 @@ function App(){
  <div className="sidefoot">● ASTERIA · LOCAL SYSTEM</div></aside></div>}
  <main><header><button className="hamb" onClick={()=>setMobile(true)}><Menu/></button><span>ASTERIA　›　<b>{labels[page].toUpperCase()}</b></span><div className="chips"><button className="theme-toggle" onClick={()=>setTheme(t=>t==='dark'?'light':'dark')} aria-label={theme==='dark'?'Switch to light theme':'Switch to dark theme'}>{theme==='dark'?<Sun size={15}/>:<Moon size={15}/>}<span>{theme==='dark'?'LIGHT':'DARK'}</span></button><i><Wallet size={14}/> {data.credits} credits</i><i><Zap size={14}/> LVL {getLevel(data.xp)}</i></div></header>
  <div className="content">
- {page==='Explore'&&<UniversalExplorer/>}\n {page==='Overview'&&<CommandCenter data={data} level={getLevel(data.xp)} xpIntoLevel={xpIntoLevel(data.xp)} onOpen={p=>open(p)} onNavigate={p=>setPage(p)} onToggleTask={taskId=>setData(d=>({...d,tasks:d.tasks.map(t=>t.id===taskId?{...t,done:!t.done}:t)}))}/>}
+ {page==='Explore'&&<UniversalExplorer/>}
+ {page==='Overview'&&<CommandCenter data={data} level={getLevel(data.xp)} xpIntoLevel={xpIntoLevel(data.xp)} onOpen={p=>open(p)} onNavigate={p=>setPage(p)} onToggleTask={taskId=>setData(d=>({...d,tasks:d.tasks.map(t=>t.id===taskId?{...t,done:!t.done}:t)}))}/>}
  {page==='Missions'&&<><Head page={page} onAdd={()=>open(page)}/><MissionControl missions={list(page)} onEdit={m=>open(page,m as Item)} onDelete={m=>{if(confirm('Delete this mission and its linked planner task, if any?')){setData(d=>({...d,missions:d.missions.filter(x=>x.id!==m.id),tasks:removeMissionTasks(d.tasks as any,m.id) as Item[]}));setToast('Mission deleted')}}} onActivate={missionId=>{const m=data.missions.find(x=>x.id===missionId);changeMissionStatus(missionId,normalizeMission(m||{id:'',title:'',created:''}).status==='Active'?'Available':'Active')}} onComplete={completeMission} onPlanner={addMissionToPlanner}/></>}
  {page==='Planner'&&<DailyPlanner tasks={data.tasks} onAdd={openPlanner} onEdit={task=>open('Planner',task)} onDelete={task=>{if(confirm('Delete this planner task?'))remove('Planner',task)}} onToggle={taskId=>setData(d=>({...d,tasks:d.tasks.map(t=>t.id===taskId?{...t,done:!t.done}:t)}))}/>}
  {page==='Dream Life'&&<DreamLife goals={data.goals} onChange={goals=>setData(d=>({...d,goals}))} onCreateMission={(goal:LifeGoal,milestone:GoalMilestone)=>{const missionId=id();const category=goal.area==='Education'?'Studies':goal.area==='Health'?'Health':goal.area==='Business'||goal.area==='Financial'?'Business':'Personal';const mission={id:missionId,title:milestone.title,created:new Date().toISOString(),description:'Milestone for life goal: '+goal.title,category,difficulty:'Medium',priority:goal.priority,xp:50,deadline:milestone.dueDate||goal.target,status:'Available',done:false,goalId:goal.id,milestoneId:milestone.id};setData(d=>({...d,missions:[mission,...d.missions],goals:d.goals.map(g=>g.id===goal.id?{...g,milestones:(g.milestones||[]).map((m:GoalMilestone)=>m.id===milestone.id?{...m,linkedMissionId:missionId}:m)}:g)}));setToast('Milestone added to Mission Control · complete it there to earn XP')}}/>}
