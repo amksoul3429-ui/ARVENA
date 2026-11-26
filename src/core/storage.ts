@@ -4,7 +4,7 @@
  * Keeps the historical uls-data-v1 key so existing installations migrate in place.
  */
 export const STORAGE_KEY = "uls-data-v1";
-export const BACKUP_FORMAT = "arvena-backup"; // Retained for backwards-compatible imports and existing installations. // Retained for backwards-compatible imports and existing installations.
+export const BACKUP_FORMAT = "arvena-backup"; // Legacy backup identifier intentionally retained for compatibility.
 export const BACKUP_VERSION = 1;
 
 export type CoreRecord = { id: string; title: string; created: string; [key: string]: unknown };
@@ -145,7 +145,7 @@ export function clearStoredAppData(): StorageResult<true> {
 
 export function createBackup(value: unknown): BackupEnvelope {
   return {
-    format: BACKUP_FORMAT, version: BACKUP_VERSION, app: "ARVENA",
+    format: BACKUP_FORMAT, version: BACKUP_VERSION, app: "ASTERIA",
     exportedAt: new Date().toISOString(), data: validateAppData(value),
   };
 }
@@ -161,13 +161,13 @@ export function parseBackup(value: unknown): StorageResult<AppData> {
     const knownCollections = ["missions", "tasks", "goals", "knowledge", "rewards", "journal", "activity", "videos", "evolution", "achievementClaims", "unlockedItems"];
     const recognizable = knownCollections.some(key => Array.isArray(backupData[key])) ||
       typeof backupData.xp === "number" || typeof backupData.credits === "number";
-    if (!recognizable) return { ok: false, error: "The backup does not contain recognizable ARVENA data." };
+    if (!recognizable) return { ok: false, error: "The backup does not contain recognizable ASTERIA data." };
     return { ok: true, value: validateAppData(backupData) };
   }
   // Accept legacy ULS flat backups, but reject unrelated JSON files.
   const looksLikeLegacy = ["missions", "tasks", "goals", "knowledge", "rewards", "journal", "videos", "evolution", "achievementClaims", "unlockedItems"].some(key => Array.isArray(value[key]));
   return looksLikeLegacy
-    ? { ok: true, value: validateAppData(value), warning: "Legacy backup imported and upgraded to the ARVENA format." }
+    ? { ok: true, value: validateAppData(value), warning: "Legacy backup imported and upgraded to the ASTERIA format." }
     : { ok: false, error: "The JSON file does not contain recognizable ASTERIA/ULS data." };
 }
 
