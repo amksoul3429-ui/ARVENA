@@ -1,100 +1,43 @@
-# ASTRELIA AND AERIS — System Blueprint (Rebuild 2.0)
+# ASTERIA — System Blueprint (Part 01 foundation)
 
-## Product identity
-**ASTRELIA AND AERIS — Celestial Knowledge Universe & Personal Intelligence System**
+## Identity
+**ASTERIA — Universal Intelligence & Knowledge System**
+**Integrated intelligence:** AERIS — Hybrid Intelligence (Commander, Companion, Strategist)
 
-The primary purpose is to let a user search for virtually any topic, question, skill, concept, problem or idea and turn it into an ongoing learning experience. A predefined catalogue must never restrict what can be searched or learned.
+ASTERIA is a mobile-first universal knowledge, research, learning and personal-intelligence environment. AERIS is an integrated intelligence layer, not a separate application. Universal exploration is the primary experience; personal-life systems are connected subsystems.
 
 ## Product principles
-1. Universal search is the primary entry point; no mandatory subject/category selection.
-2. ASTRELIA teaches and helps users understand, not merely link to search results.
-3. Topic structures and learning paths are generated dynamically from the user's query and goals.
-4. Research, external sources, media, practice and assessments are integrated into a unified learning workspace.
-5. Learning is persistent: notes, history, progress and mastery records belong to the user's knowledge memory.
-6. The knowledge experience and personal-life tools are connected but not conflated. Tasks are a subsystem, not the app's identity.
-7. Mobile-first, lightweight, installable PWA, usable on constrained devices.
-8. Dark and light themes follow the approved Sacred Bloom identity: dark celestial midnight/violet; light ethereal lavender-white with high-contrast charcoal text.
-9. The Sacred Bloom logo is the brand mark; UI should be elegant, mysterious, premium, restrained and readable.
-10. Build honestly: distinguish locally available features, external-service dependencies and unavailable capabilities. No fake search results or fabricated citations.
+- Universal search and exploration without a predefined topic catalogue.
+- Teaching and structured learning, not only search links.
+- Dynamic paths, adaptive explanations, practice and mastery.
+- Research and resource discovery with clear sources and dependency disclosure.
+- Persistent user knowledge, notes, history and progress.
+- Personal systems are connected but do not dominate the experience.
+- Lightweight, responsive, installable PWA.
+- High-contrast readable themes; dark celestial midnight/violet and light lavender-white/charcoal.
+- Sacred Bloom is the approved visual mark; do not substitute an unrelated logo. The approved image asset must be added to the repository before icon rollout.
+- Preserve existing data; do not reset, overwrite, or silently migrate without compatibility and recovery.
 
-## Product identity and integrated intelligence
-- **ASTRELIA:** the celestial, elegant, mysterious knowledge universe and primary platform. It is the home for universal learning, research, personal intelligence and personal evolution.
-- **AERIS:** the hybrid intelligence integrated into ASTRELIA, not a separate app. Its three modes are Commander (missions, discipline and accountability), Companion (understanding, support and encouragement), and Strategist (analysis, teaching, planning and problem-solving).
-- **Unified experience:** one app, shared user-approved memory and connected capabilities. Preserve AERIS configuration and behavior while integrating it safely; never silently execute consequential actions.
-- **Voice and wake-word scope:** text and user-initiated voice are planned; always-on wake-word behavior must be validated against browser/PWA permissions and device constraints before being promised.
+## Architecture boundaries
+- UI shell and routing
+- Theme and design tokens
+- Versioned local storage and backup/recovery
+- Knowledge and personal-system domain modules
+- Integration/service adapters
+- Permissioned AERIS intelligence layer (Part 02)
+- Search/learning/research engines (Part 03)
 
-## AERIS — Personal Intelligence Assistant
+## Data compatibility
+The historical local-storage key and existing backup-format identifier are retained for compatibility. Branding updates must not trigger data deletion or reset. Theme preference reads the prior ARVENA preference and writes the ASTERIA preference.
 
-AERIS is a JARVIS-inspired, system-integrated personal intelligence assistant. The inspiration is the experience of a capable, context-aware, conversational assistant that can understand the user's intent, reason across the ASTRELIA system, coordinate tools and perform authorised actions. AERIS must have its own identity and interaction layer; it is not merely a chat window.
+## Part 01 scope
+- Phase 01 Architecture & Foundation
+- Phase 02 Brand & Design System
+- Phase 03 Core Interface & Navigation
+- Phase 04 Data & Storage Infrastructure
 
-### Core capabilities
-- **Conversational intelligence:** natural-language text and user-initiated voice interaction; understand follow-up context and clarify ambiguous or consequential requests.
-- **System awareness:** with permission, read relevant ASTRELIA state such as plans, missions, learning progress, saved knowledge and user-defined priorities.
-- **Reasoning and strategy:** analyse information, compare options, identify dependencies, explain trade-offs and create actionable plans.
-- **Task execution:** operate supported ASTRELIA features and connected tools only within granted permissions; preview consequential changes and ask for confirmation before execution.
-- **Personal assistance:** help organise schedules, reminders, projects, learning sessions and workflows; report what it did and what remains.
-- **Three operating modes:** Commander (execution, discipline and accountability), Companion (supportive conversation and wellbeing-aware encouragement), Strategist (analysis, teaching, research and planning). Modes change tone and priorities, not safety or permission rules.
-- **Memory and continuity:** use user-approved memory and ASTRELIA records, with clear controls for what is remembered and used.
-- **Status and transparency:** communicate capability limits, service/API dependencies, action status and errors honestly.
-
-### Interaction and autonomy rules
-- AERIS may recommend and prepare actions proactively when relevant context and permissions allow.
-- It must not silently perform consequential actions, spend credits, send messages, modify important records or access sensitive integrations.
-- Ask for confirmation when intent, scope or impact is unclear; show a concise action summary before consequential execution.
-- Provide an understandable activity history for actions performed through ASTRELIA.
-
-### Delivery constraints
-- Build the reliable core first: in-app text assistant, explicit user-initiated voice where supported, ASTRELIA context access and a permissioned action layer.
-- Treat always-listening wake-word activation, background operation, device-wide control and autonomous access to external apps as separate advanced capabilities. Validate platform, browser/PWA, Android permission, security and API constraints before promising them.
-- Do not imply movie-level unrestricted intelligence or device control. Distinguish implemented capabilities from planned integrations and paid-service dependencies.
-
-## Core architecture (target)
-- **Core shell:** app navigation, theming, responsive UI, routing, error states, accessibility.
-- **Universal Search:** query entry, suggestions, history, intent handling and discovery without topic restrictions.
-- **Learning Engine:** adaptive explanations, dynamically constructed paths, chapters, prerequisite handling and teaching modes.
-- **Research Engine:** source discovery, retrieval, citations, source quality signals and saved research.
-- **Media Engine:** video, audio and reading resources integrated into topic context.
-- **Practice & Assessment:** exercises, quizzes, recall, feedback and mastery estimates.
-- **Knowledge Memory:** user notes, bookmarks, learning history, progress and portable backup.
-- **Knowledge Graph:** relationships between concepts, topics, skills, prerequisites and cross-domain links.
-- **Personal System:** goals, missions, projects, planner, health routines, business/finance records and journal; integrated via shared state and events.
-- **Evolution & Analytics:** meaningful progress, skill development, analytics, achievements and configurable rewards.
-- **Data & integration layer:** versioned storage, migration, validation, import/export, service adapters and optional sync.
-
-## Search-to-learning flow (target)
-1. User enters any natural-language query.
-2. ASTRELIA identifies a useful learning/research intent; user can override it.
-3. Create a subject workspace with overview, suggested structure and relevant resource modes.
-4. Teach the requested topic, adapting depth and prerequisites.
-5. Offer source-backed research and relevant media as available.
-6. Provide practice and assessment; use outcomes to adapt next steps.
-7. Save user-approved notes, progress and related concepts.
-8. Connect the learning to goals, projects or skills only where useful and optional.
-
-## Design standard
-- Sacred Bloom symbol; refined serif or elegant display accent only where appropriate, modern highly legible sans-serif for interface and body.
-- Dark theme: midnight/indigo, violet/lavender highlights, restrained cyan and champagne accents.
-- Light theme: luminous lavender-white surfaces, deep charcoal/black text and purple/blue accents.
-- Mobile-first; home centered on universal search, not task widgets.
-- Avoid generic admin-dashboard grids, overuse of cards, excessive glow, clutter and low-contrast text.
-
-## Data and migration safeguards
-- Existing user data must be preserved and migrated deliberately.
-- Keep the existing storage key/data available until a tested migration path is implemented.
-- AERIS is an integral intelligence layer within ASTRELIA. Preserve existing AERIS configuration and functionality; inventory it before refactoring, then integrate it with ASTRELIA's shared memory, knowledge and personal-system data through explicit permissions and user-approved actions.
-- Validate imports, back up before destructive migration, and test rollback/recovery.
-- Prefer modular adapters and progressively replace old screens instead of a risky all-at-once rewrite.
-
-## Phase plan
-1. Foundation & Architecture
-2. Brand & UI System
-3. Core Interface
-4. Universal Search Engine
-5. Universal Learning Engine
-6. Research & Discovery
-7. Media & Resources
-8. Practice & Mastery
-9. Knowledge Memory
-10. Personal Intelligence System
-11. Integration & Intelligence
-12. Testing & Production
+## Safety and delivery
+- No consequential action without clear intent and appropriate confirmation.
+- Report real limitations and external-service dependencies.
+- No fake search results, citations, integrations or completion claims.
+- Complete Part 01 only after build, tests, data compatibility checks, mobile/layout checks and user-facing verification.
