@@ -1,8 +1,8 @@
-# ARVENA — Personal Intelligence System
+# ASTERIA — Personal Intelligence System
 
 **Think beyond. Evolve beyond.**
 
-ARVENA is a local-first personal operating system built as an installable Progressive Web App (PWA). It combines life planning, learning, personal development, rewards and reporting in one responsive workspace.
+ASTERIA is a local-first personal operating system built as an installable Progressive Web App (PWA). It combines life planning, learning, personal development, rewards and reporting in one responsive workspace.
 
 ## Workspaces
 
@@ -37,7 +37,7 @@ GitHub Actions runs the automated regression suite and production build, then de
 
 ## Install the PWA
 
-Open [ARVENA](https://amksoul3429-ui.github.io/ARVENA/) in Chrome on Android or a supported desktop browser, then choose **Install app** or **Add to Home Screen**. The app shell is cached by a service worker for offline startup. A device-level offline test is still required after each release.
+Open [ASTERIA](https://amksoul3429-ui.github.io/ASTERIA/) in Chrome on Android or a supported desktop browser, then choose **Install app** or **Add to Home Screen**. The app shell is cached by a service worker for offline startup. A device-level offline test is still required after each release.
 
 ## Data and privacy
 
