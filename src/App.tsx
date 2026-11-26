@@ -33,7 +33,7 @@ function App(){
  const[data,setData]=useState<Data>(()=>loadResult.ok?loadResult.value:blank);
  const[persistenceReady,setPersistenceReady]=useState(loadResult.ok);
  const[notificationAccess,setNotificationAccess]=useState(getNotificationAccess);
- const[theme,setTheme]=useState<'dark'|'light'>(()=>(localStorage.getItem('asteria-theme')||localStorage.getItem('asteria-theme'))==='light'?'light':'dark');
+ const[theme,setTheme]=useState<'dark'|'light'>(()=>(localStorage.getItem('asteria-theme')||localStorage.getItem('arvena-theme'))==='light'?'light':'dark');
  const[page,setPage]=useState<Page>('Overview'),[modal,setModal]=useState<Page|null>(null),[editing,setEditing]=useState<Item|null>(null),[plannerDate,setPlannerDate]=useState(today()),[mobile,setMobile]=useState(false),[toast,setToast]=useState(loadResult.ok?(loadResult.warning||''):loadResult.error),[search,setSearch]=useState('');
  useEffect(()=>{if(!persistenceReady)return;const result=saveAppData(data);if(!result.ok)setToast(result.error)},[data,persistenceReady]);
  useEffect(()=>{localStorage.removeItem("arvena-aeris-endpoint-v1");localStorage.removeItem("arvena-aeris-token-v1")},[]);
