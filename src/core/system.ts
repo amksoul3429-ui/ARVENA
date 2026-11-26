@@ -1,10 +1,10 @@
 /**
- * ASTRELIA AND AERIS — Core Engine
+ * ASTERIA AND AERIS — Core Engine
  * Central rules for progression and reward integrity.
  */
 
 export const SYSTEM_CONFIG = {
-  name: "ASTRELIA AND AERIS — Celestial Knowledge Universe & Personal Intelligence System",
+  name: "ASTERIA AND AERIS — Celestial Knowledge Universe & Personal Intelligence System",
   version: "1.1.0",
   xpPerLevel: 500,
   creditsPerTenXp: 1,
