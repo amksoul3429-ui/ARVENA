@@ -28,7 +28,7 @@ ASTERIA is a mobile-first universal knowledge, research, learning and personal-i
 - Search/learning/research engines (Part 03)
 
 ## Data compatibility
-The historical local-storage key and existing backup-format identifier are retained for compatibility. Branding updates must not trigger data deletion or reset. Theme preference reads the prior ARVENA preference and writes the ASTERIA preference.
+The historical local-storage key and existing backup-format identifier are retained for compatibility. Branding updates must not trigger data deletion or reset. Theme preference reads the prior ASTERIA preference and writes the ASTERIA preference.
 
 ## Part 01 scope
 - Phase 01 Architecture & Foundation
