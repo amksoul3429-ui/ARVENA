@@ -1,4 +1,4 @@
-/* ARVENA — unified interface system v2 */
+/* ASTERIA — unified interface system v2 */
 :root{--arv-text:#eef1fb;--arv-muted:#9aa7bd;--arv-line:rgba(160,174,210,.15);--arv-panel:rgba(17,26,45,.82);--arv-panel2:#141f35;--arv-accent:#a99cff;--arv-cyan:#7ad9e4;--arv-sidebar:280px}
 :root[data-theme="light"]{--arv-text:#202a40;--arv-muted:#6d7890;--arv-line:rgba(73,88,126,.15);--arv-panel:rgba(255,255,255,.9);--arv-panel2:#f6f7fc}
 body{color:var(--arv-text);background:radial-gradient(ellipse at 80% -15%,rgba(109,95,208,.18),transparent 36%),radial-gradient(ellipse at 4% 78%,rgba(45,155,170,.08),transparent 34%),var(--arv-bg)}
@@ -502,7 +502,7 @@ footer>span:first-child{color:#a99cff;font-weight:800;letter-spacing:2px}
 :root[data-theme="light"] .simple{color:#111827!important}
 :root[data-theme="light"] footer{color:#39465b!important}
 
-/* ARVENA light theme — reduced brightness with true black text */
+/* ASTERIA light theme — reduced brightness with true black text */
 :root[data-theme="light"]{
   --arv-text:#050505!important;
   --arv-muted:#202020!important;
