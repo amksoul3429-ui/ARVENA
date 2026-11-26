@@ -20,7 +20,7 @@ import {claimAchievement,redeemPersonalReward,fulfillPersonalReward,unlockSystem
 import {habitStreak} from './core/evolution';
 import {loadAppData,saveAppData,subscribeToExternalChanges,clearStoredAppData} from './core/storage';
 import {getNotificationAccess,requestNotificationAccess,sendSystemNotification} from './core/permissions';
-import {Activity,BookOpen,CalendarDays,Check,ChevronRight,Compass,Edit3,Flame,LayoutDashboard,Menu,Plus,Settings,Sparkles,Target,Trophy,Wallet,Video as VideoIcon,X,Zap,Sun,Moon} from 'lucide-react';
+import {Activity,BookOpen,CalendarDays,Check,ChevronRight,Compass,Edit3,Flame,LayoutDashboard,Menu,Plus,Settings,Target,Trophy,Wallet,Video as VideoIcon,X,Zap,Sun,Moon} from 'lucide-react';
 type Page='Explore'|'Overview'|'Missions'|'Planner'|'Dream Life'|'Evolution'|'Knowledge'|'Videos'|'Rewards'|'Journal'|'Reports'|'Settings';
 type Item={id:string;title:string;created:string;[key:string]:any};
 type Data={missions:Item[];tasks:Item[];goals:Item[];knowledge:Item[];videos:Item[];evolution:Item[];rewards:Item[];journal:Item[];activity:Item[];achievementClaims:string[];unlockedItems:string[];xp:number;credits:number};
