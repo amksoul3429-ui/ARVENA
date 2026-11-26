@@ -31,3 +31,19 @@ body{background:radial-gradient(ellipse at 85% -15%,rgba(127,91,201,.18),transpa
 button,input,textarea,select{color:inherit}
 button:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible{outline:2px solid var(--a-accent2);outline-offset:2px}
 @media(max-width:700px){.content{padding:20px 15px}.shell>main>header{padding:0 14px}.shell>main>header>span{font-size:9px;letter-spacing:.5px}.hero{padding:24px 20px;min-height:210px}.orb{width:100px;height:100px;margin:0}.stats{gap:8px}.stat{padding:11px}.modal{padding:18px}}
+
+/* Phase 02 foundation refinement: high-contrast light-mode cards and controls */
+:root[data-theme="light"] .cc-welcome{background:linear-gradient(115deg,#e9e4ff,#e9efff 68%,#f5eaff);border-color:#d5d0ec}
+:root[data-theme="light"] .cc-welcome h1,:root[data-theme="light"] .cc-welcome p,:root[data-theme="light"] .cc-level strong{color:#20243a}
+:root[data-theme="light"] .cc-eyebrow,:root[data-theme="light"] .cc-level small,:root[data-theme="light"] .cc-level>span{color:#5e568c}
+:root[data-theme="light"] .cc-level,:root[data-theme="light"] .cc-card,:root[data-theme="light"] .cc-section,:root[data-theme="light"] .cc-stats article{background:#fff;border-color:#dce2ec}
+:root[data-theme="light"] .cc-stats article small,:root[data-theme="light"] .cc-stats article span,:root[data-theme="light"] .cc-section-heading>span,:root[data-theme="light"] .cc-metric>div:first-child span,:root[data-theme="light"] .cc-metric>small,:root[data-theme="light"] .cc-card p,:root[data-theme="light"] .cc-empty{color:#56627a}
+:root[data-theme="light"] .cc-stats article strong,:root[data-theme="light"] .cc-section-heading h2,:root[data-theme="light"] .cc-card-heading h2,:root[data-theme="light"] .cc-metric strong,:root[data-theme="light"] .cc-deadline strong,:root[data-theme="light"] .cc-task{color:#202a3b}
+:root[data-theme="light"] .cc-actions button{background:#f4f3ff;border-color:#dcd9f2;color:#29334b}
+:root[data-theme="light"] .cc-actions button>span{background:#e6e2ff;color:#5b4eaa}
+:root[data-theme="light"] .cc-date{background:#efedff;border-color:#dcd8f2;color:#554b93}
+:root[data-theme="light"] .cc-task,:root[data-theme="light"] .cc-metric,:root[data-theme="light"] .cc-deadline{border-color:#e5e9f1}
+:root[data-theme="light"] .cc-track{background:#e6eaf2}
+:root[data-theme="light"] .search{box-shadow:0 4px 20px rgba(25,30,50,.12)}
+:root[data-theme="light"] .shell > main > header .hamb{background:#f1f3f8;border-color:#dce2ec;color:#34415a}
+:root[data-theme="light"] .toast{background:#e8f7f0;border-color:#b7e2ce;color:#215c43}
