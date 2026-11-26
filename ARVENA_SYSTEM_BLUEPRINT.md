@@ -15,7 +15,7 @@ ASTERIA is a mobile-first universal knowledge, research, learning and personal-i
 - Personal systems are connected but do not dominate the experience.
 - Lightweight, responsive, installable PWA.
 - High-contrast readable themes; dark celestial midnight/violet and light lavender-white/charcoal.
-- Sacred Bloom is the approved visual mark; do not substitute an unrelated logo. The approved image asset must be added to the repository before icon rollout.
+- Sacred Bloom is the approved visual mark; do not substitute an unrelated logo. An initial Sacred Bloom-inspired vector mark is committed; it is a placeholder/inspired vector and not a verified copy of the user's previously approved original artwork.
 - Preserve existing data; do not reset, overwrite, or silently migrate without compatibility and recovery.
 
 ## Architecture boundaries
@@ -28,7 +28,7 @@ ASTERIA is a mobile-first universal knowledge, research, learning and personal-i
 - Search/learning/research engines (Part 03)
 
 ## Data compatibility
-The historical local-storage key and existing backup-format identifier are retained for compatibility. Branding updates must not trigger data deletion or reset. Theme preference reads the prior ASTERIA preference and writes the ASTERIA preference.
+The historical local-storage key and existing backup-format identifier are retained for compatibility. Branding updates must not trigger data deletion or reset. Theme preference reads the ASTERIA and legacy ARVENA preference keys and writes the ASTERIA preference.
 
 ## Part 01 scope
 - Phase 01 Architecture & Foundation
