@@ -118,3 +118,15 @@
 **AERIS is a separate application. ASTERIA must not embed an AERIS interface or depend on AERIS to operate.**
 
 **Acceptance handoff:** Implementation and automated checks are prepared on the foundation branch. The unchecked browser/device items are intentionally reserved for the owner to test on their own desktop and mobile devices after the branch is merged and deployed. Do not mark Part 01 signed off until those results are recorded. The original approved Sacred Bloom artwork remains an owner-supplied identity asset; the current mark is interim.
+
+## CELESTIAL DASHBOARD REDESIGN — USER-REQUESTED VISUAL PASS
+- [x] Persistent desktop navigation and grouped module links
+- [x] Redesigned global topbar with workspace filter and system status
+- [x] Three-zone dashboard shell with local guide and daily insight rail
+- [x] Responsive tablet/mobile navigation and layouts
+- [x] Dark and light themes using the persisted theme preference
+- [x] Existing app modules and local data behavior retained
+- [ ] CI and production deployment verified
+- [ ] Owner desktop/mobile visual acceptance
+
+See [CELESTIAL-DASHBOARD-REDESIGN.md](CELESTIAL-DASHBOARD-REDESIGN.md).
