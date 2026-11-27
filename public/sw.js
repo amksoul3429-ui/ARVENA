@@ -1,6 +1,6 @@
 const CACHE = 'asteria-shell-v5';
 const BASE = new URL('./', self.location).pathname;
-const SHELL = [BASE, BASE + 'index.html', BASE + 'manifest.webmanifest', BASE + 'favicon.svg'];
+const SHELL = [BASE, BASE + 'index.html', BASE + 'manifest.webmanifest', BASE + 'favicon.svg', BASE + 'asteria-mark.svg'];
 
 self.addEventListener('install', (event) => {
   event.waitUntil((async () => {
