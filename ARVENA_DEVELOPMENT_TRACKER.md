@@ -112,7 +112,7 @@
 - [x] Lazy-load secondary workspaces to reduce initial application payload
 - [x] Accessible keyboard skip-to-content link, workspace loading status and reduced-motion treatment
 - [x] Branch CI passed: 121/121 automated tests and TypeScript/Vite production build (workflow 46026447549)
-- [ ] Main deployment and Pages deployment passed
+- [x] Main deployment and Pages deployment passed (workflow 46026671681)
 - [ ] Owner desktop/mobile and real-device recovery/offline acceptance
 
 **AERIS is a separate application. ASTERIA must not embed an AERIS interface or depend on AERIS to operate.**
