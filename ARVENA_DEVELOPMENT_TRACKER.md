@@ -98,6 +98,7 @@
 - [x] Skill practice levels use the shared capped progression rule
 - [x] Regression tests for award integrity, duplicate prevention, levels, ranks and skill progression
 - [x] Branch CI passed: 118/118 automated tests, TypeScript and Vite production build (workflow 46024178662)
+- [x] Main deployment and GitHub Pages deployment passed (workflow 46024304553)
 - [ ] Owner desktop/mobile acceptance
 
 ## PART 05 — SECURITY, INTEGRATION & PRODUCTION
