@@ -1,0 +1,418 @@
+/* ASTERIA Phase 02 — workspace-wide high-contrast light theme.
+   Dark theme remains the default; these rules only apply when the user selects light. */
+:root[data-theme="light"] .daily-planner,
+:root[data-theme="light"] .dream,
+:root[data-theme="light"] .mission-control,
+:root[data-theme="light"] .evolution,
+:root[data-theme="light"] .journal,
+:root[data-theme="light"] .sr-wrap,
+:root[data-theme="light"] .video-studio,
+:root[data-theme="light"] .ss-wrap,
+:root[data-theme="light"] .ra-page {
+  color: #202a3b;
+}
+
+:root[data-theme="light"] .dp-calendar,
+:root[data-theme="light"] .dp-summary article,
+:root[data-theme="light"] .dp-progress,
+:root[data-theme="light"] .dp-filter-row,
+:root[data-theme="light"] .dp-task,
+:root[data-theme="light"] .dp-week button,
+:root[data-theme="light"] .dp-month-grid button,
+:root[data-theme="light"] .dp-empty,
+:root[data-theme="light"] .dream-stats>div,
+:root[data-theme="light"] .dream-overview,
+:root[data-theme="light"] .dream-card,
+:root[data-theme="light"] .dream-empty,
+:root[data-theme="light"] .mission-summary article,
+:root[data-theme="light"] .mission-card,
+:root[data-theme="light"] .ev-stats>div,
+:root[data-theme="light"] .ev-panel,
+:root[data-theme="light"] .ev-card,
+:root[data-theme="light"] .jn-stats article,
+:root[data-theme="light"] .jn-editor,
+:root[data-theme="light"] .jn-prompts,
+:root[data-theme="light"] .jn-entries,
+:root[data-theme="light"] .jn-entry,
+:root[data-theme="light"] .sr-period,
+:root[data-theme="light"] .sr-overview article,
+:root[data-theme="light"] .sr-metrics article,
+:root[data-theme="light"] .sr-panel,
+:root[data-theme="light"] .sr-detail-grid>div,
+:root[data-theme="light"] .sr-journal-total,
+:root[data-theme="light"] .vs-library,
+:root[data-theme="light"] .vs-player-area,
+:root[data-theme="light"] .vs-result,
+:root[data-theme="light"] .vs-key-setup,
+:root[data-theme="light"] .ss-hero,
+:root[data-theme="light"] .ss-panel {
+  background: #fff;
+  border-color: #dce2ec;
+  color: #202a3b;
+}
+
+:root[data-theme="light"] .dp-summary strong,
+:root[data-theme="light"] .dp-task-title strong,
+:root[data-theme="light"] .dp-empty strong,
+:root[data-theme="light"] .dp-calendar-top h2,
+:root[data-theme="light"] .dp-list-head h2,
+:root[data-theme="light"] .dp-month-grid button,
+:root[data-theme="light"] .dream-hero h1,
+:root[data-theme="light"] .dream-card-title h3,
+:root[data-theme="light"] .dream-stats b,
+:root[data-theme="light"] .dream-milestone>span,
+:root[data-theme="light"] .dream-toolbar h2,
+:root[data-theme="light"] .mission-main h3,
+:root[data-theme="light"] .mission-summary strong,
+:root[data-theme="light"] .ev-hero h1,
+:root[data-theme="light"] .ev-panel-head h2,
+:root[data-theme="light"] .ev-card h3,
+:root[data-theme="light"] .ev-stats b,
+:root[data-theme="light"] .jn-hero h1,
+:root[data-theme="light"] .jn-editor-head h2,
+:root[data-theme="light"] .jn-prompts h2,
+:root[data-theme="light"] .jn-list-head h2,
+:root[data-theme="light"] .jn-entry h3,
+:root[data-theme="light"] .jn-empty h3,
+:root[data-theme="light"] .sr-hero h1,
+:root[data-theme="light"] .sr-overview strong,
+:root[data-theme="light"] .sr-metrics b,
+:root[data-theme="light"] .sr-panel-head h2,
+:root[data-theme="light"] .sr-detail-grid b,
+:root[data-theme="light"] .sr-journal-total b,
+:root[data-theme="light"] .vs-video-heading h2,
+:root[data-theme="light"] .vs-welcome h2,
+:root[data-theme="light"] .vs-discovery-heading h2,
+:root[data-theme="light"] .vs-result-copy>b,
+:root[data-theme="light"] .ss-hero h1,
+:root[data-theme="light"] .ss-title h2,
+:root[data-theme="light"] .ss-facts b,
+:root[data-theme="light"] .ss-cap-name b,
+:root[data-theme="light"] .ra-hero h1,
+:root[data-theme="light"] .ra-heading h2,
+:root[data-theme="light"] .ra-ach-copy h3,
+:root[data-theme="light"] .ra-reward h3,
+:root[data-theme="light"] .ra-ranks b,
+:root[data-theme="light"] .ra-rank strong {
+  color: #202a3b;
+}
+
+:root[data-theme="light"] .dp-heading p,
+:root[data-theme="light"] .dp-summary small,
+:root[data-theme="light"] .dp-summary span,
+:root[data-theme="light"] .dp-task-meta>span,
+:root[data-theme="light"] .dp-notes,
+:root[data-theme="light"] .dp-group h3,
+:root[data-theme="light"] .dp-footnote,
+:root[data-theme="light"] .dp-empty span,
+:root[data-theme="light"] .dream-hero p,
+:root[data-theme="light"] .dream-toolbar p,
+:root[data-theme="light"] .dream-description,
+:root[data-theme="light"] .dream-no-milestones,
+:root[data-theme="light"] .dream-milestone small,
+:root[data-theme="light"] .dream-empty p,
+:root[data-theme="light"] .mission-main p,
+:root[data-theme="light"] .mission-meta span,
+:root[data-theme="light"] .mission-guide p,
+:root[data-theme="light"] .ev-hero p,
+:root[data-theme="light"] .ev-card p,
+:root[data-theme="light"] .ev-card small,
+:root[data-theme="light"] .ev-stats small,
+:root[data-theme="light"] .ev-stats span,
+:root[data-theme="light"] .ev-footnote,
+:root[data-theme="light"] .jn-hero p,
+:root[data-theme="light"] .jn-prompts>div>p,
+:root[data-theme="light"] .jn-list-head p,
+:root[data-theme="light"] .jn-fields label,
+:root[data-theme="light"] .jn-writing-label,
+:root[data-theme="light"] .jn-writing-meta label,
+:root[data-theme="light"] .jn-writing-meta>span,
+:root[data-theme="light"] .jn-entry-meta span,
+:root[data-theme="light"] .jn-entry-content,
+:root[data-theme="light"] .jn-empty p,
+:root[data-theme="light"] .jn-privacy,
+:root[data-theme="light"] .sr-hero p,
+:root[data-theme="light"] .sr-period span,
+:root[data-theme="light"] .sr-period label,
+:root[data-theme="light"] .sr-overview small,
+:root[data-theme="light"] .sr-panel-head>small,
+:root[data-theme="light"] .sr-category>div,
+:root[data-theme="light"] .sr-detail-grid span,
+:root[data-theme="light"] .sr-journal-total span,
+:root[data-theme="light"] .sr-note,
+:root[data-theme="light"] .sr-footnote,
+:root[data-theme="light"] .vs-video-heading p,
+:root[data-theme="light"] .vs-transcript div,
+:root[data-theme="light"] .vs-course-link p,
+:root[data-theme="light"] .vs-item-copy small,
+:root[data-theme="light"] .vs-empty,
+:root[data-theme="light"] .vs-discovery-heading p,
+:root[data-theme="light"] .vs-key-setup p,
+:root[data-theme="light"] .vs-result-copy>small,
+:root[data-theme="light"] .vs-result-copy>p,
+:root[data-theme="light"] .ss-hero p,
+:root[data-theme="light"] .ss-panel p,
+:root[data-theme="light"] .ss-facts small,
+:root[data-theme="light"] .ss-capabilities p,
+:root[data-theme="light"] .ss-permission span,
+:root[data-theme="light"] .ra-hero p,
+:root[data-theme="light"] .ra-heading p,
+:root[data-theme="light"] .ra-ach-copy p,
+:root[data-theme="light"] .ra-ach-copy small,
+:root[data-theme="light"] .ra-reward p,
+:root[data-theme="light"] .ra-ranks p {
+  color: #56627a;
+}
+
+:root[data-theme="light"] .dp-date-controls button,
+:root[data-theme="light"] .dp-date-controls input,
+:root[data-theme="light"] .dp-view-switch button,
+:root[data-theme="light"] .dp-list-controls>button,
+:root[data-theme="light"] .dp-filter-row select,
+:root[data-theme="light"] .dp-task-actions button,
+:root[data-theme="light"] .dream-toolbar select,
+:root[data-theme="light"] .dream-icon-actions button,
+:root[data-theme="light"] .dream-add-milestone input,
+:root[data-theme="light"] .dream-add-milestone button,
+:root[data-theme="light"] .mission-actions button,
+:root[data-theme="light"] .ev-tabs button,
+:root[data-theme="light"] .ev-form,
+:root[data-theme="light"] .ev-form input,
+:root[data-theme="light"] .ev-form select,
+:root[data-theme="light"] .ev-form textarea,
+:root[data-theme="light"] .ev-minutes,
+:root[data-theme="light"] .ev-card-actions .iconbtn,
+:root[data-theme="light"] .jn-secondary,
+:root[data-theme="light"] .jn-icon,
+:root[data-theme="light"] .jn-fields input,
+:root[data-theme="light"] .jn-fields select,
+:root[data-theme="light"] .jn-writing-label textarea,
+:root[data-theme="light"] .jn-writing-meta input,
+:root[data-theme="light"] .jn-filters,
+:root[data-theme="light"] .jn-filters select,
+:root[data-theme="light"] .jn-filters input,
+:root[data-theme="light"] .jn-fav-filter,
+:root[data-theme="light"] .jn-clear,
+:root[data-theme="light"] .jn-prompt-grid button,
+:root[data-theme="light"] .sr-period select,
+:root[data-theme="light"] .sr-period input,
+:root[data-theme="light"] .vs-search,
+:root[data-theme="light"] .vs-search input,
+:root[data-theme="light"] .vs-filters button,
+:root[data-theme="light"] .vs-discovery-form input,
+:root[data-theme="light"] .vs-discovery-form select,
+:root[data-theme="light"] .vs-key-setup input,
+:root[data-theme="light"] .vs-detail-grid textarea {
+  background: #f5f6fb;
+  border-color: #cbd3e1;
+  color: #202a3b;
+}
+
+:root[data-theme="light"] .dp-week button.selected,
+:root[data-theme="light"] .dp-month-grid button.selected,
+:root[data-theme="light"] .dp-list-controls>button.active,
+:root[data-theme="light"] .dp-view-switch button.active,
+:root[data-theme="light"] .ev-tabs button.active,
+:root[data-theme="light"] .jn-prompt-active,
+:root[data-theme="light"] .jn-category,
+:root[data-theme="light"] .jn-tags span,
+:root[data-theme="light"] .vs-filters button.active,
+:root[data-theme="light"] .vs-chapter.active {
+  background: #ecebff;
+  border-color: #c9c4f0;
+  color: #4b438e;
+}
+
+:root[data-theme="light"] .dream-why,
+:root[data-theme="light"] .dream-next,
+:root[data-theme="light"] .ev-level,
+:root[data-theme="light"] .ev-card,
+:root[data-theme="light"] .jn-hero-mark,
+:root[data-theme="light"] .jn-prompt-grid button,
+:root[data-theme="light"] .jn-entry,
+:root[data-theme="light"] .jn-filters,
+:root[data-theme="light"] .vs-item:hover,
+:root[data-theme="light"] .vs-item.selected,
+:root[data-theme="light"] .vs-discovery-notice,
+:root[data-theme="light"] .vs-key-needed,
+:root[data-theme="light"] .vs-result-signals span {
+  background: #f0f2fa;
+  border-color: #dce2ec;
+  color: #34415a;
+}
+
+:root[data-theme="light"] .dream-modal,
+:root[data-theme="light"] .ev-form,
+:root[data-theme="light"] .ra-form {
+  background: #fff;
+  border-color: #d5dce8;
+  color: #202a3b;
+}
+:root[data-theme="light"] .dream-modal label,
+:root[data-theme="light"] .ra-form label { color: #46536a; }
+:root[data-theme="light"] .dream-modal input,
+:root[data-theme="light"] .dream-modal textarea,
+:root[data-theme="light"] .dream-modal select,
+:root[data-theme="light"] .ra-form input,
+:root[data-theme="light"] .ra-form textarea,
+:root[data-theme="light"] .ra-form select {
+  background: #fff;
+  border-color: #cbd3e1;
+  color: #202a3b;
+}
+:root[data-theme="light"] .dream-modal-head h2,
+:root[data-theme="light"] .dream-modal-head>span,
+:root[data-theme="light"] .ra-form-head h2 { color: #202a3b; }
+
+:root[data-theme="light"] .ra-page {
+  --text: #202a3b;
+  --muted: #56627a;
+  --line: #dce2ec;
+  --panel: #fff;
+}
+:root[data-theme="light"] .ra-hero {
+  background: linear-gradient(125deg,#e9edff,#f3edff);
+  border-color: #dce2ec;
+}
+:root[data-theme="light"] .ra-rank,
+:root[data-theme="light"] .ra-achievement,
+:root[data-theme="light"] .ra-ranks article,
+:root[data-theme="light"] .ra-reward,
+:root[data-theme="light"] .ra-unlock,
+:root[data-theme="light"] .ra-stats article {
+  background: #fff;
+  border-color: #dce2ec;
+  color: #202a3b;
+}
+:root[data-theme="light"] .ra-achievement.unlocked,
+:root[data-theme="light"] .ra-ranks article.earned,
+:root[data-theme="light"] .ra-unlock.is-unlocked {
+  background: #eef2ff;
+  border-color: #cbd5ed;
+}
+:root[data-theme="light"] .ra-ach-reward>b,
+:root[data-theme="light"] .ra-cost>b { color: #4b5681; }
+:root[data-theme="light"] .ra-eyebrow,
+:root[data-theme="light"] .ra-counter,
+:root[data-theme="light"] .ra-rank small,
+:root[data-theme="light"] .ra-rank span,
+:root[data-theme="light"] .ra-ach-copy>span,
+:root[data-theme="light"] .ra-ach-reward>small,
+:root[data-theme="light"] .ra-ranks small,
+:root[data-theme="light"] .ra-ranks article>span,
+:root[data-theme="light"] .ra-unlock-top>span,
+:root[data-theme="light"] .ra-unlock>small,
+:root[data-theme="light"] .ra-store-summary span {
+  color: #56627a;
+}
+:root[data-theme="light"] .ra-filters button { color: #56627a; border-color: #dce2ec; }
+:root[data-theme="light"] .ra-filters button.active { color: #433d83; background: #ecebff; border-color: #c9c4f0; }
+:root[data-theme="light"] .ra-button.secondary { color: #45417e; background: #eeedff; }
+
+:root[data-theme="light"] .ss-hero {
+  background: linear-gradient(115deg,#e9edff,#f2edff);
+}
+:root[data-theme="light"] .ss-title>svg,
+:root[data-theme="light"] .ss-hero>svg { color: #6258ad; }
+:root[data-theme="light"] .ss-facts>div,
+:root[data-theme="light"] .ss-permission,
+:root[data-theme="light"] .ss-capabilities>div {
+  background: #f5f6fb;
+  border-color: #dce2ec;
+}
+:root[data-theme="light"] .ss-note { background: #f0f2fa; color: #46536a; }
+:root[data-theme="light"] .ss-warning { background: #fff8e9; border-color: #e8d7ac; }
+:root[data-theme="light"] .ss-warning p { color: #66522b; }
+:root[data-theme="light"] .ss-secondary { background: #f1f2fa; border-color: #cbd3e1; color: #34415a; }
+
+:root[data-theme="light"] .sr-period b,
+:root[data-theme="light"] .sr-category b { color: #202a3b; }
+:root[data-theme="light"] .sr-progress { background: #e5e9f2; }
+:root[data-theme="light"] .sr-category>i { background: #e5e9f2; }
+:root[data-theme="light"] .sr-bar-col b,
+:root[data-theme="light"] .sr-bar-col span { color: #56627a; }
+
+:root[data-theme="light"] .vs-library-title,
+:root[data-theme="light"] .vs-library-title span,
+:root[data-theme="light"] .vs-item { color: #34415a; }
+:root[data-theme="light"] .vs-item:hover,
+:root[data-theme="light"] .vs-item.selected { background: #ecebff; border-color: #cbc6f0; }
+:root[data-theme="light"] .vs-thumb { background: #e7e8fa; color: #554b9a; }
+:root[data-theme="light"] .vs-player { background: #151a27; }
+:root[data-theme="light"] .vs-transcript,
+:root[data-theme="light"] .vs-visual,
+:root[data-theme="light"] .vs-resources,
+:root[data-theme="light"] .vs-course-link { color: #34415a; }
+:root[data-theme="light"] .vs-detail-grid h4,
+:root[data-theme="light"] .vs-transcript h4,
+:root[data-theme="light"] .vs-visual h4,
+:root[data-theme="light"] .vs-resources h4,
+:root[data-theme="light"] .vs-course-link h4 { color: #514a98; }
+:root[data-theme="light"] .vs-result-signals span { background: #ecebff; color: #514a98; }
+:root[data-theme="light"] .vs-result-signals i { background: #f0f2fa; color: #56627a; }
+
+:root[data-theme="light"] .mission-guide {
+  background: linear-gradient(110deg,#e9edff,#f2edff);
+  border-color: #d5d9ed;
+}
+:root[data-theme="light"] .mission-guide b { color: #202a3b; }
+:root[data-theme="light"] .mission-guide span { color: #554b9a; }
+:root[data-theme="light"] .mission-status { background: #eceff6; color: #46536a; }
+:root[data-theme="light"] .mission-status.active { background: #ecebff; color: #514a98; }
+:root[data-theme="light"] .mission-status.completed { background: #e7f5ee; color: #286d55; }
+:root[data-theme="light"] .mission-actions button { background: #f1f3f8; border-color: #dce2ec; color: #46536a; }
+
+:root[data-theme="light"] .ev-hero,
+:root[data-theme="light"] .jn-hero,
+:root[data-theme="light"] .sr-hero {
+  background: linear-gradient(115deg,#e9edff,#f2edff);
+  border-color: #d5dced;
+}
+:root[data-theme="light"] .ev-hero small,
+:root[data-theme="light"] .ev-panel-head small,
+:root[data-theme="light"] .jn-kicker,
+:root[data-theme="light"] .sr-kicker { color: #554b9a; }
+:root[data-theme="light"] .ev-tabs button { background: #f1f3f8; color: #46536a; border-color: #dce2ec; }
+:root[data-theme="light"] .ev-form input,
+:root[data-theme="light"] .ev-form select,
+:root[data-theme="light"] .ev-form textarea,
+:root[data-theme="light"] .ev-minutes { background: #fff; color: #202a3b; border-color: #cbd3e1; }
+:root[data-theme="light"] .ev-card-actions .iconbtn { background: #f1f3f8; color: #46536a; border-color: #dce2ec; }
+:root[data-theme="light"] .ev-week { background: #e5e9f2; }
+
+:root[data-theme="light"] .jn-hero-mark { background: #f5f6fb; border-color: #dce2ec; color: #554b9a; }
+:root[data-theme="light"] .jn-hero-mark span { color: #34345e; }
+:root[data-theme="light"] .jn-hero-mark small { color: #56627a; }
+:root[data-theme="light"] .jn-fields input,
+:root[data-theme="light"] .jn-fields select,
+:root[data-theme="light"] .jn-writing-label textarea,
+:root[data-theme="light"] .jn-writing-meta input,
+:root[data-theme="light"] .jn-filters input,
+:root[data-theme="light"] .jn-filters select { background: #fff; color: #202a3b; border-color: #cbd3e1; }
+:root[data-theme="light"] .jn-prompt-active { background: #efedff; border-color: #d5d0f3; color: #45417e; }
+:root[data-theme="light"] .jn-fav-filter.active { background: #fff0f4; color: #8a3651; border-color: #edc6d2; }
+:root[data-theme="light"] .jn-day-label { color: #46536a; }
+:root[data-theme="light"] .jn-day-label i { background: #dce2ec; }
+:root[data-theme="light"] .jn-entry-meta span+span { border-color: #dce2ec; color: #554b9a; }
+:root[data-theme="light"] .jn-entry-prompt { color: #554b9a; }
+:root[data-theme="light"] .jn-updated { color: #69758a; }
+
+:root[data-theme="light"] .dream-modal-backdrop,
+:root[data-theme="light"] .ra-overlay { background: rgba(26,31,48,.42); }
+:root[data-theme="light"] .dream-modal-head h2 { color: #202a3b; }
+:root[data-theme="light"] .dream-modal-head>button { background: #f1f3f8; border-color: #dce2ec; color: #46536a; }
+:root[data-theme="light"] .dream-progress,
+:root[data-theme="light"] .dream-bigbar { background: #e5e9f2; }
+:root[data-theme="light"] .dp-progress-track { background: #e5e9f2; }
+:root[data-theme="light"] .dp-date-controls input::-webkit-calendar-picker-indicator { filter: none; }
+:root[data-theme="light"] .dp-week i,
+:root[data-theme="light"] .dp-month-weekdays span { color: #69758a; }
+:root[data-theme="light"] .dp-week .selected i { color: #514a98; }
+:root[data-theme="light"] .dp-overdue { background: #fff1e9; color: #8a4529; border-color: #e9c7b5; }
+:root[data-theme="light"] .dp-overdue span { color: #79503e; }
+:root[data-theme="light"] .dp-conflicts { background: #fff8e9; color: #745a21; border-color: #e8d7ac; }
+:root[data-theme="light"] .dp-conflicts span { color: #66522b; }
+
+@media (prefers-reduced-motion: reduce) {
+  :root[data-theme="light"] * { scroll-behavior: auto; }
+}
