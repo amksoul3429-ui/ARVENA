@@ -33,7 +33,7 @@ import {getLevel,xpIntoLevel} from './core/system';
 import {awardProgression} from './core/progression';
 import {clearStoredAppData,restoreAppData} from './core/storage';
 import {getNotificationAccess,requestNotificationAccess,sendSystemNotification} from './core/permissions';
-import {Plus,X} from 'lucide-react';
+import {Plus} from 'lucide-react';
 function App(){
  const {data,setData,setPersistenceReady,resetPersistence,storageHealthy,persistenceError,loadError,loadWarning}=useAsteriaData();
  const {canInstall,updateReady,install,applyUpdate}=usePwa();
