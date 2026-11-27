@@ -41,6 +41,7 @@ function App(){
  useEffect(()=>{document.documentElement.dataset.theme=theme;localStorage.setItem('asteria-theme',theme)},[theme]);
  useEffect(()=>subscribeToExternalChanges(next=>setData(next)),[]);
  useEffect(()=>{if(toast){const t=setTimeout(()=>setToast(''),4000);return()=>clearTimeout(t)}},[toast]);
+ useEffect(()=>{const onKeyDown=(event:KeyboardEvent)=>{if(event.key==='Escape'){setMobile(false);if(modal){setModal(null);setEditing(null)}}};window.addEventListener('keydown',onKeyDown);return()=>window.removeEventListener('keydown',onKeyDown)},[modal]);
  const key=(p:Page)=>p==='Missions'?'missions':p==='Planner'?'tasks':p==='Dream Life'?'goals':p==='Knowledge'?'knowledge':p==='Videos'?'videos':p==='Evolution'?'evolution':p==='Rewards'?'rewards':'journal';
  const open=(p:Page,item?:Item)=>{setEditing(item||null);setModal(p)};
  const openPlanner=(date:string)=>{setPlannerDate(date);open('Planner')};
