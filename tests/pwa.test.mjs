@@ -19,7 +19,7 @@ function createWorker({ html = "", networkFetch = async () => { throw new Error(
     URL,
     fetch: networkFetch,
     self: {
-      location: { origin: "https://example.test", pathname: "/ARVENA/sw.js" },
+      location: { href: "https://example.test/ARVENA/sw.js", origin: "https://example.test", pathname: "/ARVENA/sw.js" },
       clients: { claim: async () => {} },
       skipWaiting: () => {},
       addEventListener: (name, callback) => listeners.set(name, callback),
