@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { transitionMission, assignMissionToPlanner, missionReward } from "../.test-build/missions.js";
+import { transitionMission, assignMissionToPlanner, missionReward, normalizeMission } from "../.test-build/missions.js";
 import { syncMissionTask, getDaySummary, removeMissionTasks } from "../.test-build/planner.js";
 import { addGoalMilestone, toggleGoalMilestone, goalProgress } from "../.test-build/goals.js";
 import { recordHabitCheckIn, evolutionSummary } from "../.test-build/evolution.js";
@@ -24,7 +24,7 @@ test("life-system workflow: mission assignment, planner sync, completion and exa
   const completed = transitionMission(activated.missions, "m1", "Completed", day);
   assert.equal(completed.ok, true);
   assert.equal(transitionMission(completed.missions, "m1", "Completed", day).ok, false);
-  assert.deepEqual(missionReward(mission), {xp:50,credits:5});
+  assert.deepEqual(missionReward(normalizeMission(mission)), {xp:50,credits:5});
   assert.equal(removeMissionTasks(synced, "m1").length, 0);
 });
 
