@@ -1,31 +1,4 @@
-import { Download, Menu, Moon, RefreshCw, Sun, Wallet, Zap } from "lucide-react";
-import type { Page } from "../core/navigation";
-import type { AsteriaTheme } from "../hooks/useAsteriaTheme";
-
-type Props = {
-  page: Page;
-  theme: AsteriaTheme;
-  credits: number;
-  level: number;
-  navigationOpen: boolean;
-  canInstall: boolean;
-  updateReady: boolean;
-  onOpenNavigation: () => void;
-  onToggleTheme: () => void;
-  onInstall: () => void;
-  onApplyUpdate: () => void;
-};
-
-export default function AppHeader({ page, theme, credits, level, navigationOpen, canInstall, updateReady, onOpenNavigation, onToggleTheme, onInstall, onApplyUpdate }: Props) {
-  return <header>
-    <button className="hamb" aria-label="Open navigation" aria-expanded={navigationOpen} aria-controls="asteria-navigation-dialog" onClick={onOpenNavigation}><Menu/></button>
-    <span>ASTERIA　›　<b>{page.toUpperCase()}</b></span>
-    <div className="chips">
-      {canInstall&&<button className="pwa-action" onClick={onInstall}><Download size={14}/> INSTALL</button>}
-      {updateReady&&<button className="pwa-action update" onClick={onApplyUpdate}><RefreshCw size={14}/> UPDATE READY</button>}
-      <button className="theme-toggle" onClick={onToggleTheme} aria-label={theme==='dark'?'Switch to light theme':'Switch to dark theme'}>{theme==='dark'?<Sun size={15}/>:<Moon size={15}/>}<span>{theme==='dark'?'LIGHT':'DARK'}</span></button>
-      <i><Wallet size={14}/> {credits} credits</i>
-      <i><Zap size={14}/> LVL {level}</i>
-    </div>
-  </header>;
-}
+import {Download,Menu,Moon,RefreshCw,Search,Sun,Wallet,Zap,X} from "lucide-react";
+import type {Page} from "../core/navigation";import type {AsteriaTheme} from "../hooks/useAsteriaTheme";
+type Props={page:Page;theme:AsteriaTheme;credits:number;level:number;navigationOpen:boolean;canInstall:boolean;updateReady:boolean;search:string;onSearch:(value:string)=>void;onOpenNavigation:()=>void;onToggleTheme:()=>void;onInstall:()=>void;onApplyUpdate:()=>void};
+export default function AppHeader({page,theme,credits,level,navigationOpen,canInstall,updateReady,search,onSearch,onOpenNavigation,onToggleTheme,onInstall,onApplyUpdate}:Props){return <header className="asteria-topbar"><button className="hamb" aria-label="Open navigation" aria-expanded={navigationOpen} aria-controls="asteria-navigation-dialog" onClick={onOpenNavigation}><Menu/></button><div className="asteria-breadcrumb"><span>ASTERIA</span><b>›</b><strong>{page.toUpperCase()}</strong></div><label className="asteria-global-search"><Search size={15}/><input value={search} onChange={e=>onSearch(e.target.value)} placeholder="Filter this workspace…"/>{search&&<button aria-label="Clear search" onClick={()=>onSearch("")}><X size={13}/></button>}<kbd>⌘ K</kbd></label><div className="chips">{canInstall&&<button className="pwa-action" onClick={onInstall}><Download size={14}/> INSTALL</button>}{updateReady&&<button className="pwa-action update" onClick={onApplyUpdate}><RefreshCw size={14}/> UPDATE READY</button>}<span className="asteria-system-online"><i/> PRIVATE MODE</span><button className="theme-toggle" onClick={onToggleTheme} aria-label={theme==="dark"?"Switch to light theme":"Switch to dark theme"}>{theme==="dark"?<Sun size={15}/>:<Moon size={15}/>}<span>{theme==="dark"?"LIGHT":"DARK"}</span></button><i className="asteria-credit-chip"><Wallet size={14}/> {credits} credits</i><i className="asteria-level-chip"><Zap size={14}/> LVL {level}</i></div></header>}
