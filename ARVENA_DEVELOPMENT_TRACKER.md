@@ -102,11 +102,18 @@
 - [ ] Owner desktop/mobile acceptance
 
 ## PART 05 — SECURITY, INTEGRATION & PRODUCTION
-- [ ] Privacy and security hardening
-- [ ] Data portability and recovery
-- [ ] Additional integrations and automation
-- [ ] Performance and accessibility refinement
-- [ ] Production deployment and verification
+
+> Implementation status: implemented on part-05-security-production; CI and deployment verification pending. See [PART-05-SECURITY-PRODUCTION.md](PART-05-SECURITY-PRODUCTION.md).
+
+- [x] Passphrase-encrypted portable backups using AES-256-GCM and PBKDF2-SHA-256
+- [x] Encrypted backup import with authenticated decryption, schema validation, restore confirmation and 20 MB limit
+- [x] Existing standard and legacy backup compatibility retained; YouTube API key excluded
+- [x] Explicit disclosure of local-storage, cloud-sync, remote-AI and encryption-at-rest boundaries
+- [x] Lazy-load secondary workspaces to reduce initial application payload
+- [x] Accessible keyboard skip-to-content link, workspace loading status and reduced-motion treatment
+- [x] Branch CI passed: 121/121 automated tests and TypeScript/Vite production build (workflow 46026447549)
+- [ ] Main deployment and Pages deployment passed
+- [ ] Owner desktop/mobile and real-device recovery/offline acceptance
 
 **AERIS is a separate application. ASTERIA must not embed an AERIS interface or depend on AERIS to operate.**
 

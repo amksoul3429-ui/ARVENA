@@ -172,3 +172,6 @@
 :root[data-theme="light"] .navigation-layer>.navigation-panel{background:rgba(255,255,255,.99)!important;border-color:#dce3ef!important;}
 
 .pwa-action{display:inline-flex;align-items:center;gap:6px;padding:8px 10px;border:1px solid #625b9c;border-radius:18px;background:rgba(132,119,230,.14);color:#d9d4ff;font-size:9px;font-weight:800;letter-spacing:.6px;white-space:nowrap}.pwa-action.update{border-color:#8a7145;background:rgba(190,151,79,.14);color:#f0d6a4}:root[data-theme="light"] .pwa-action{border-color:#d6d0f3;background:#eeecff;color:#51478e}:root[data-theme="light"] .pwa-action.update{border-color:#e8d9b9;background:#fff6e4;color:#795b28}@media(max-width:520px){.pwa-action{padding:7px;font-size:8px}.pwa-action svg{width:12px}}
+
+/* Part 05: keyboard skip navigation and reduced-motion-safe focus treatment. */
+.skip-link{position:absolute;top:8px;left:8px;z-index:2000;padding:10px 14px;border-radius:8px;background:#fff;color:#17152d;font-size:12px;font-weight:800;transform:translateY(-160%);transition:transform .15s ease}.skip-link:focus{transform:translateY(0);outline:3px solid #9188ff;outline-offset:3px}@media(prefers-reduced-motion:reduce){.skip-link{transition:none}}
