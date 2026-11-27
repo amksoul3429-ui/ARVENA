@@ -21,3 +21,5 @@ UI event → domain helper/validated state → storage envelope → UI projectio
 
 ## Phase 01 follow-up
 This is a boundary map, not a claim that the existing app has been fully refactored into every boundary. The current shell still orchestrates several components; incremental extraction is safer than a risky wholesale rewrite.
+
+- **Application boundary:** ASTERIA is an independent PWA. AERIS is a separate application and must not be imported into the ASTERIA interface or required for ASTERIA operation.
