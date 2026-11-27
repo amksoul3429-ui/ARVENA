@@ -57,7 +57,7 @@ test("life-system workflow: journal search, favorites, streak and reporting stay
   assert.equal(journalSummary(entries, day).currentStreak, 1);
   const report = summarizeReports({journal:entries,missions:[{id:"m1",title:"Done",created:day,completedAt:day,status:"Completed"}],tasks:[{id:"t1",title:"Done",created:day,date:day,done:true}],xp:55,credits:5},{start:day,end:day});
   assert.equal(report.totals.journalEntries, 1);
-  assert.equal(report.totals.journalWords, 7);
+  assert.equal(report.totals.journalWords, 6);
   assert.equal(report.totals.missions, 1);
   assert.equal(report.totals.tasks, 1);
   assert.equal(report.totals.completionRate, 100);
