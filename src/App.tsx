@@ -20,6 +20,7 @@ import SettingsSecurity from './components/SettingsSecurity';
 import RecordModal from './components/RecordModal';
 import {removeMissionTasks} from './core/planner';
 import {saveRecord} from './core/records';
+import {filterWorkspaceRecords} from './core/workspaceData';
 import {normalizeMission} from './core/missions';
 import type { LifeGoal, GoalMilestone } from './core/goals';
 import './components/MissionControl.css';
@@ -61,13 +62,12 @@ function App(){
   else if(mobile)document.querySelector<HTMLElement>('.navigation-panel .close')?.focus();
   else if(focusReturnRef.current){focusReturnRef.current.focus();focusReturnRef.current=null;}
  },[modal,mobile]);
- const key=(p:Page)=>p==='Missions'?'missions':p==='Planner'?'tasks':p==='Dream Life'?'goals':p==='Knowledge'?'knowledge':p==='Videos'?'videos':p==='Evolution'?'evolution':p==='Rewards'?'rewards':'journal';
  const open=(p:RecordPage,item?:Item)=>{focusReturnRef.current=document.activeElement as HTMLElement|null;setEditing(item||null);setModal(p)};
  const openPlanner=(date:string)=>{setPlannerDate(date);open('Planner')};
- const remove=(p:RecordPage,item:Item)=>{setData(d=>({...d,[key(p)]:d[key(p)].filter(x=>x.id!==item.id)}));setToast('Deleted')};
+ const remove=(p:RecordPage,item:Item)=>{setData(d=>({...d,[p==='Missions'?'missions':p==='Planner'?'tasks':p==='Dream Life'?'goals':p==='Knowledge'?'knowledge':p==='Rewards'?'rewards':'journal']:d[p==='Missions'?'missions':p==='Planner'?'tasks':p==='Dream Life'?'goals':p==='Knowledge'?'knowledge':p==='Rewards'?'rewards':'journal'].filter(x=>x.id!==item.id)}));setToast('Deleted')};
  const save=(p:RecordPage,form:HTMLFormElement)=>{setData(d=>saveRecord(d,p,new FormData(form),editing));setModal(null);setEditing(null);setToast(editing?'Saved changes':'Added successfully')};
  const {changeMissionStatus,completeMission,addMissionToPlanner,claimRewardAchievement,unlockSystemReward,redeemPersonal,fulfillPersonal}=useAsteriaActions(setData,setToast);
- const list=(p:Page)=>data[key(p)].filter(x=>x.title.toLowerCase().includes(search.toLowerCase()));
+ const list=(p:Page)=>filterWorkspaceRecords(data,p,search);
  return <div className="shell">
  {mobile&&<NavigationOverlay page={page} xp={data.xp} onNavigate={setPage} onClose={()=>setMobile(false)}/>}
  <main><header><button className="hamb" aria-label="Open navigation" aria-expanded={mobile} aria-controls="asteria-navigation-dialog" onClick={()=>{focusReturnRef.current=document.activeElement as HTMLElement|null;setMobile(true)}}><Menu/></button><span>ASTERIA　›　<b>{labels[page].toUpperCase()}</b></span><div className="chips"><button className="theme-toggle" onClick={()=>setTheme(t=>t==='dark'?'light':'dark')} aria-label={theme==='dark'?'Switch to light theme':'Switch to dark theme'}>{theme==='dark'?<Sun size={15}/>:<Moon size={15}/>}<span>{theme==='dark'?'LIGHT':'DARK'}</span></button><i><Wallet size={14}/> {data.credits} credits</i><i><Zap size={14}/> LVL {getLevel(data.xp)}</i></div></header>
