@@ -1,10 +1,10 @@
 # ASTERIA — Manual Acceptance Checklist
 
-Use this checklist on the deployed app after the GitHub Actions build and deployment succeed. Test on Android Chrome first, then on desktop if available.
+Use this checklist yourself after the GitHub Actions build and deployment succeed. Start with Android Chrome, then check desktop. Implementation and automated checks are handled in the branch; the device/browser acceptance boxes are intentionally left for your hands-on review.
 
 ## Before testing
 
-- [ ] Open the production app: https://amksoul3429-ui.github.io/ARVENA/
+- [ ] Open the production app: https://amksoul3429-ui.github.io/ASTERIA/
 - [ ] Confirm the page loads without a blank screen or browser error.
 - [ ] If an older version appears, close the installed PWA/tab completely, reopen the URL, and refresh once.
 - [ ] Create a backup in Settings & Security before testing restore/reset features.
