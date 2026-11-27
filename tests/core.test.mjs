@@ -158,6 +158,17 @@ test("explicit local reset clears a protected future-version envelope", () => {
   assert.equal(store.has(STORAGE_KEY), false);
 });
 
+test("explicit local reset also removes the legacy standalone Explorer video library", () => {
+  store.set(STORAGE_KEY, JSON.stringify(createBackup(sample)));
+  store.set("arvena-video-library-v1", JSON.stringify([
+    { id: "legacy-video", title: "Saved lecture", url: "https://youtu.be/example", created: "2026-11-23" }
+  ]));
+  const cleared = clearStoredAppData();
+  assert.equal(cleared.ok, true);
+  assert.equal(store.has(STORAGE_KEY), false);
+  assert.equal(store.has("arvena-video-library-v1"), false);
+});
+
 test("current-version backup rejects unrelated empty data objects", () => {
   const parsed = parseBackup({ format: BACKUP_FORMAT, version: BACKUP_VERSION, data: { unrelated: true } });
   assert.equal(parsed.ok, false);
