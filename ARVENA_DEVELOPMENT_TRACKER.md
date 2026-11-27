@@ -1,4 +1,4 @@
-# ASTERIA × AERIS — Master Development Tracker
+# ASTERIA — Master Development Tracker
 
 ## PART 01 — ASTERIA FOUNDATION (Phases 01–04)
 
@@ -41,28 +41,36 @@
 - [ ] Android/desktop device acceptance complete
 - [ ] Part 01 sign-off
 
-## PART 02 — AERIS INTELLIGENCE (PHASES 05–09)
-- [ ] Phase 05 — AERIS Intelligence Core
-- [ ] Phase 06 — AERIS Personalities & Adaptive Interaction
-- [ ] Phase 07 — Voice Intelligence & Hands-Free Interaction
-- [ ] Phase 08 — AERIS Command & Action Engine
-- [ ] Phase 09 — Intelligence Memory & Context Engine
+## PART 02 — LIFE SYSTEMS
+- [ ] Command Center
+- [ ] Mission Control
+- [ ] Daily Planner
+- [ ] Dream Life & Vision
+- [ ] Personal Evolution
+- [ ] Personal Journal
+- [ ] System Reports
 
-## PART 03 — UNIVERSAL KNOWLEDGE (PHASES 10–15)
-- [ ] Phase 10 — Universal Search & Exploration
-- [ ] Phase 11 — Universal Learning Engine
-- [ ] Phase 12 — Research & Discovery Engine
-- [ ] Phase 13 — Media & Resource Intelligence
-- [ ] Phase 14 — Practice, Testing & Mastery
-- [ ] Phase 15 — Knowledge Library & Knowledge Graph
+## PART 03 — UNIVERSAL KNOWLEDGE
+- [ ] Universal Knowledge Library
+- [ ] Knowledge Marketplace
+- [ ] Complete learning pathways and skill trees
+- [ ] Video Learning Studio
+- [ ] Practice, assessment, revision and mastery
 
-## PART 04 — PERSONAL EVOLUTION & INTELLIGENCE (PHASES 16–18)
-- [ ] Phase 16 — Personal Evolution & Life Systems
-- [ ] Phase 17 — Business, Finance & Strategic Systems
-- [ ] Phase 18 — Adaptive Personal Intelligence
+## PART 04 — PROGRESSION & PERSONAL DEVELOPMENT
+- [ ] Unified XP and credits economy
+- [ ] Levels, ranks, titles and achievements
+- [ ] Mission and milestone rewards
+- [ ] Knowledge and skill unlock progression
+- [ ] Reward validation and analytics
 
-## PART 05 — SECURITY, INTEGRATION & PRODUCTION (PHASES 19–20)
-- [ ] Phase 19 — Security, Integration & Performance
-- [ ] Phase 20 — Testing, Deployment & Production Evolution
+## PART 05 — SECURITY, INTEGRATION & PRODUCTION
+- [ ] Privacy and security hardening
+- [ ] Data portability and recovery
+- [ ] Additional integrations and automation
+- [ ] Performance and accessibility refinement
+- [ ] Production deployment and verification
+
+**AERIS is a separate application. ASTERIA must not embed an AERIS interface or depend on AERIS to operate.**
 
 **Completion policy:** Part 01 remains incomplete until implementation, automated verification, deployment and user-device acceptance meet the standards above.
