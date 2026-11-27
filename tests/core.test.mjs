@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { BACKUP_FORMAT, BACKUP_VERSION, STORAGE_KEY, clearStoredAppData, createBackup, loadAppData, parseBackup, saveAppData, subscribeToExternalChanges, validateAppData } from "../.test-build/storage.js";
+import { BACKUP_FORMAT, BACKUP_VERSION, STORAGE_KEY, clearStoredAppData, createBackup, loadAppData, parseBackup, restoreAppData, saveAppData, subscribeToExternalChanges, validateAppData } from "../.test-build/storage.js";
 
 const store = new Map();
 const eventListeners = new Map();
@@ -224,4 +224,22 @@ test("reset failures are returned to the caller instead of being reported as suc
   } finally {
     window.localStorage.removeItem = originalRemove;
   }
+});
+
+
+test("ordinary saves never overwrite malformed existing data", () => {
+  const raw = "{broken-json";
+  store.set(STORAGE_KEY, raw);
+  const saved = saveAppData({ ...sample, xp: 500 });
+  assert.equal(saved.ok, false);
+  assert.equal(store.get(STORAGE_KEY), raw);
+});
+
+test("explicit confirmed restore replaces malformed data with a validated envelope", () => {
+  store.set(STORAGE_KEY, "{broken-json");
+  const restored = restoreAppData(sample);
+  assert.equal(restored.ok, true);
+  const stored = JSON.parse(store.get(STORAGE_KEY));
+  assert.equal(stored.format, BACKUP_FORMAT);
+  assert.deepEqual(stored.data, validateAppData(sample));
 });
