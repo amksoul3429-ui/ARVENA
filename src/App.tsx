@@ -4,6 +4,7 @@ import NavigationOverlay from './components/NavigationOverlay';
 import {labels,type Page} from './core/navigation';
 import type {RecordPage} from './core/records';
 import {useAsteriaActions} from './hooks/useAsteriaActions';
+import {usePwa} from './hooks/usePwa';
 import {blank,today,id,rewardMetrics,type Data,type Item} from './core/appData';
 import CommandCenter from './components/CommandCenter';
 import UniversalExplorer from './UniversalExplorer';
@@ -27,9 +28,10 @@ import './components/MissionControl.css';
 import {getLevel,xpIntoLevel} from './core/system';
 import {clearStoredAppData,restoreAppData} from './core/storage';
 import {getNotificationAccess,requestNotificationAccess,sendSystemNotification} from './core/permissions';
-import {Menu,Plus,Wallet,X,Zap,Sun,Moon} from 'lucide-react';
+import {Menu,Plus,Wallet,X,Zap,Sun,Moon,Download,RefreshCw} from 'lucide-react';
 function App(){
  const {data,setData,setPersistenceReady,storageHealthy,persistenceError,loadError,loadWarning}=useAsteriaData();
+ const {canInstall,updateReady,install,applyUpdate}=usePwa();
  const[notificationAccess,setNotificationAccess]=useState(getNotificationAccess);
  const[theme,setTheme]=useState<'dark'|'light'>(()=>{try{return (window.localStorage.getItem('asteria-theme')||window.localStorage.getItem('arvena-theme'))==='light'?'light':'dark'}catch{return 'dark'}});
  const[page,setPage]=useState<Page>('Overview'),[modal,setModal]=useState<RecordPage|null>(null),[editing,setEditing]=useState<Item|null>(null),[plannerDate,setPlannerDate]=useState(today()),[mobile,setMobile]=useState(false),[toast,setToast]=useState(loadWarning||loadError),[search,setSearch]=useState('');
@@ -70,7 +72,7 @@ function App(){
  const list=(p:Page)=>filterWorkspaceRecords(data,p,search);
  return <div className="shell">
  {mobile&&<NavigationOverlay page={page} xp={data.xp} onNavigate={setPage} onClose={()=>setMobile(false)}/>}
- <main><header><button className="hamb" aria-label="Open navigation" aria-expanded={mobile} aria-controls="asteria-navigation-dialog" onClick={()=>{focusReturnRef.current=document.activeElement as HTMLElement|null;setMobile(true)}}><Menu/></button><span>ASTERIA　›　<b>{labels[page].toUpperCase()}</b></span><div className="chips"><button className="theme-toggle" onClick={()=>setTheme(t=>t==='dark'?'light':'dark')} aria-label={theme==='dark'?'Switch to light theme':'Switch to dark theme'}>{theme==='dark'?<Sun size={15}/>:<Moon size={15}/>}<span>{theme==='dark'?'LIGHT':'DARK'}</span></button><i><Wallet size={14}/> {data.credits} credits</i><i><Zap size={14}/> LVL {getLevel(data.xp)}</i></div></header>
+ <main><header><button className="hamb" aria-label="Open navigation" aria-expanded={mobile} aria-controls="asteria-navigation-dialog" onClick={()=>{focusReturnRef.current=document.activeElement as HTMLElement|null;setMobile(true)}}><Menu/></button><span>ASTERIA　›　<b>{labels[page].toUpperCase()}</b></span><div className="chips">{canInstall&&<button className="pwa-action" onClick={()=>void install()}><Download size={14}/> INSTALL</button>}{updateReady&&<button className="pwa-action update" onClick={applyUpdate}><RefreshCw size={14}/> UPDATE READY</button>}<button className="theme-toggle" onClick={()=>setTheme(t=>t==='dark'?'light':'dark')} aria-label={theme==='dark'?'Switch to light theme':'Switch to dark theme'}>{theme==='dark'?<Sun size={15}/>:<Moon size={15}/>}<span>{theme==='dark'?'LIGHT':'DARK'}</span></button><i><Wallet size={14}/> {data.credits} credits</i><i><Zap size={14}/> LVL {getLevel(data.xp)}</i></div></header>
  <div className="content">
  {page==='Explore'&&<UniversalExplorer videos={data.videos as any[]} onChange={videos=>setData(d=>({...d,videos:videos as unknown as Item[]}))}/>}
  {page==='Overview'&&<CommandCenter data={data} level={getLevel(data.xp)} xpIntoLevel={xpIntoLevel(data.xp)} onOpen={p=>open(p)} onNavigate={p=>setPage(p)} onToggleTask={taskId=>setData(d=>({...d,tasks:d.tasks.map(t=>t.id===taskId?{...t,done:!t.done}:t)}))}/>}
