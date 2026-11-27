@@ -118,7 +118,8 @@ export function saveAppData(value: unknown): StorageResult<AppData> {
       } catch {
         return { ok: false, error: "Saved data could not be validated and was left untouched. Restore a verified backup or explicitly reset local data." };
       }
-      if (JSON.stringify(existing) === JSON.stringify(data)) return { ok: true, value: data };
+      const currentEnvelope = (() => { try { const parsed: unknown = JSON.parse(existingRaw); return isObject(parsed) && parsed.format === BACKUP_FORMAT && parsed.version === BACKUP_VERSION; } catch { return false; } })();
+      if (currentEnvelope && JSON.stringify(existing) === JSON.stringify(data)) return { ok: true, value: data };
     }
     const envelope: BackupEnvelope = {
       format: BACKUP_FORMAT, version: BACKUP_VERSION, app: "ASTERIA",
