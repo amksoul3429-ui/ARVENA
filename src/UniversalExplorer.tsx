@@ -18,8 +18,12 @@ function videoEmbed(raw:string):{embed:string;provider:string}|null{
  }catch{}
  return null;
 }
-type Props={videos:VideoItem[];onChange:(videos:VideoItem[])=>void};
-export default function UniversalExplorer({videos,onChange}:Props){
+const SAVED='arvena-video-library-v1';
+type Props={videos?:VideoItem[];onChange?:(videos:VideoItem[])=>void};
+export default function UniversalExplorer({videos:providedVideos,onChange}:Props={}){
+ const [localVideos,setLocalVideos]=useState<VideoItem[]>(()=>{try{return JSON.parse(localStorage.getItem(SAVED)||'[]')}catch{return[]}});
+ const videos=providedVideos??localVideos;
+ const updateVideos=(next:VideoItem[])=>{if(onChange)onChange(next);else{setLocalVideos(next);try{localStorage.setItem(SAVED,JSON.stringify(next))}catch{}}};
  const [query,setQuery]=useState('');
  const [loading,setLoading]=useState(false);
  const [error,setError]=useState('');
@@ -45,9 +49,9 @@ export default function UniversalExplorer({videos,onChange}:Props){
  const addVideo=()=>{
   const parsed=videoEmbed(videoUrl);if(!parsed)return;
   const item={id:parsed.embed,title:videoTitle.trim()||'Saved educational video',url:videoUrl.trim(),provider:parsed.provider};
-  const next=[item,...videos.filter(v=>v.id!==item.id)];onChange(next);setActive(item);setVideoUrl('');setVideoTitle('');
+  const next=[item,...videos.filter(v=>v.id!==item.id)];updateVideos(next);setActive(item);setVideoUrl('');setVideoTitle('');
  };
- const removeVideo=(id:string)=>{const next=videos.filter(v=>v.id!==id);onChange(next);if(active?.id===id)setActive(null);};
+ const removeVideo=(id:string)=>{const next=videos.filter(v=>v.id!==id);updateVideos(next);if(active?.id===id)setActive(null);};
  const topics=['Astronomy','Cosmology','Evolution','Quantum mechanics','Mathematics','Computer science','Artificial intelligence','World history','Philosophy','Psychology','Economics','Medicine','Earth science','Literature','Languages','Engineering','Music theory','Ecology','Political science','Art history','Neuroscience','Oceanography','Geology','Ethics'];
  return <section className="ux">
   <div className="ux-heading"><div><span><Orbit size={13}/> UNIVERSAL KNOWLEDGE EXPLORER</span><h2>Explore the <em>known and unknown.</em></h2><p>Search across disciplines and discover connected ideas. Your starting point is not limited to a preset course catalogue.</p></div><div className="ux-mark"><Globe2 size={36}/><small>OPEN KNOWLEDGE</small></div></div>
