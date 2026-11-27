@@ -2,7 +2,7 @@ import {useMemo,useState} from "react";
 import {Activity,BookOpen,CalendarCheck,Check,Flame,Pencil,Plus,Target,Trash2,TrendingUp} from "lucide-react";
 import {evolutionSummary,habitStreak,habitWeeklyCount,logSkillPractice,normalizeEvolution,recordHabitCheckIn,updateTrait,type EvolutionRecord,type Habit,type Skill,type Trait} from "../core/evolution";
 import "./PersonalEvolution.css";
-type Props={records:any[];xp:number;onChange:(records:EvolutionRecord[])=>void;onAwardXp:(xp:number)=>void;onCreateMission:(title:string,description:string)=>void;onScheduleHabit:(title:string,category:string)=>void};
+type Props={records:any[];xp:number;onChange:(records:EvolutionRecord[])=>void;onAwardXp:(xp:number,eventId:string)=>void;onCreateMission:(title:string,description:string)=>void;onScheduleHabit:(title:string,category:string)=>void};
 const uid=()=>crypto.randomUUID();
 const today=()=>{const d=new Date();return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0")};
 export default function PersonalEvolution({records,xp,onChange,onAwardXp,onCreateMission,onScheduleHabit}:Props){
@@ -27,7 +27,7 @@ export default function PersonalEvolution({records,xp,onChange,onAwardXp,onCreat
   else next={...base,kind:"reflection",content:content||description,mood};
   onChange(existing?items.map(r=>r.id===existing.id?next:r):[next,...items]);resetForm();
  };
- const checkIn=(h:Habit)=>{const r=recordHabitCheckIn(items,h.id,date,date);if(r.changed){onChange(r.records);if(r.xpAwarded)onAwardXp(r.xpAwarded)}};
+ const checkIn=(h:Habit)=>{const r=recordHabitCheckIn(items,h.id,date,date);if(r.changed){onChange(r.records);if(r.xpAwarded)onAwardXp(r.xpAwarded,'habit:'+h.id+':'+date)}};
  const remove=(r:EvolutionRecord)=>{if(confirm("Delete "+r.title+" and its personal-growth history?"))onChange(items.filter(x=>x.id!==r.id));};
  const heading=tab==="Habits"?"Build consistency":tab==="Skills"?"Develop capabilities":tab==="Identity"?"Strengthen your character":"Review your growth";
  return <div className="evolution">
