@@ -90,7 +90,7 @@ export function createUniversalKnowledgeCourses(now = new Date().toISOString()):
    id:seed.id+"-lesson-"+(index+1),title:item.title,summary:item.summary,content:item.content,
    objectives:item.objectives,estimatedMinutes:25+index*5,resources:[],
    question:{prompt:item.question,options:item.options,answerIndex:item.answer,explanation:item.explanation},
-   done:false
+   done:false,reviewIntervalDays:0,reviewStreak:0,assessmentAttempts:0,assessmentCorrect:0
   }))
  }));
 }
