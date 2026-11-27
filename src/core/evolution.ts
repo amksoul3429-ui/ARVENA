@@ -1,3 +1,4 @@
+import { skillLevelFromPractice } from "./progression";
 export type HabitFrequency = "Daily" | "Weekdays" | "Weekly";
 export type Habit = { id:string; title:string; created:string; kind:"habit"; description:string; category:string; frequency:HabitFrequency; targetPerWeek:number; active:boolean; checkIns:string[] };
 export type Skill = { id:string; title:string; created:string; kind:"skill"; category:string; level:number; practiceMinutes:number; sessions:number; notes:string; updatedAt:string };
@@ -35,7 +36,7 @@ export function habitWeeklyCount(value:unknown,today:string):number{
 }
 export function logSkillPractice(values:unknown[],skillId:string,minutes:number,note="",now=new Date().toISOString()){
  const records=normalizeEvolution(values);let changed=false;
- const next=records.map(r=>{if(r.kind!=="skill"||r.id!==skillId)return r;changed=true;const practiceMinutes=r.practiceMinutes+Math.max(1,Math.min(1440,Math.floor(minutes)||1));return {...r,practiceMinutes,sessions:r.sessions+1,level:Math.min(10,1+Math.floor(practiceMinutes/300)),notes:note.trim()||r.notes,updatedAt:now};});
+ const next=records.map(r=>{if(r.kind!=="skill"||r.id!==skillId)return r;changed=true;const practiceMinutes=r.practiceMinutes+Math.max(1,Math.min(1440,Math.floor(minutes)||1));return {...r,practiceMinutes,sessions:r.sessions+1,level:skillLevelFromPractice(practiceMinutes),notes:note.trim()||r.notes,updatedAt:now};});
  return {records:next,changed};
 }
 export function updateTrait(values:unknown[],traitId:string,score:number,reflection:string,now=new Date().toISOString()){
