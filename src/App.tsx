@@ -1,4 +1,4 @@
-import {useEffect,useRef,useState} from 'react';
+import {lazy,Suspense,useEffect,useRef,useState} from 'react';
 import {useAsteriaData} from './hooks/useAsteriaData';
 import NavigationOverlay from './components/NavigationOverlay';
 import {labels,type Page} from './core/navigation';
@@ -9,17 +9,17 @@ import {useAsteriaTheme} from './hooks/useAsteriaTheme';
 import AppHeader from './components/AppHeader';
 import {blank,today,id,rewardMetrics,type Data,type Item} from './core/appData';
 import CommandCenter from './components/CommandCenter';
-import UniversalExplorer from './UniversalExplorer';
-import MissionControl from './components/MissionControl';
-import DailyPlanner from './components/DailyPlanner';
-import DreamLife from './components/DreamLife';
-import KnowledgeLibrary from './components/KnowledgeLibrary';
-import VideoLearningStudio from './components/VideoLearningStudio';
-import PersonalEvolution from './components/PersonalEvolution';
-import RewardsAchievements from './components/RewardsAchievements';
-import PersonalJournal from './components/PersonalJournal';
-import SystemReports from './components/SystemReports';
-import SettingsSecurity from './components/SettingsSecurity';
+const UniversalExplorer=lazy(()=>import('./UniversalExplorer'));
+const MissionControl=lazy(()=>import('./components/MissionControl'));
+const DailyPlanner=lazy(()=>import('./components/DailyPlanner'));
+const DreamLife=lazy(()=>import('./components/DreamLife'));
+const KnowledgeLibrary=lazy(()=>import('./components/KnowledgeLibrary'));
+const VideoLearningStudio=lazy(()=>import('./components/VideoLearningStudio'));
+const PersonalEvolution=lazy(()=>import('./components/PersonalEvolution'));
+const RewardsAchievements=lazy(()=>import('./components/RewardsAchievements'));
+const PersonalJournal=lazy(()=>import('./components/PersonalJournal'));
+const SystemReports=lazy(()=>import('./components/SystemReports'));
+const SettingsSecurity=lazy(()=>import('./components/SettingsSecurity'));
 import RecordModal from './components/RecordModal';
 import {removeMissionTasks} from './core/planner';
 import {saveRecord} from './core/records';
@@ -74,8 +74,8 @@ function App(){
  const list=(p:Page)=>filterWorkspaceRecords(data,p,search);
  return <div className="shell">
  {mobile&&<NavigationOverlay page={page} xp={data.xp} onNavigate={setPage} onClose={()=>setMobile(false)}/>}
- <main><AppHeader page={page} theme={theme} credits={data.credits} level={getLevel(data.xp)} navigationOpen={mobile} canInstall={canInstall} updateReady={updateReady} onOpenNavigation={()=>{focusReturnRef.current=document.activeElement as HTMLElement|null;setMobile(true)}} onToggleTheme={()=>setTheme(t=>t==='dark'?'light':'dark')} onInstall={()=>void install()} onApplyUpdate={applyUpdate}/>
- <div className="content">
+ <main id="main-content"><a className="skip-link" href="#main-content">Skip to main content</a><AppHeader page={page} theme={theme} credits={data.credits} level={getLevel(data.xp)} navigationOpen={mobile} canInstall={canInstall} updateReady={updateReady} onOpenNavigation={()=>{focusReturnRef.current=document.activeElement as HTMLElement|null;setMobile(true)}} onToggleTheme={()=>setTheme(t=>t==='dark'?'light':'dark')} onInstall={()=>void install()} onApplyUpdate={applyUpdate}/>
+ <div className="content"><Suspense fallback={<div className="panel" role="status" aria-live="polite">Loading workspace…</div>}>
  {page==='Explore'&&<UniversalExplorer videos={data.videos as any[]} onChange={videos=>setData(d=>({...d,videos:videos as unknown as Item[]}))}/>}
  {page==='Overview'&&<CommandCenter data={data} level={getLevel(data.xp)} xpIntoLevel={xpIntoLevel(data.xp)} onOpen={p=>open(p)} onNavigate={p=>setPage(p)} onToggleTask={taskId=>setData(d=>({...d,tasks:d.tasks.map(t=>t.id===taskId?{...t,done:!t.done}:t)}))}/>}
  {page==='Missions'&&<><Head page={page} onAdd={()=>open(page)}/><MissionControl missions={list(page)} onEdit={m=>open(page,m as Item)} onDelete={m=>{if(confirm('Delete this mission and its linked planner task, if any?')){setData(d=>({...d,missions:d.missions.filter(x=>x.id!==m.id),tasks:removeMissionTasks(d.tasks as any,m.id) as Item[]}));setToast('Mission deleted')}}} onActivate={missionId=>{const m=data.missions.find(x=>x.id===missionId);changeMissionStatus(missionId,normalizeMission(m||{id:'',title:'',created:''}).status==='Active'?'Available':'Active')}} onComplete={completeMission} onPlanner={addMissionToPlanner}/></>}
@@ -88,7 +88,7 @@ function App(){
  {page==='Journal'&&<PersonalJournal entries={data.journal} onChange={entries=>setData(d=>({...d,journal:entries as Item[]}))}/>}
  {page==='Reports'&&<SystemReports data={data}/>}
  {page==='Settings'&&<SettingsSecurity data={data} storageHealthy={storageHealthy} notificationAccess={notificationAccess} onRequestNotifications={async()=>{const access=await requestNotificationAccess();setNotificationAccess(access);if(access==='granted'){sendSystemNotification('ASTERIA notifications enabled','ASTERIA can now show browser notifications.');setToast('Notifications enabled')}else if(access==='denied')setToast('Notifications are blocked in browser settings')}} onRestore={(restored,warning)=>{const result=restoreAppData(restored);if(!result.ok){setToast(result.error);return;}setPersistenceReady(true);setData(result.value as Data);setToast(warning||'Backup restored successfully')}} onReset={()=>{const result=clearStoredAppData();if(!result.ok){setToast(result.error);return;}resetPersistence();setPersistenceReady(true);setData({...blank});setToast('Local data reset')}}/>}
- </div><footer>ASTERIA · PRIVATE · LOCAL-FIRST</footer></main>
+ </Suspense></div><footer>ASTERIA · PRIVATE · LOCAL-FIRST</footer></main>
  {modal&&<RecordModal page={modal} title={labels[modal]||modal} initial={editing} defaultDate={plannerDate} close={()=>{setModal(null);setEditing(null)}} save={f=>save(modal,f)}/>}
  {toast&&<div className="toast">✓　{toast}</div>}
  <div className="search"><input placeholder="Filter current section..." value={search} onChange={e=>setSearch(e.target.value)}/>{search&&<button onClick={()=>setSearch('')}><X size={13}/></button>}</div>
