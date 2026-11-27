@@ -271,3 +271,19 @@ test("unrecognized current-version envelopes are preserved instead of normalized
   assert.equal(loaded.ok, false);
   assert.equal(store.get(STORAGE_KEY), raw);
 });
+
+
+test("an empty first-run store remains absent until the user creates data", () => {
+  store.delete(STORAGE_KEY);
+  const loaded = loadAppData();
+  assert.equal(loaded.ok, true);
+  if (loaded.ok) assert.equal(loaded.persisted, false);
+  assert.equal(store.has(STORAGE_KEY), false);
+});
+
+test("an existing saved snapshot is reported as persisted", () => {
+  store.set(STORAGE_KEY, JSON.stringify(createBackup(sample)));
+  const loaded = loadAppData();
+  assert.equal(loaded.ok, true);
+  if (loaded.ok) assert.equal(loaded.persisted, true);
+});
