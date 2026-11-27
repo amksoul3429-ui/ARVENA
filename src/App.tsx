@@ -20,7 +20,7 @@ import SettingsSecurity from './components/SettingsSecurity';
 import RecordModal from './components/RecordModal';
 import {removeMissionTasks} from './core/planner';
 import {saveRecord} from './core/records';
-import {filterWorkspaceRecords} from './core/workspaceData';
+import {filterWorkspaceRecords,removeWorkspaceRecord} from './core/workspaceData';
 import {normalizeMission} from './core/missions';
 import type { LifeGoal, GoalMilestone } from './core/goals';
 import './components/MissionControl.css';
@@ -64,7 +64,7 @@ function App(){
  },[modal,mobile]);
  const open=(p:RecordPage,item?:Item)=>{focusReturnRef.current=document.activeElement as HTMLElement|null;setEditing(item||null);setModal(p)};
  const openPlanner=(date:string)=>{setPlannerDate(date);open('Planner')};
- const remove=(p:RecordPage,item:Item)=>{setData(d=>({...d,[p==='Missions'?'missions':p==='Planner'?'tasks':p==='Dream Life'?'goals':p==='Knowledge'?'knowledge':p==='Rewards'?'rewards':'journal']:d[p==='Missions'?'missions':p==='Planner'?'tasks':p==='Dream Life'?'goals':p==='Knowledge'?'knowledge':p==='Rewards'?'rewards':'journal'].filter(x=>x.id!==item.id)}));setToast('Deleted')};
+ const remove=(p:RecordPage,item:Item)=>{setData(d=>removeWorkspaceRecord(d,p,item.id));setToast('Deleted')};
  const save=(p:RecordPage,form:HTMLFormElement)=>{setData(d=>saveRecord(d,p,new FormData(form),editing));setModal(null);setEditing(null);setToast(editing?'Saved changes':'Added successfully')};
  const {changeMissionStatus,completeMission,addMissionToPlanner,claimRewardAchievement,unlockSystemReward,redeemPersonal,fulfillPersonal}=useAsteriaActions(setData,setToast);
  const list=(p:Page)=>filterWorkspaceRecords(data,p,search);
