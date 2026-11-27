@@ -1,33 +1,52 @@
 # ASTERIA × AERIS — Master Development Tracker
 
 ## PART 01 — ASTERIA FOUNDATION (Phases 01–04)
-- [x] Phase 01 — Architecture documentation and foundation review started; modular app/storage structure retained
-- [x] Phase 01 — Architecture boundaries documented; domain/storage/UI separation map and guardrails published (incremental refactor remains)
-- [x] Phase 02 — ASTERIA mark, shared design tokens and theme contrast foundations committed; approved original logo artwork may still replace the inspired placeholder
-- [x] Phase 03 — Universal Explorer promoted to a first-class navigation destination and responsive styling added (source integrations and complete learning engine remain separate phases)
-- [x] Phase 04 — Preserve existing local storage key and backup identifier; validate and retain legacy data
-- [x] PWA manifest base/scope paths corrected to relative paths for repository hosting
-- [x] ASTERIA branding applied to app shell and PWA metadata
-- [x] Accessibility/contrast foundation overrides added for light and dark themes
-- [x] Light-theme contrast refinements for Command Center and controls
-- [x] Theme preference migration fallback for prior installations
-- [x] CI core tests passed on commit dd525fe24a59686e65bbc9c9fec2149168adfa24
-- [x] CI production build passed on commit dd525fe24a59686e65bbc9c9fec2149168adfa24
-- [ ] Visual validation on Android and desktop
-- [x] Universal Explorer responsive layout and theme-specific presentation committed
-- [ ] Verify PWA install, update and offline behavior
-- [ ] Verify import/export/restore and persistence against existing user data
-- [ ] Add the exact Sacred Bloom logo asset and icons
+
+> **Status: IN PROGRESS — not signed off.** Checkboxes describe verifiable deliverables, not intentions or documentation alone.
+
+### Phase 01 — Architecture
+- [x] Architecture boundaries and data flow documented
+- [x] Existing domain modules and storage boundary identified
+- [ ] App shell responsibilities refactored and verified against the documented boundary map
+- [ ] Build/test configuration and deployment workflows consolidated and verified
+- [ ] Remove dead, duplicate or misleading foundation artifacts
+
+### Phase 02 — Identity & Design
+- [x] ASTERIA branding and theme tokens exist
+- [x] Light/dark theme foundations exist
+- [ ] All workspace screens and controls verified for contrast and consistency in both themes
+- [ ] Original user-approved Sacred Bloom artwork and complete app icon set integrated (placeholder is not accepted)
+- [ ] Mobile and desktop visual acceptance completed
+
+### Phase 03 — Core Interface
+- [x] Universal Explorer integrated into first-class navigation
+- [x] Centered mobile navigation overlay implemented
+- [x] Responsive Explorer styles connected
+- [ ] Navigation, overlay, keyboard/accessibility, all workspaces and interactions manually acceptance-tested
+- [ ] Interface consistency and responsive behavior accepted across phone/tablet/desktop
+
+### Phase 04 — Data & Storage
+- [x] Historical storage key and backup identifier retained
+- [x] Data validation, migration and backup/restore code exist
+- [ ] Import/export/restore tested on real browser/device with existing data and recovery copy
+- [ ] Cross-tab updates and storage failures verified
+- [ ] PWA installation, update and offline behavior verified on device
+
+### Foundation verification and sign-off
+- [x] Automated tests and production build passed on earlier recorded CI commit (not evidence for current HEAD)
+- [ ] Current HEAD CI checks pass
+- [ ] Production deploy verified
+- [ ] Android/desktop device acceptance complete
 - [ ] Part 01 sign-off
 
-## PART 02 — AERIS INTELLIGENCE (Phases 05–09)
+## PART 02 — AERIS INTELLIGENCE (PHASES 05–09)
 - [ ] Phase 05 — AERIS Intelligence Core
 - [ ] Phase 06 — AERIS Personalities & Adaptive Interaction
 - [ ] Phase 07 — Voice Intelligence & Hands-Free Interaction
 - [ ] Phase 08 — AERIS Command & Action Engine
 - [ ] Phase 09 — Intelligence Memory & Context Engine
 
-## PART 03 — UNIVERSAL KNOWLEDGE (Phases 10–15)
+## PART 03 — UNIVERSAL KNOWLEDGE (PHASES 10–15)
 - [ ] Phase 10 — Universal Search & Exploration
 - [ ] Phase 11 — Universal Learning Engine
 - [ ] Phase 12 — Research & Discovery Engine
@@ -35,13 +54,13 @@
 - [ ] Phase 14 — Practice, Testing & Mastery
 - [ ] Phase 15 — Knowledge Library & Knowledge Graph
 
-## PART 04 — PERSONAL EVOLUTION & INTELLIGENCE (Phases 16–18)
+## PART 04 — PERSONAL EVOLUTION & INTELLIGENCE (PHASES 16–18)
 - [ ] Phase 16 — Personal Evolution & Life Systems
 - [ ] Phase 17 — Business, Finance & Strategic Systems
 - [ ] Phase 18 — Adaptive Personal Intelligence
 
-## PART 05 — SECURITY, INTEGRATION & PRODUCTION (Phases 19–20)
+## PART 05 — SECURITY, INTEGRATION & PRODUCTION (PHASES 19–20)
 - [ ] Phase 19 — Security, Integration & Performance
 - [ ] Phase 20 — Testing, Deployment & Production Evolution
 
-**Completion policy:** Part 01 is not complete until the remaining visual, asset, persistence, PWA and user-device checks pass.
+**Completion policy:** Part 01 remains incomplete until implementation, automated verification, deployment and user-device acceptance meet the standards above.
