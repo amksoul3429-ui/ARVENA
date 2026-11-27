@@ -7,7 +7,10 @@
 ### Phase 01 — Architecture
 - [x] Architecture boundaries and data flow documented
 - [x] Existing domain modules and storage boundary identified
-- [ ] App shell responsibilities refactored and verified against the documented boundary map
+- [x] Record editor extracted into a dedicated component
+- [x] Persistence, migration status and cross-tab synchronization encapsulated in useAsteriaData
+- [x] Mission and reward orchestration delegated to useAsteriaActions
+- [ ] App shell responsibilities fully refactored and verified against the documented boundary map
 - [ ] Build/test configuration and deployment workflows consolidated and verified
 - [ ] Remove dead, duplicate or misleading foundation artifacts
 
