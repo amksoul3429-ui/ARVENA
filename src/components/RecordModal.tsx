@@ -1,7 +1,8 @@
 import {Check,X} from 'lucide-react';
+import type {RecordPage} from '../core/records';
 
 type RecordModalProps={
- page:string;
+ page:RecordPage;
  title:string;
  initial:Record<string,any>|null;
  defaultDate:string;
