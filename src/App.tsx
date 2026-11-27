@@ -1,4 +1,6 @@
 import {useEffect,useRef,useState} from 'react';
+import {useAsteriaData} from './hooks/useAsteriaData';
+import {blank,today,id,rewardMetrics,type Data,type Item} from './core/appData';
 import CommandCenter from './components/CommandCenter';
 import UniversalExplorer from './UniversalExplorer';
 import MissionControl from './components/MissionControl';
@@ -18,31 +20,20 @@ import type { LifeGoal, GoalMilestone } from './core/goals';
 import './components/MissionControl.css';
 import {getLevel,xpIntoLevel} from './core/system';
 import {claimAchievement,redeemPersonalReward,fulfillPersonalReward,unlockSystemItem} from './core/rewards';
-import {habitStreak} from './core/evolution';
-import {loadAppData,saveAppData,subscribeToExternalChanges,clearStoredAppData} from './core/storage';
+import {clearStoredAppData} from './core/storage';
 import {getNotificationAccess,requestNotificationAccess,sendSystemNotification} from './core/permissions';
 import {Activity,BookOpen,CalendarDays,ChevronRight,Compass,Edit3,Flame,LayoutDashboard,Menu,Plus,Settings,Target,Trophy,Wallet,Video as VideoIcon,X,Zap,Sun,Moon} from 'lucide-react';
 type Page='Explore'|'Overview'|'Missions'|'Planner'|'Dream Life'|'Evolution'|'Knowledge'|'Videos'|'Rewards'|'Journal'|'Reports'|'Settings';
-type Item={id:string;title:string;created:string;[key:string]:any};
-type Data={missions:Item[];tasks:Item[];goals:Item[];knowledge:Item[];videos:Item[];evolution:Item[];rewards:Item[];journal:Item[];activity:Item[];achievementClaims:string[];unlockedItems:string[];xp:number;credits:number};
-const blank:Data={missions:[],tasks:[],goals:[],knowledge:[],videos:[],evolution:[],rewards:[],journal:[],activity:[],achievementClaims:[],unlockedItems:[],xp:0,credits:0};
-const today=()=>{const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')},id=()=>crypto.randomUUID();
-const rewardMetrics=(d:Data)=>({missionsCompleted:d.missions.filter(m=>m.done||m.status==='Completed').length,businessMissionsCompleted:d.missions.filter(m=>(m.done||m.status==='Completed')&&String(m.category||'').toLowerCase()==='business').length,coursesCompleted:d.knowledge.filter(k=>k.done).length,lessonsCompleted:d.knowledge.reduce((n,k)=>n+(Array.isArray(k.lessons)?k.lessons.filter((l:any)=>l.done).length:(k.done?1:0)),0),habitCheckIns:d.evolution.filter(e=>e.kind==='habit').reduce((n,h)=>n+(Array.isArray(h.checkIns)?h.checkIns.length:0),0),bestHabitStreak:Math.max(0,...d.evolution.filter(e=>e.kind==='habit').map(h=>habitStreak(h,today()))),goalsCompleted:d.goals.filter(g=>g.status==='Completed'||g.done===true).length});
 const sections:Page[]=['Explore','Overview','Missions','Planner','Dream Life','Evolution','Knowledge','Videos','Rewards','Journal','Reports','Settings'];
 const labels:Record<Page,string>={'Explore':'Universal Explorer','Overview':'Command Center','Missions':'Mission Control','Planner':'Daily Planner','Dream Life':'Dream Life','Evolution':'Personal Evolution','Knowledge':'Knowledge Library','Videos':'Video Learning Studio','Rewards':'Rewards & Achievements','Journal':'Personal Journal','Reports':'System Reports','Settings':'Settings'};
 function App(){
- const[loadResult]=useState(()=>loadAppData());
- const[data,setData]=useState<Data>(()=>loadResult.ok?loadResult.value:blank);
- const[persistenceReady,setPersistenceReady]=useState(loadResult.ok);
- const[storageHealthy,setStorageHealthy]=useState(loadResult.ok);
+ const {data,setData,persistenceReady,setPersistenceReady,storageHealthy,persistenceError,loadError,loadWarning}=useAsteriaData();
  const[notificationAccess,setNotificationAccess]=useState(getNotificationAccess);
  const[theme,setTheme]=useState<'dark'|'light'>(()=>{try{return (window.localStorage.getItem('asteria-theme')||window.localStorage.getItem('arvena-theme'))==='light'?'light':'dark'}catch{return 'dark'}});
- const[page,setPage]=useState<Page>('Overview'),[modal,setModal]=useState<Page|null>(null),[editing,setEditing]=useState<Item|null>(null),[plannerDate,setPlannerDate]=useState(today()),[mobile,setMobile]=useState(false),[toast,setToast]=useState(loadResult.ok?(loadResult.warning||''):loadResult.error),[search,setSearch]=useState('');
+ const[page,setPage]=useState<Page>('Overview'),[modal,setModal]=useState<Page|null>(null),[editing,setEditing]=useState<Item|null>(null),[plannerDate,setPlannerDate]=useState(today()),[mobile,setMobile]=useState(false),[toast,setToast]=useState(loadWarning||loadError),[search,setSearch]=useState('');
  const focusReturnRef=useRef<HTMLElement|null>(null);
- useEffect(()=>{if(!persistenceReady)return;const result=saveAppData(data);setStorageHealthy(result.ok);if(!result.ok)setToast(result.error)},[data,persistenceReady]);
- useEffect(()=>{try{window.localStorage.removeItem("arvena-aeris-endpoint-v1");window.localStorage.removeItem("arvena-aeris-token-v1")}catch{/* Optional legacy cleanup must not prevent startup. */}},[]);
+ useEffect(()=>{if(persistenceError)setToast(persistenceError)},[persistenceError]);
  useEffect(()=>{document.documentElement.dataset.theme=theme;try{window.localStorage.setItem('asteria-theme',theme)}catch{/* Theme preference is optional. */}},[theme]);
- useEffect(()=>subscribeToExternalChanges(next=>setData(next)),[]);
  useEffect(()=>{if(toast){const t=setTimeout(()=>setToast(''),4000);return()=>clearTimeout(t)}},[toast]);
  useEffect(()=>{
   const onKeyDown=(event:KeyboardEvent)=>{
