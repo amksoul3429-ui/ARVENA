@@ -2,7 +2,7 @@ import type { Data, Item } from "./appData";
 import type { Page } from "./navigation";
 
 export type DataCollection = keyof Pick<Data,
-  "missions" | "tasks" | "goals" | "knowledge" | "videos" | "evolution" | "rewards" | "journal"
+  "missions" | "tasks" | "goals" | "knowledge" | "videos" | "evolution" | "rewards" | "journal" | "activity"
 >;
 
 const PAGE_COLLECTION: Record<Page, DataCollection> = {
