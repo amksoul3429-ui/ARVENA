@@ -13,6 +13,8 @@
 - [x] Mobile navigation overlay extracted into a dedicated component with centralized page definitions
 - [x] Persistence, migration status and cross-tab synchronization encapsulated in useAsteriaData
 - [x] Cross-tab explicit reset clears peer tabs without recreating the deleted storage snapshot
+- [x] First-run empty state and confirmed reset do not immediately recreate an empty storage snapshot
+- [x] Unrecognized legacy/current envelopes are rejected without destructive normalization
 - [x] Mission and reward orchestration delegated to useAsteriaActions
 - [x] Universal Explorer video library uses the shared app data model in the main app
 - [x] Legacy standalone Explorer videos migrate into shared storage before the legacy copy is removed
@@ -33,6 +35,7 @@
 ### Phase 03 — Core Interface
 - [x] Universal Explorer integrated into first-class navigation
 - [x] Centered mobile navigation overlay implemented
+- [x] Native PWA install prompt and update-ready action are wired into the app shell
 - [x] Responsive Explorer styles connected
 - [x] Navigation and record dialogs have dialog semantics, initial focus and keyboard focus containment
 - [ ] Navigation, overlay, keyboard/accessibility, all workspaces and interactions manually acceptance-tested
@@ -47,7 +50,7 @@
 - [ ] PWA installation, update and offline behavior verified on device
 
 ### Foundation verification and sign-off
-- [x] Current pull-request HEAD CI passed: 99/99 automated tests, TypeScript/Vite production build and dependency install on commit 7b0f0e9 (PR #2)
+- [x] CI passed: 103/103 automated tests, TypeScript/Vite production build and dependency install on commit ed3b76b (subsequent changes are queued for re-verification)
 - [ ] Production deployment verified after merge
 - [ ] Android/desktop device acceptance complete
 - [ ] Part 01 sign-off
