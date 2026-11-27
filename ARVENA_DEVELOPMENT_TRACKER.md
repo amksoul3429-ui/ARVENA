@@ -71,11 +71,20 @@
 - [ ] Owner desktop/mobile acceptance
 
 ## PART 03 — UNIVERSAL KNOWLEDGE
-- [ ] Universal Knowledge Library
-- [ ] Knowledge Marketplace
-- [ ] Complete learning pathways and skill trees
-- [ ] Video Learning Studio
-- [ ] Practice, assessment, revision and mastery
+
+> **Implementation status: delivered; final branch CI and owner device acceptance tracked separately.** See [PART-03-UNIVERSAL-KNOWLEDGE.md](PART-03-UNIVERSAL-KNOWLEDGE.md).
+
+- [x] Universal Knowledge Library — structured multi-subject course and lesson catalogue
+- [x] Knowledge Marketplace — search, filters, previews, permanent credit unlocks
+- [x] Learning pathways and skill trees — explicit prerequisites, milestone unlocks and optional paid early unlock
+- [x] Video Learning Studio — linked videos, notes, chapters, provider validation and privacy-enhanced embeds
+- [x] Practice and assessment — knowledge checks gate lesson completion; free retests
+- [x] Spaced revision — due queue, 1/2/4… day intervals, incorrect-answer retry and persisted review history
+- [x] Mastery analytics — review streak, mastered lesson count and assessment accuracy
+- [x] Added pathway and mastery regression suites
+- [ ] Part 03 branch CI passes on final commit
+- [ ] Owner desktop/mobile acceptance
+- [ ] Owner YouTube API key configured and live discovery verified
 
 ## PART 04 — PROGRESSION & PERSONAL DEVELOPMENT
 - [ ] Unified XP and credits economy
