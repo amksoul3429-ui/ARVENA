@@ -22,6 +22,7 @@ export function useAsteriaData() {
     return migrated.length ? { ...loadResult.value, videos: [...loadResult.value.videos, ...migrated] } : loadResult.value;
   });
   const [persistenceReady, setPersistenceReady] = useState(loadResult.ok);
+  const [hasPersistedSnapshot, setHasPersistedSnapshot] = useState(loadResult.ok && loadResult.persisted === true);
   const [storageHealthy, setStorageHealthy] = useState(loadResult.ok);
   const [persistenceError, setPersistenceError] = useState("");
   // A remote reset must clear this tab without immediately recreating the deleted key.
@@ -35,18 +36,22 @@ export function useAsteriaData() {
       setPersistenceError("");
       return;
     }
+    const hasContent = Object.values(data).some(value => Array.isArray(value) ? value.length > 0 : typeof value === "number" && value > 0);
+    if (!hasPersistedSnapshot && !hasContent) return;
     const result = saveAppData(data);
+    if (result.ok) setHasPersistedSnapshot(true);
     setStorageHealthy(result.ok);
     setPersistenceError(result.ok ? "" : result.error);
     // Remove the old separate library only after the merged shared snapshot was saved.
     if (result.ok && legacyExplorerVideos.length) {
       try { window.localStorage.removeItem("arvena-video-library-v1"); } catch { /* Keep the legacy copy if cleanup is blocked. */ }
     }
-  }, [data, persistenceReady, legacyExplorerVideos]);
+  }, [data, persistenceReady, legacyExplorerVideos, hasPersistedSnapshot]);
 
   useEffect(() => subscribeToExternalChanges(next => {
     if (next === null) {
       skipNextPersistence.current = true;
+      setHasPersistedSnapshot(false);
       setData({ ...blank });
       return;
     }
@@ -61,8 +66,14 @@ export function useAsteriaData() {
     } catch { /* Storage preferences are optional. */ }
   }, []);
 
+  const resetPersistence = () => {
+    skipNextPersistence.current = true;
+    setHasPersistedSnapshot(false);
+  };
+
   return {
     data,
+    resetPersistence,
     setData,
     persistenceReady,
     setPersistenceReady,
