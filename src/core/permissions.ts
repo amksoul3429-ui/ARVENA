@@ -21,7 +21,7 @@ export async function requestNotificationAccess(): Promise<NotificationAccess> {
 export function sendSystemNotification(title: string, body: string): boolean {
   if (getNotificationAccess() !== "granted") return false;
   try {
-    new Notification(title, { body, icon: "/icons.svg", tag: "arvena-system" });
+    new Notification(title, { body, icon: new URL("asteria-mark.svg", document.baseURI).toString(), tag: "asteria-system" });
     return true;
   } catch { return false; }
 }
