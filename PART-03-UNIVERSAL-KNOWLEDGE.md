@@ -29,7 +29,7 @@ Part 03 makes learning a connected system rather than a standalone list:
 - Added spaced-revision and mastery regression tests, including correct/incorrect scheduling, due queues, accuracy, persisted metadata and pathway relationships.
 - Added pathway catalogue tests for prerequisite links and automatic successor unlock.
 - Existing knowledge and video tests continue to cover course unlocks, lesson assessments, exactly-once XP, legacy compatibility, video validation, embeds, watch status and YouTube search ranking.
-- Branch CI is required to pass on the final Part 03 commit before merge; the final test count and production build result will be recorded in the merged delivery.
+- Branch CI passed on final implementation commit `dd4a9757cd9830f1969bfdd16cf1c9d9d102610c`: `npm ci`, all 114 automated tests (114 passed, 0 failed), and the TypeScript/Vite production build. See [workflow run](https://github.com/amksoul3429-ui/ASTERIA/actions/runs/46021614912).
 
 ## Owner acceptance
 
