@@ -17,7 +17,8 @@ import PersonalJournal from './components/PersonalJournal';
 import SystemReports from './components/SystemReports';
 import SettingsSecurity from './components/SettingsSecurity';
 import RecordModal from './components/RecordModal';
-import {syncMissionTask,removeMissionTasks} from './core/planner';
+import {removeMissionTasks} from './core/planner';
+import {saveRecord} from './core/records';
 import {normalizeMission} from './core/missions';
 import type { LifeGoal, GoalMilestone } from './core/goals';
 import './components/MissionControl.css';
@@ -63,15 +64,7 @@ function App(){
  const open=(p:Page,item?:Item)=>{focusReturnRef.current=document.activeElement as HTMLElement|null;setEditing(item||null);setModal(p)};
  const openPlanner=(date:string)=>{setPlannerDate(date);open('Planner')};
  const remove=(p:Page,item:Item)=>{setData(d=>({...d,[key(p)]:d[key(p)].filter(x=>x.id!==item.id)}));setToast('Deleted')};
- const save=(p:Page,form:HTMLFormElement)=>{const f=new FormData(form),v=(k:string)=>String(f.get(k)||''),old=editing;const base={id:old?.id||id(),title:v('title'),created:old?.created||new Date().toISOString()};
- let item:Item=base;
- if(p==='Missions')item={...base,description:v('description'),category:v('category'),difficulty:v('difficulty'),priority:v('priority'),xp:+v('xp'),deadline:v('deadline'),status:old?.status||'Available',done:old?.done||false,completedAt:old?.completedAt};
- if(p==='Planner')item={...base,date:v('date'),category:v('category'),priority:v('priority'),done:old?.done||false,missionId:old?.missionId,startTime:v('startTime'),durationMinutes:+v('durationMinutes'),notes:v('notes')};
- if(p==='Dream Life')item={...base,description:v('description'),area:v('area'),target:v('target'),progress:+v('progress')};
- if(p==='Knowledge')item={...base,subject:v('subject'),level:v('level'),done:old?.done||false};
- if(p==='Rewards')item={...base,description:v('description'),type:v('type'),cost:+v('cost'),redeemed:old?.redeemed||false};
- if(p==='Journal')item={...base,content:v('content'),mood:v('mood')};
- setData(d=>{const next={...d,[key(p)]:old?d[key(p)].map(x=>x.id===old.id?item:x):[item,...d[key(p)]]};if(p==='Missions'&&old)next.tasks=syncMissionTask(d.tasks as any,item as any) as Item[];return next});setModal(null);setEditing(null);setToast(old?'Saved changes':'Added successfully')};
+ const save=(p:Page,form:HTMLFormElement)=>{setData(d=>saveRecord(d,p as 'Missions'|'Planner'|'Dream Life'|'Knowledge'|'Rewards'|'Journal',new FormData(form),editing));setModal(null);setEditing(null);setToast(editing?'Saved changes':'Added successfully')};
  const {changeMissionStatus,completeMission,addMissionToPlanner,claimRewardAchievement,unlockSystemReward,redeemPersonal,fulfillPersonal}=useAsteriaActions(setData,setToast);
  const list=(p:Page)=>data[key(p)].filter(x=>x.title.toLowerCase().includes(search.toLowerCase()));
  return <div className="shell">
