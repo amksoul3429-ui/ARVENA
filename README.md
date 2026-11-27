@@ -2,56 +2,48 @@
 
 **Explore anything. Understand everything.**
 
-ASTERIA is a local-first personal operating system built as an installable Progressive Web App (PWA). It combines life planning, learning, personal development, rewards and reporting in one responsive workspace.
+ASTERIA is a local-first personal operating system built as an installable Progressive Web App (PWA). It brings life planning, learning, personal development, rewards and reports into a responsive workspace.
 
 ## Workspaces
-
 - Command Center
 - Mission Control
 - Daily Planner
 - Dream Life goals and milestones
 - Universal Knowledge Library
-- Video Learning Studio (YouTube discovery requires the user's own restricted YouTube Data API key)
-- Personal Evolution (habits, skills, identity and reflections)
+- Video Learning Studio (live YouTube discovery requires a restricted YouTube Data API key)
+- Personal Evolution
 - Rewards & Achievements
 - Personal Journal
 - System Reports
 - Settings & Security
 
 ## Run locally
-
 ```bash
 npm ci
 npm run dev
 ```
 
 ## Verify and build
-
 ```bash
 npm test
 npm run build
 npm run preview
 ```
 
-GitHub Actions runs the automated regression suite and production build, then deploys the production artifact to GitHub Pages from `main`.
+GitHub Actions has separate quality checks and Pages build/deployment workflows. A deploy is not considered device-verified solely because Actions passed.
 
-## Install the PWA
+## Install
+Production URL: https://amksoul3429-ui.github.io/ARVENA/
 
-Open [ASTERIA](https://amksoul3429-ui.github.io/ASTERIA/) in Chrome on Android or a supported desktop browser, then choose **Install app** or **Add to Home Screen**. The app shell is cached by a service worker for offline startup. A device-level offline test is still required after each release.
+Open the URL in Chrome on Android or a supported browser and use **Install app** / **Add to Home screen**. A service worker caches the shell for offline startup; offline behavior must still be tested on-device.
 
-## Data and privacy
+## Data, compatibility and privacy
+- Records are saved locally in the browser under the backward-compatible `uls-data-v1` key.
+- Data is device/browser-local. Cloud sync and user accounts are not connected.
+- JSON backup and restore are available in Settings & Security. Keep exports private.
+- Local browser storage and exported backups are not encrypted in this build.
+- AI processing, secure cloud storage, authentication, encrypted backup and external actions are not connected.
+- The YouTube API key is saved locally in browser settings only, excluded from backups, and never committed. Restrict the key to YouTube Data API v3 and the site referrer. Rotate any exposed key.
 
-- App records are stored in browser local storage under the backward-compatible `uls-data-v1` key.
-- Records are local to each browser/device. There is no account or cross-device cloud synchronization.
-- Versioned JSON backup and restore are available in Settings & Security. Keep exported backups private.
-- Local storage and exported backups are not encrypted by this build.
-- AI model access, remote AI processing, login/authentication, encrypted cloud storage, Health Connect and external actions are not connected.
-- The YouTube API key is stored in the browser only and excluded from app backups. Never commit or share it. Use a restricted key and rotate any key previously pasted into chat or exposed.
-
-## Release acceptance
-
-Automated tests and production builds are necessary but do not replace manual acceptance on Android and desktop. Confirm navigation, data persistence, backup/restore, PWA installation, offline shell behavior and update delivery on the actual devices before calling a release fully accepted.
-
-
-## ASTERIA Foundation status
-The identity and shell branding work has begun. Core tests and production build passed in GitHub Actions for the latest foundation commit. Visual/manual PWA validation, the original Sacred Bloom asset integration and broader interface redesign remain outstanding before Part 01 is declared complete.
+## Acceptance status
+**Part 01 — ASTERIA Foundation remains in progress.** The tracker is evidence-based and does not claim completion from styling commits or documentation. Remaining work includes complete implementation/architecture cleanup, consistent UI verification, original approved identity artwork, current CI verification and manual Android/desktop acceptance of navigation, storage, backup/restore, installation, offline and update behavior.
