@@ -126,7 +126,8 @@
 - [x] Responsive tablet/mobile navigation and layouts
 - [x] Dark and light themes using the persisted theme preference
 - [x] Existing app modules and local data behavior retained
-- [ ] CI and production deployment verified
+- [x] CI passed: npm test and TypeScript/Vite production build (workflow 46027745844)
+- [ ] Main-branch Pages deployment verified
 - [ ] Owner desktop/mobile visual acceptance
 
 See [CELESTIAL-DASHBOARD-REDESIGN.md](CELESTIAL-DASHBOARD-REDESIGN.md).
