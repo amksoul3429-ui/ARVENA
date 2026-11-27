@@ -31,3 +31,12 @@ export function filterWorkspaceRecords(data: Data, page: Page, query: string): I
   const records = data[collectionForPage(page)] as Item[];
   return normalized ? records.filter(record => record.title.toLocaleLowerCase().includes(normalized)) : records;
 }
+
+/** Removes one record from the collection owned by a workspace. */
+export function removeWorkspaceRecord(data: Data, page: Page, recordId: string): Data {
+  const collection = collectionForPage(page);
+  return {
+    ...data,
+    [collection]: (data[collection] as Item[]).filter(record => record.id !== recordId),
+  };
+}
