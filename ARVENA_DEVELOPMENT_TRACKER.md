@@ -11,6 +11,7 @@
 - [x] Persistence, migration status and cross-tab synchronization encapsulated in useAsteriaData
 - [x] Mission and reward orchestration delegated to useAsteriaActions
 - [x] Universal Explorer video library uses the shared app data model in the main app
+- [x] Legacy standalone Explorer videos migrate into shared storage before the legacy copy is removed
 - [x] Ordinary saves refuse to overwrite malformed or unsupported stored data; explicit confirmed restore has a separate validated write path
 - [x] Service-worker activation only removes obsolete ASTERIA-owned caches
 - [ ] App shell responsibilities fully refactored and verified against the documented boundary map
@@ -42,7 +43,7 @@
 - [ ] PWA installation, update and offline behavior verified on device
 
 ### Foundation verification and sign-off
-- [x] Pull-request branch CI passed: 91 automated tests and production build on commit 02be5f1 (PR #2)
+- [x] Pull-request branch CI passed: 91 automated tests and production build on commit 4d33f36 (PR #2)
 - [ ] Production deployment verified after merge
 - [ ] Production deploy verified
 - [ ] Android/desktop device acceptance complete
