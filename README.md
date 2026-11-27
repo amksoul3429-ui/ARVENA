@@ -35,7 +35,7 @@ GitHub Actions runs quality checks and the production build in one workflow, wit
 ## Install
 Production URL: https://amksoul3429-ui.github.io/ARVENA/
 
-Open the URL in Chrome on Android or a supported browser and use **Install app** / **Add to Home screen**. A service worker caches the shell for offline startup; offline behavior must still be tested on-device.
+Open the URL in Chrome on Android or a supported browser and use **Install app** / **Add to Home screen**. A service worker caches the built shell and entry assets for offline startup. Where supported, the app offers a native install prompt and an explicit update-ready action; both still require on-device acceptance.
 
 ## Data, compatibility and privacy
 - Records are saved locally in the browser under the backward-compatible `uls-data-v1` key.
