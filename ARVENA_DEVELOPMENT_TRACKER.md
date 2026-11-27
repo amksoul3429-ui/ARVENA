@@ -14,7 +14,8 @@
 ### Phase 02 — Identity & Design
 - [x] ASTERIA branding and theme tokens exist
 - [x] Light/dark theme foundations exist
-- [ ] All workspace screens and controls verified for contrast and consistency in both themes
+- [x] High-contrast light-theme overrides implemented across all major workspaces
+- [ ] All workspace screens and controls visually verified for contrast and consistency in both themes
 - [ ] Original user-approved Sacred Bloom artwork and complete app icon set integrated (placeholder is not accepted)
 - [ ] Mobile and desktop visual acceptance completed
 
@@ -22,6 +23,7 @@
 - [x] Universal Explorer integrated into first-class navigation
 - [x] Centered mobile navigation overlay implemented
 - [x] Responsive Explorer styles connected
+- [x] Navigation and record dialogs have dialog semantics, initial focus and keyboard focus containment
 - [ ] Navigation, overlay, keyboard/accessibility, all workspaces and interactions manually acceptance-tested
 - [ ] Interface consistency and responsive behavior accepted across phone/tablet/desktop
 
