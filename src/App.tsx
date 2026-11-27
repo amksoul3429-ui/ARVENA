@@ -1,5 +1,7 @@
 import {useEffect,useRef,useState} from 'react';
 import {useAsteriaData} from './hooks/useAsteriaData';
+import NavigationOverlay from './components/NavigationOverlay';
+import {labels,type Page} from './core/navigation';
 import {useAsteriaActions} from './hooks/useAsteriaActions';
 import {blank,today,id,rewardMetrics,type Data,type Item} from './core/appData';
 import CommandCenter from './components/CommandCenter';
@@ -22,10 +24,7 @@ import './components/MissionControl.css';
 import {getLevel,xpIntoLevel} from './core/system';
 import {clearStoredAppData,restoreAppData} from './core/storage';
 import {getNotificationAccess,requestNotificationAccess,sendSystemNotification} from './core/permissions';
-import {Activity,BookOpen,CalendarDays,ChevronRight,Compass,Edit3,Flame,LayoutDashboard,Menu,Plus,Settings,Target,Trophy,Wallet,Video as VideoIcon,X,Zap,Sun,Moon} from 'lucide-react';
-type Page='Explore'|'Overview'|'Missions'|'Planner'|'Dream Life'|'Evolution'|'Knowledge'|'Videos'|'Rewards'|'Journal'|'Reports'|'Settings';
-const sections:Page[]=['Explore','Overview','Missions','Planner','Dream Life','Evolution','Knowledge','Videos','Rewards','Journal','Reports','Settings'];
-const labels:Record<Page,string>={'Explore':'Universal Explorer','Overview':'Command Center','Missions':'Mission Control','Planner':'Daily Planner','Dream Life':'Dream Life','Evolution':'Personal Evolution','Knowledge':'Knowledge Library','Videos':'Video Learning Studio','Rewards':'Rewards & Achievements','Journal':'Personal Journal','Reports':'System Reports','Settings':'Settings'};
+import {Menu,Plus,Wallet,X,Zap,Sun,Moon} from 'lucide-react';
 function App(){
  const {data,setData,setPersistenceReady,storageHealthy,persistenceError,loadError,loadWarning}=useAsteriaData();
  const[notificationAccess,setNotificationAccess]=useState(getNotificationAccess);
@@ -75,13 +74,8 @@ function App(){
  setData(d=>{const next={...d,[key(p)]:old?d[key(p)].map(x=>x.id===old.id?item:x):[item,...d[key(p)]]};if(p==='Missions'&&old)next.tasks=syncMissionTask(d.tasks as any,item as any) as Item[];return next});setModal(null);setEditing(null);setToast(old?'Saved changes':'Added successfully')};
  const {changeMissionStatus,completeMission,addMissionToPlanner,claimRewardAchievement,unlockSystemReward,redeemPersonal,fulfillPersonal}=useAsteriaActions(setData,setToast);
  const list=(p:Page)=>data[key(p)].filter(x=>x.title.toLowerCase().includes(search.toLowerCase()));
- const navIcon:Record<Page,any>={Explore:Compass,Overview:LayoutDashboard,Missions:Target,Planner:CalendarDays,'Dream Life':Compass,Evolution:Activity,Knowledge:BookOpen,Videos:VideoIcon,Rewards:Trophy,Journal:Edit3,Reports:Flame,Settings:Settings};
  return <div className="shell">
- {mobile&&<div className="navigation-layer" style={{position:'fixed',inset:0,zIndex:1000,display:'grid',placeItems:'center',padding:14,background:'rgba(2,7,19,.72)',backdropFilter:'blur(4px)'}} onClick={()=>setMobile(false)}><aside id="asteria-navigation-dialog" role="dialog" aria-modal="true" aria-label="ASTERIA navigation" className="sidebar navigation-panel" style={{position:'relative',inset:'auto',top:'auto',right:'auto',bottom:'auto',left:'auto',width:'min(380px, calc(100vw - 28px))',height:'auto',maxHeight:'calc(100dvh - 28px)',overflowX:'hidden',overflowY:'auto',display:'flex',flexDirection:'column',margin:0,padding:'22px 15px',border:'1px solid #3a4b68',borderRadius:20,transform:'none',visibility:'visible',opacity:1,pointerEvents:'auto',zIndex:1001,boxShadow:'0 24px 80px rgba(0,0,0,.42)'}} onClick={e=>e.stopPropagation()}>
- <div className="brand"><span><img src='./asteria-mark.svg' alt='ASTERIA mark'/></span><div><b>ASTERIA</b><small>PERSONAL SYSTEM</small></div><button className="close" aria-label="Close navigation" onClick={()=>setMobile(false)}><X/></button></div>
- <div className="operator"><b>ASTERIA Operator</b><small>Level {getLevel(data.xp)} · {data.xp} XP</small></div>
- {sections.map(p=>{const I=navIcon[p];return <button key={p} className={'nav '+(page===p?'active':'')} onClick={()=>{setPage(p);setMobile(false)}}><I size={17}/>{labels[p]}{page===p&&<ChevronRight size={14}/>}</button>})}
- <div className="sidefoot">● ASTERIA · LOCAL SYSTEM</div></aside></div>}
+ {mobile&&<NavigationOverlay page={page} xp={data.xp} onNavigate={setPage} onClose={()=>setMobile(false)}/>}
  <main><header><button className="hamb" aria-label="Open navigation" aria-expanded={mobile} aria-controls="asteria-navigation-dialog" onClick={()=>{focusReturnRef.current=document.activeElement as HTMLElement|null;setMobile(true)}}><Menu/></button><span>ASTERIA　›　<b>{labels[page].toUpperCase()}</b></span><div className="chips"><button className="theme-toggle" onClick={()=>setTheme(t=>t==='dark'?'light':'dark')} aria-label={theme==='dark'?'Switch to light theme':'Switch to dark theme'}>{theme==='dark'?<Sun size={15}/>:<Moon size={15}/>}<span>{theme==='dark'?'LIGHT':'DARK'}</span></button><i><Wallet size={14}/> {data.credits} credits</i><i><Zap size={14}/> LVL {getLevel(data.xp)}</i></div></header>
  <div className="content">
  {page==='Explore'&&<UniversalExplorer videos={data.videos as any[]} onChange={videos=>setData(d=>({...d,videos:videos as unknown as Item[]}))}/>}
