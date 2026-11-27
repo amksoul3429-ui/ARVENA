@@ -33,8 +33,8 @@
 - [ ] PWA installation, update and offline behavior verified on device
 
 ### Foundation verification and sign-off
-- [x] Automated tests and production build passed on earlier recorded CI commit (not evidence for current HEAD)
-- [ ] Current HEAD CI checks pass
+- [x] Pull-request branch CI passed: 86 automated tests and production build on commit 587e6ae (PR #2)
+- [ ] Production deployment verified after merge
 - [ ] Production deploy verified
 - [ ] Android/desktop device acceptance complete
 - [ ] Part 01 sign-off
