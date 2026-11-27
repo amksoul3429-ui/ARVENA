@@ -1,4 +1,4 @@
-import {useEffect,useState} from 'react';
+import {useEffect,useRef,useState} from 'react';
 import CommandCenter from './components/CommandCenter';
 import UniversalExplorer from './UniversalExplorer';
 import MissionControl from './components/MissionControl';
@@ -37,14 +37,39 @@ function App(){
  const[notificationAccess,setNotificationAccess]=useState(getNotificationAccess);
  const[theme,setTheme]=useState<'dark'|'light'>(()=>{try{return (window.localStorage.getItem('asteria-theme')||window.localStorage.getItem('arvena-theme'))==='light'?'light':'dark'}catch{return 'dark'}});
  const[page,setPage]=useState<Page>('Overview'),[modal,setModal]=useState<Page|null>(null),[editing,setEditing]=useState<Item|null>(null),[plannerDate,setPlannerDate]=useState(today()),[mobile,setMobile]=useState(false),[toast,setToast]=useState(loadResult.ok?(loadResult.warning||''):loadResult.error),[search,setSearch]=useState('');
+ const focusReturnRef=useRef<HTMLElement|null>(null);
  useEffect(()=>{if(!persistenceReady)return;const result=saveAppData(data);setStorageHealthy(result.ok);if(!result.ok)setToast(result.error)},[data,persistenceReady]);
  useEffect(()=>{try{window.localStorage.removeItem("arvena-aeris-endpoint-v1");window.localStorage.removeItem("arvena-aeris-token-v1")}catch{/* Optional legacy cleanup must not prevent startup. */}},[]);
  useEffect(()=>{document.documentElement.dataset.theme=theme;try{window.localStorage.setItem('asteria-theme',theme)}catch{/* Theme preference is optional. */}},[theme]);
  useEffect(()=>subscribeToExternalChanges(next=>setData(next)),[]);
  useEffect(()=>{if(toast){const t=setTimeout(()=>setToast(''),4000);return()=>clearTimeout(t)}},[toast]);
- useEffect(()=>{const onKeyDown=(event:KeyboardEvent)=>{if(event.key==='Escape'){setMobile(false);if(modal){setModal(null);setEditing(null)}}};window.addEventListener('keydown',onKeyDown);return()=>window.removeEventListener('keydown',onKeyDown)},[modal]);
+ useEffect(()=>{
+  const onKeyDown=(event:KeyboardEvent)=>{
+   if(event.key==='Escape'){
+    if(mobile)setMobile(false);
+    if(modal){setModal(null);setEditing(null);}
+    return;
+   }
+   if(event.key==='Tab'&&(mobile||modal)){
+    const dialog=document.querySelector<HTMLElement>(modal?'.backdrop .modal':'.navigation-layer .navigation-panel');
+    if(!dialog)return;
+    const focusable=Array.from(dialog.querySelectorAll<HTMLElement>('a[href],button:not([disabled]),input:not([disabled]),select:not([disabled]),textarea:not([disabled]),[tabindex]:not([tabindex="-1"])')).filter(element=>!element.hasAttribute('hidden'));
+    if(!focusable.length)return;
+    const first=focusable[0],last=focusable[focusable.length-1];
+    if(event.shiftKey&&(document.activeElement===first||!dialog.contains(document.activeElement))){event.preventDefault();last.focus();}
+    else if(!event.shiftKey&&document.activeElement===last){event.preventDefault();first.focus();}
+   }
+  };
+  window.addEventListener('keydown',onKeyDown);
+  return()=>window.removeEventListener('keydown',onKeyDown);
+ },[modal,mobile]);
+ useEffect(()=>{
+  if(modal)document.querySelector<HTMLElement>('.backdrop .modal input:not([readonly]),.backdrop .modal textarea,.backdrop .modal select')?.focus();
+  else if(mobile)document.querySelector<HTMLElement>('.navigation-panel .close')?.focus();
+  else if(focusReturnRef.current){focusReturnRef.current.focus();focusReturnRef.current=null;}
+ },[modal,mobile]);
  const key=(p:Page)=>p==='Missions'?'missions':p==='Planner'?'tasks':p==='Dream Life'?'goals':p==='Knowledge'?'knowledge':p==='Videos'?'videos':p==='Evolution'?'evolution':p==='Rewards'?'rewards':'journal';
- const open=(p:Page,item?:Item)=>{setEditing(item||null);setModal(p)};
+ const open=(p:Page,item?:Item)=>{focusReturnRef.current=document.activeElement as HTMLElement|null;setEditing(item||null);setModal(p)};
  const openPlanner=(date:string)=>{setPlannerDate(date);open('Planner')};
  const remove=(p:Page,item:Item)=>{setData(d=>({...d,[key(p)]:d[key(p)].filter(x=>x.id!==item.id)}));setToast('Deleted')};
  const save=(p:Page,form:HTMLFormElement)=>{const f=new FormData(form),v=(k:string)=>String(f.get(k)||''),old=editing;const base={id:old?.id||id(),title:v('title'),created:old?.created||new Date().toISOString()};
@@ -80,12 +105,12 @@ function App(){
  const list=(p:Page)=>data[key(p)].filter(x=>x.title.toLowerCase().includes(search.toLowerCase()));
  const navIcon:Record<Page,any>={Explore:Compass,Overview:LayoutDashboard,Missions:Target,Planner:CalendarDays,'Dream Life':Compass,Evolution:Activity,Knowledge:BookOpen,Videos:VideoIcon,Rewards:Trophy,Journal:Edit3,Reports:Flame,Settings:Settings};
  return <div className="shell">
- {mobile&&<div className="navigation-layer" style={{position:'fixed',inset:0,zIndex:1000,display:'grid',placeItems:'center',padding:14,background:'rgba(2,7,19,.72)',backdropFilter:'blur(4px)'}} onClick={()=>setMobile(false)}><aside className="sidebar navigation-panel" style={{position:'relative',inset:'auto',top:'auto',right:'auto',bottom:'auto',left:'auto',width:'min(380px, calc(100vw - 28px))',height:'auto',maxHeight:'calc(100dvh - 28px)',overflowX:'hidden',overflowY:'auto',display:'flex',flexDirection:'column',margin:0,padding:'22px 15px',border:'1px solid #3a4b68',borderRadius:20,transform:'none',visibility:'visible',opacity:1,pointerEvents:'auto',zIndex:1001,boxShadow:'0 24px 80px rgba(0,0,0,.42)'}} onClick={e=>e.stopPropagation()}>
- <div className="brand"><span><img src='./asteria-mark.svg' alt='ASTERIA mark'/></span><div><b>ASTERIA</b><small>PERSONAL SYSTEM</small></div><button className="close" onClick={()=>setMobile(false)}><X/></button></div>
+ {mobile&&<div className="navigation-layer" style={{position:'fixed',inset:0,zIndex:1000,display:'grid',placeItems:'center',padding:14,background:'rgba(2,7,19,.72)',backdropFilter:'blur(4px)'}} onClick={()=>setMobile(false)}><aside id="asteria-navigation-dialog" role="dialog" aria-modal="true" aria-label="ASTERIA navigation" className="sidebar navigation-panel" style={{position:'relative',inset:'auto',top:'auto',right:'auto',bottom:'auto',left:'auto',width:'min(380px, calc(100vw - 28px))',height:'auto',maxHeight:'calc(100dvh - 28px)',overflowX:'hidden',overflowY:'auto',display:'flex',flexDirection:'column',margin:0,padding:'22px 15px',border:'1px solid #3a4b68',borderRadius:20,transform:'none',visibility:'visible',opacity:1,pointerEvents:'auto',zIndex:1001,boxShadow:'0 24px 80px rgba(0,0,0,.42)'}} onClick={e=>e.stopPropagation()}>
+ <div className="brand"><span><img src='./asteria-mark.svg' alt='ASTERIA mark'/></span><div><b>ASTERIA</b><small>PERSONAL SYSTEM</small></div><button className="close" aria-label="Close navigation" onClick={()=>setMobile(false)}><X/></button></div>
  <div className="operator"><b>ASTERIA Operator</b><small>Level {getLevel(data.xp)} · {data.xp} XP</small></div>
  {sections.map(p=>{const I=navIcon[p];return <button key={p} className={'nav '+(page===p?'active':'')} onClick={()=>{setPage(p);setMobile(false)}}><I size={17}/>{labels[p]}{page===p&&<ChevronRight size={14}/>}</button>})}
  <div className="sidefoot">● ASTERIA · LOCAL SYSTEM</div></aside></div>}
- <main><header><button className="hamb" onClick={()=>setMobile(true)}><Menu/></button><span>ASTERIA　›　<b>{labels[page].toUpperCase()}</b></span><div className="chips"><button className="theme-toggle" onClick={()=>setTheme(t=>t==='dark'?'light':'dark')} aria-label={theme==='dark'?'Switch to light theme':'Switch to dark theme'}>{theme==='dark'?<Sun size={15}/>:<Moon size={15}/>}<span>{theme==='dark'?'LIGHT':'DARK'}</span></button><i><Wallet size={14}/> {data.credits} credits</i><i><Zap size={14}/> LVL {getLevel(data.xp)}</i></div></header>
+ <main><header><button className="hamb" aria-label="Open navigation" aria-expanded={mobile} aria-controls="asteria-navigation-dialog" onClick={()=>{focusReturnRef.current=document.activeElement as HTMLElement|null;setMobile(true)}}><Menu/></button><span>ASTERIA　›　<b>{labels[page].toUpperCase()}</b></span><div className="chips"><button className="theme-toggle" onClick={()=>setTheme(t=>t==='dark'?'light':'dark')} aria-label={theme==='dark'?'Switch to light theme':'Switch to dark theme'}>{theme==='dark'?<Sun size={15}/>:<Moon size={15}/>}<span>{theme==='dark'?'LIGHT':'DARK'}</span></button><i><Wallet size={14}/> {data.credits} credits</i><i><Zap size={14}/> LVL {getLevel(data.xp)}</i></div></header>
  <div className="content">
  {page==='Explore'&&<UniversalExplorer/>}
  {page==='Overview'&&<CommandCenter data={data} level={getLevel(data.xp)} xpIntoLevel={xpIntoLevel(data.xp)} onOpen={p=>open(p)} onNavigate={p=>setPage(p)} onToggleTask={taskId=>setData(d=>({...d,tasks:d.tasks.map(t=>t.id===taskId?{...t,done:!t.done}:t)}))}/>}
@@ -108,7 +133,7 @@ function App(){
 function Head({page,onAdd}:{page:Page;onAdd?:()=>void}){return <div className="head"><div><small>UNIVERSAL LIFE SYSTEM / {page.toUpperCase()}</small><h1>{labels[page]}</h1><p>Plan deliberately. Execute consistently. Review honestly.</p></div>{onAdd&&<button className="primary" onClick={onAdd}><Plus size={15}/> ADD NEW</button>}</div>}
 function Modal({page,initial,defaultDate,close,save}:{page:Page;initial:Item|null;defaultDate:string;close:()=>void;save:(f:HTMLFormElement)=>void}){
  const title=labels[page]||page;
- return <div className="backdrop" onMouseDown={e=>{if(e.target===e.currentTarget)close()}}><form className="modal" onSubmit={e=>{e.preventDefault();save(e.currentTarget)}}><div className="modalhead"><div><small>ASTERIA / RECORD</small><h2>{initial?'Edit record':title}</h2></div><button type="button" onClick={close}><X/></button></div>
+ return <div className="backdrop" onMouseDown={e=>{if(e.target===e.currentTarget)close()}}><form className="modal" role="dialog" aria-modal="true" aria-labelledby="asteria-record-dialog-title" onSubmit={e=>{e.preventDefault();save(e.currentTarget)}}><div className="modalhead"><div><small>ASTERIA / RECORD</small><h2 id="asteria-record-dialog-title">{initial?'Edit record':title}</h2></div><button type="button" aria-label="Close record dialog" onClick={close}><X/></button></div>
  <label>Title<input name="title" required maxLength={120} defaultValue={initial?.title||''} readOnly={page==='Planner'&&!!initial?.missionId}/>{page==='Planner'&&initial?.missionId&&<small className="muted">This title is linked to Mission Control. Edit the mission to rename it.</small>}</label>
  {page==='Missions'&&<><label>Description<textarea name="description" defaultValue={initial?.description||''}/></label><div className="formgrid"><label>Category<select name="category" defaultValue={initial?.category||'Personal'}>{['Personal','Studies','Business','Health','Fitness','Learning'].map(x=><option>{x}</option>)}</select></label><label>Difficulty<select name="difficulty" defaultValue={initial?.difficulty||'Medium'}>{['Easy','Medium','Hard','Elite'].map(x=><option>{x}</option>)}</select></label></div><div className="formgrid"><label>Priority<select name="priority" defaultValue={initial?.priority||'Medium'}>{['Low','Medium','High','Critical'].map(x=><option>{x}</option>)}</select></label><label>XP reward<input name="xp" type="number" min="0" max="100000" defaultValue={initial?.xp??50}/></label></div><label>Deadline<input name="deadline" type="date" defaultValue={initial?.deadline||''}/></label></>}
  {page==='Planner'&&<><label>Date<input name="date" type="date" defaultValue={initial?.date||defaultDate} required/></label><div className="formgrid"><label>Start time<input name="startTime" type="time" defaultValue={initial?.startTime||''}/></label><label>Duration (minutes)<input name="durationMinutes" type="number" min="5" max="1440" step="5" defaultValue={initial?.durationMinutes??30}/></label></div><div className="formgrid"><label>Category<select name="category" defaultValue={initial?.category||'Personal'}>{['Personal','Studies','Business','Health','Fitness','Learning','Other'].map(x=><option>{x}</option>)}</select></label><label>Priority<select name="priority" defaultValue={initial?.priority||'Medium'}>{['Low','Medium','High','Critical'].map(x=><option>{x}</option>)}</select></label></div><label>Notes<textarea name="notes" rows={3} maxLength={1000} defaultValue={initial?.notes||''} placeholder="What needs to happen? Any useful details..."/></label></>}
