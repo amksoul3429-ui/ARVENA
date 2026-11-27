@@ -1,4 +1,4 @@
-import { skillLevelFromPractice } from "./progression";
+import { skillLevelFromPractice } from "./progression.js";
 export type HabitFrequency = "Daily" | "Weekdays" | "Weekly";
 export type Habit = { id:string; title:string; created:string; kind:"habit"; description:string; category:string; frequency:HabitFrequency; targetPerWeek:number; active:boolean; checkIns:string[] };
 export type Skill = { id:string; title:string; created:string; kind:"skill"; category:string; level:number; practiceMinutes:number; sessions:number; notes:string; updatedAt:string };
