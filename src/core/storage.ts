@@ -173,7 +173,13 @@ export function parseBackup(value: unknown): StorageResult<AppData> {
 
 export function subscribeToExternalChanges(onChange: (data: AppData) => void): () => void {
   const onStorage = (event: StorageEvent) => {
-    if (event.key !== STORAGE_KEY || !event.newValue) return;
+    if (event.key !== STORAGE_KEY) return;
+    // Propagate explicit resets so stale tabs cannot restore deleted snapshots.
+    if (event.newValue === null) {
+      onChange(validateAppData({}));
+      return;
+    }
+    if (!event.newValue) return;
     try { onChange(parseStoredValue(event.newValue)); } catch { /* Ignore malformed writes from another tab. */ }
   };
   const onLocal = (event: Event) => {

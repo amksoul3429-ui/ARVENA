@@ -1,14 +1,21 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { BACKUP_FORMAT, BACKUP_VERSION, STORAGE_KEY, clearStoredAppData, createBackup, loadAppData, parseBackup, saveAppData, validateAppData } from "../.test-build/storage.js";
+import { BACKUP_FORMAT, BACKUP_VERSION, STORAGE_KEY, clearStoredAppData, createBackup, loadAppData, parseBackup, saveAppData, subscribeToExternalChanges, validateAppData } from "../.test-build/storage.js";
 
 const store = new Map();
+const eventListeners = new Map();
 globalThis.window = {
   localStorage: {
     getItem: key => store.has(key) ? store.get(key) : null,
     setItem: (key, value) => store.set(key, String(value)),
     removeItem: key => store.delete(key),
   },
+  addEventListener: (type, listener) => {
+    const listeners = eventListeners.get(type) || new Set();
+    listeners.add(listener);
+    eventListeners.set(type, listeners);
+  },
+  removeEventListener: (type, listener) => eventListeners.get(type)?.delete(listener),
 };
 
 const sample = {
@@ -154,4 +161,30 @@ test("explicit local reset clears a protected future-version envelope", () => {
 test("current-version backup rejects unrelated empty data objects", () => {
   const parsed = parseBackup({ format: BACKUP_FORMAT, version: BACKUP_VERSION, data: { unrelated: true } });
   assert.equal(parsed.ok, false);
+});
+
+
+test("cross-tab storage deletion clears stale in-memory data", () => {
+  const received = [];
+  const unsubscribe = subscribeToExternalChanges(data => received.push(data));
+  const handler = eventListeners.get("storage");
+  handler({ key: "unrelated-key", newValue: null });
+  assert.equal(received.length, 0);
+  handler({ key: STORAGE_KEY, newValue: null });
+  assert.equal(received.length, 1);
+  assert.deepEqual(received[0], validateAppData({}));
+  unsubscribe();
+  assert.equal(eventListeners.get("storage").size, 0);
+});
+
+test("cross-tab storage updates are validated and malformed writes ignored", () => {
+  const received = [];
+  const unsubscribe = subscribeToExternalChanges(data => received.push(data));
+  const handler = eventListeners.get("storage");
+  handler({ key: STORAGE_KEY, newValue: JSON.stringify(createBackup({ ...sample, xp: 240 })) });
+  assert.equal(received.length, 1);
+  assert.equal(received[0].xp, 240);
+  handler({ key: STORAGE_KEY, newValue: "{broken-json" });
+  assert.equal(received.length, 1);
+  unsubscribe();
 });

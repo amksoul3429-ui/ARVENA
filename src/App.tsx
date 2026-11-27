@@ -33,12 +33,13 @@ function App(){
  const[loadResult]=useState(()=>loadAppData());
  const[data,setData]=useState<Data>(()=>loadResult.ok?loadResult.value:blank);
  const[persistenceReady,setPersistenceReady]=useState(loadResult.ok);
+ const[storageHealthy,setStorageHealthy]=useState(loadResult.ok);
  const[notificationAccess,setNotificationAccess]=useState(getNotificationAccess);
- const[theme,setTheme]=useState<'dark'|'light'>(()=>(localStorage.getItem('asteria-theme')||localStorage.getItem('arvena-theme'))==='light'?'light':'dark');
+ const[theme,setTheme]=useState<'dark'|'light'>(()=>{try{return (window.localStorage.getItem('asteria-theme')||window.localStorage.getItem('arvena-theme'))==='light'?'light':'dark'}catch{return 'dark'}});
  const[page,setPage]=useState<Page>('Overview'),[modal,setModal]=useState<Page|null>(null),[editing,setEditing]=useState<Item|null>(null),[plannerDate,setPlannerDate]=useState(today()),[mobile,setMobile]=useState(false),[toast,setToast]=useState(loadResult.ok?(loadResult.warning||''):loadResult.error),[search,setSearch]=useState('');
- useEffect(()=>{if(!persistenceReady)return;const result=saveAppData(data);if(!result.ok)setToast(result.error)},[data,persistenceReady]);
- useEffect(()=>{localStorage.removeItem("arvena-aeris-endpoint-v1");localStorage.removeItem("arvena-aeris-token-v1")},[]);
- useEffect(()=>{document.documentElement.dataset.theme=theme;localStorage.setItem('asteria-theme',theme)},[theme]);
+ useEffect(()=>{if(!persistenceReady)return;const result=saveAppData(data);setStorageHealthy(result.ok);if(!result.ok)setToast(result.error)},[data,persistenceReady]);
+ useEffect(()=>{try{window.localStorage.removeItem("arvena-aeris-endpoint-v1");window.localStorage.removeItem("arvena-aeris-token-v1")}catch{/* Optional legacy cleanup must not prevent startup. */}},[]);
+ useEffect(()=>{document.documentElement.dataset.theme=theme;try{window.localStorage.setItem('asteria-theme',theme)}catch{/* Theme preference is optional. */}},[theme]);
  useEffect(()=>subscribeToExternalChanges(next=>setData(next)),[]);
  useEffect(()=>{if(toast){const t=setTimeout(()=>setToast(''),4000);return()=>clearTimeout(t)}},[toast]);
  useEffect(()=>{const onKeyDown=(event:KeyboardEvent)=>{if(event.key==='Escape'){setMobile(false);if(modal){setModal(null);setEditing(null)}}};window.addEventListener('keydown',onKeyDown);return()=>window.removeEventListener('keydown',onKeyDown)},[modal]);
@@ -97,7 +98,7 @@ function App(){
  {page==='Rewards'&&<RewardsAchievements rewards={data.rewards as any[]} xp={data.xp} credits={data.credits} metrics={rewardMetrics(data)} claimedAchievements={data.achievementClaims} unlockedItems={data.unlockedItems} onUnlock={unlockSystemReward} onSaveReward={reward=>setData(d=>({...d,rewards:d.rewards.some(r=>r.id===reward.id)?d.rewards.map(r=>r.id===reward.id?reward as Item:r):[reward as Item,...d.rewards]}))} onDeleteReward={rewardId=>setData(d=>({...d,rewards:d.rewards.filter(r=>r.id!==rewardId)}))} onRedeem={redeemPersonal} onFulfill={fulfillPersonal} onClaimAchievement={claimRewardAchievement}/>}
  {page==='Journal'&&<PersonalJournal entries={data.journal} onChange={entries=>setData(d=>({...d,journal:entries as Item[]}))}/>}
  {page==='Reports'&&<SystemReports data={data}/>}
- {page==='Settings'&&<SettingsSecurity data={data} storageHealthy={persistenceReady} notificationAccess={notificationAccess} onRequestNotifications={async()=>{const access=await requestNotificationAccess();setNotificationAccess(access);if(access==='granted'){sendSystemNotification('ASTERIA notifications enabled','ASTERIA can now show browser notifications.');setToast('Notifications enabled')}else if(access==='denied')setToast('Notifications are blocked in browser settings')}} onRestore={(restored,warning)=>{setPersistenceReady(true);setData(restored as Data);setToast(warning||'Backup restored successfully')}} onReset={()=>{const result=clearStoredAppData();if(!result.ok){setToast(result.error);return;}setPersistenceReady(true);setData(blank);setToast('Local data reset')}}/>}
+ {page==='Settings'&&<SettingsSecurity data={data} storageHealthy={storageHealthy} notificationAccess={notificationAccess} onRequestNotifications={async()=>{const access=await requestNotificationAccess();setNotificationAccess(access);if(access==='granted'){sendSystemNotification('ASTERIA notifications enabled','ASTERIA can now show browser notifications.');setToast('Notifications enabled')}else if(access==='denied')setToast('Notifications are blocked in browser settings')}} onRestore={(restored,warning)=>{setPersistenceReady(true);setData(restored as Data);setToast(warning||'Backup restored successfully')}} onReset={()=>{const result=clearStoredAppData();if(!result.ok){setToast(result.error);return;}setPersistenceReady(true);setData(blank);setToast('Local data reset')}}/>}
  </div><footer>ASTERIA · PRIVATE · LOCAL-FIRST</footer></main>
  {modal&&<Modal page={modal} initial={editing} defaultDate={plannerDate} close={()=>{setModal(null);setEditing(null)}} save={f=>save(modal,f)}/>}
  {toast&&<div className="toast">✓　{toast}</div>}
