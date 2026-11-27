@@ -1,5 +1,5 @@
 import {Activity,BookOpen,CalendarDays,ChevronRight,Compass,Edit3,Flame,LayoutDashboard,Settings,Target,Trophy,Video} from "lucide-react";
-import {labels,type Page,sections} from "../core/navigation";
+import {labels,type Page} from "../core/navigation";
 import {getLevel} from "../core/system";
 type Props={page:Page;xp:number;onNavigate:(page:Page)=>void};
 const icons:Record<Page,typeof Compass>={Explore:Compass,Overview:LayoutDashboard,Missions:Target,Planner:CalendarDays,"Dream Life":Compass,Evolution:Activity,Knowledge:BookOpen,Videos:Video,Rewards:Trophy,Journal:Edit3,Reports:Flame,Settings};
