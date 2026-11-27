@@ -127,7 +127,7 @@
 - [x] Dark and light themes using the persisted theme preference
 - [x] Existing app modules and local data behavior retained
 - [x] CI passed: npm test and TypeScript/Vite production build (workflow 46027745844)
-- [ ] Main-branch Pages deployment verified
+- [x] Main-branch Pages deployment verified (workflow 46027860897)
 - [ ] Owner desktop/mobile visual acceptance
 
 See [CELESTIAL-DASHBOARD-REDESIGN.md](CELESTIAL-DASHBOARD-REDESIGN.md).
