@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import { ArrowLeft, BookOpen, CheckCircle2, ChevronRight, Clock, ExternalLink, GraduationCap, Lock, Search, Trophy, Unlock } from "lucide-react";
 import { completeKnowledgeLesson, evaluateKnowledgeAnswer, knowledgeProgress, knowledgeSummary, normalizeKnowledgeCourse, unlockKnowledgeCourse, type KnowledgeCourse, type KnowledgeLesson } from "../core/knowledge";
 import { createUniversalKnowledgeCourses } from "../core/knowledgeCatalog";
+import { dueKnowledgeReviews, knowledgeMastery, recordKnowledgeReview } from "../core/learningMastery";
 import "./KnowledgeLibrary.css";
 
 type Props = { courses: any[]; credits: number; onChange: (courses: KnowledgeCourse[]) => void; onEconomy: (courses: KnowledgeCourse[], credits: number, xp: number) => void };
@@ -58,6 +59,8 @@ export default function KnowledgeLibrary({ courses, credits, onChange, onEconomy
     if (JSON.stringify(merged) !== JSON.stringify(normalized)) onChange(merged);
   }, [normalized, onChange]);
   const summary = knowledgeSummary(normalized);
+  const mastery = knowledgeMastery(normalized);
+  const dueReviews = dueKnowledgeReviews(normalized);
   const current = normalized.find(c => c.id === selectedId) || null;
   const filtered = normalized.filter(c => {
     const matchesCategory = category === "All subjects" || categoryFor(c.subject) === category || c.subject.toLowerCase() === category.toLowerCase();
@@ -70,6 +73,14 @@ export default function KnowledgeLibrary({ courses, credits, onChange, onEconomy
     const result = unlockKnowledgeCourse(normalized, course.id, credits, "spend");
     if (result.changed) onEconomy(result.courses, result.credits, 0);
     setFeedback(p => ({ ...p, [course.id]: result.reason }));
+  };
+  const submitRevision = (course: KnowledgeCourse, lesson: KnowledgeLesson) => {
+    if (!lesson.question) { setFeedback(p => ({ ...p, [lesson.id]: "No assessment is configured for this lesson." })); return; }
+    const check = evaluateKnowledgeAnswer(lesson, answers[lesson.id]);
+    if (answers[lesson.id] === undefined) return;
+    const result = recordKnowledgeReview(normalized, course.id, lesson.id, check.correct);
+    if (result.changed) onChange(result.courses);
+    setFeedback(p => ({ ...p, [lesson.id]: check.correct ? "Correct. Your next revision has been scheduled." : "Not quite. " + check.explanation + " Your revision is scheduled for tomorrow." }));
   };
   const finishLesson = (course: KnowledgeCourse, lesson: KnowledgeLesson) => {
     if (lesson.question) {
@@ -100,6 +111,13 @@ export default function KnowledgeLibrary({ courses, credits, onChange, onEconomy
       <section className="km-intro km-detail-intro"><div><span>{categoryFor(current.subject).toUpperCase()} / COURSE PREVIEW</span><h2>{current.title}</h2><p>{current.description}</p><div className="km-meta"><span>{current.subject}</span><span>{current.level}</span><span>{current.lessons.length} lessons</span><span>{knowledgeProgress(current).minutes} study minutes</span></div></div><div className="km-emblem"><BookOpen size={32}/></div></section>
       {!current.unlocked ? <div className="km-buy"><div><b>One-time permanent access</b><small>Pay once with credits. Keep this course forever and revisit all lessons without paying again. Assessments and retests are always free.</small></div><strong>{current.unlockCost === 0 ? "FREE" : current.unlockCost + " CREDITS"}</strong><button className="primary" disabled={credits < current.unlockCost} onClick={() => unlock(current)}>UNLOCK COURSE</button><small>{feedback[current.id] || (credits < current.unlockCost ? "Not enough credits yet." : "Your access will not expire.")}</small></div> : <div className="km-buy"><div><b><CheckCircle2 size={15}/> Permanently unlocked</b><small>All lessons and assessments are available. Assessments never cost credits.</small></div><strong>{current.done ? "MASTERED" : "IN PROGRESS"}</strong></div>}
       <div className="km-progress"><div><b>COURSE PROGRESS</b><strong>{knowledgeProgress(current).percent}%</strong><span>{knowledgeProgress(current).completed}/{knowledgeProgress(current).total} lessons completed</span></div><div className="km-track"><i style={{ width: knowledgeProgress(current).percent + "%" }}/></div></div>
+      <section className="km-buy" aria-label="Revision and mastery">
+        <div><b>REVISION & MASTERY</b><small>{mastery.masteredLessons} mastered of {mastery.completedLessons} completed lessons · {mastery.assessmentAccuracy}% assessment accuracy · {dueReviews.length} reviews due</small></div>
+        <strong>{mastery.masteryPercent}%</strong>
+      </section>
+      {current.unlocked && current.lessons.some(lesson => lesson.done) && <section className="km-policy"><div><b>SPACED REVISION QUEUE</b><p>Revisit completed lessons to strengthen recall. Correct answers extend the interval (1, 2, 4, 8… days, up to 90); incorrect answers schedule an earlier retry.</p></div>
+        {current.lessons.filter(lesson => lesson.done).map(lesson => <button key={lesson.id} className="secondary mini" onClick={() => setActiveLesson(lesson.id)}>REVISE: {lesson.title} {lesson.reviewDueAt ? "· due "+new Date(lesson.reviewDueAt).toLocaleDateString() : "· ready to review"}</button>)}
+      </section>}
       <h3 className="km-section-title">WHAT YOU WILL LEARN</h3>
       {current.objectives.length ? <ul className="km-outcomes">{current.objectives.map((item, i) => <li key={i}>{item}</li>)}</ul> : <p className="muted">Learning outcomes are not available for this course.</p>}
       <div className="km-section-heading"><h3>CURRICULUM & LESSONS</h3></div>
@@ -110,7 +128,7 @@ export default function KnowledgeLibrary({ courses, credits, onChange, onEconomy
           {lesson.resources.map((resource, i) => <p key={i}><a href={resource.url} target="_blank" rel="noreferrer">{resource.label} <ExternalLink size={12}/></a></p>)}
           {lesson.question && <div className="km-check"><b>KNOWLEDGE CHECK · FREE</b><p>{lesson.question.prompt}</p>{lesson.question.options.map((option, i) => <label key={i}><input type="radio" name={"quiz-" + lesson.id} checked={answers[lesson.id] === i} onChange={() => setAnswers(p => ({ ...p, [lesson.id]: i }))}/>{option}</label>)}</div>}
           {feedback[lesson.id] && <p className="km-feedback">{feedback[lesson.id]}</p>}
-          <button className="primary km-finish" disabled={lesson.done || (!!lesson.question && answers[lesson.id] === undefined)} onClick={() => finishLesson(current, lesson)}>{lesson.done ? "LESSON COMPLETED" : "MARK LESSON COMPLETE"}</button>
+          {lesson.done ? <button className="primary km-finish" disabled={!lesson.question || answers[lesson.id] === undefined} onClick={() => submitRevision(current, lesson)}>SUBMIT REVISION CHECK</button> : <button className="primary km-finish" disabled={!!lesson.question && answers[lesson.id] === undefined} onClick={() => finishLesson(current, lesson)}>MARK LESSON COMPLETE</button>}
         </>}</div>}</article>)}
       {current.done && <div className="km-last"><Trophy size={16}/> COURSE MASTERED · ALL LESSONS COMPLETED</div>}
     </>}
