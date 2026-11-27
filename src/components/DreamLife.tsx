@@ -3,13 +3,13 @@ import { Archive, ArrowRight, CalendarDays, Check, Circle, Flag, ListChecks, Pau
 import { addGoalMilestone, goalProgress, goalSummary, normalizeGoal, toggleGoalMilestone, updateGoalStatus, type LifeGoal, type GoalMilestone } from "../core/goals";
 import "./DreamLife.css";
 
-type Props = { goals: any[]; onChange: (goals: any[]) => void; onCreateMission: (goal: LifeGoal, milestone: GoalMilestone) => void };
+type Props = { goals: any[]; onChange: (goals: any[]) => void; onCreateMission: (goal: LifeGoal, milestone: GoalMilestone) => void; onMilestoneComplete:(goalId:string,milestoneId:string)=>void };
 const areas = ["Career","Business","Financial","Home & Lifestyle","Health","Education","Family","Experiences","Personal"];
 const priorities = ["Low","Medium","High","Critical"] as const;
 const empty = () => ({ title:"", description:"", area:"Personal", target:"", priority:"Medium", why:"", nextAction:"", progress:0 });
 const makeId = () => crypto.randomUUID();
 const dateLabel = (s: string) => { if(!s) return "No target date"; const d = new Date(s+"T00:00:00"); return Number.isNaN(d.getTime()) ? s : d.toLocaleDateString(undefined,{day:"numeric",month:"short",year:"numeric"}); };
-export default function DreamLife({goals,onChange,onCreateMission}:Props) {
+export default function DreamLife({goals,onChange,onCreateMission,onMilestoneComplete}:Props) {
   const [showForm,setShowForm] = useState(false), [editing,setEditing] = useState<LifeGoal|null>(null), [draft,setDraft] = useState(empty());
   const [milestoneGoal,setMilestoneGoal] = useState<string|null>(null), [milestoneTitle,setMilestoneTitle] = useState(""), [milestoneDate,setMilestoneDate] = useState("");
   const [filter,setFilter] = useState("All");
@@ -22,7 +22,7 @@ export default function DreamLife({goals,onChange,onCreateMission}:Props) {
     const item:LifeGoal={id:editing?.id||makeId(),created:editing?.created||now,...draft,title:draft.title.trim(),priority:draft.priority as LifeGoal["priority"],status:editing?.status||"Active",milestones:editing?.milestones||[],updatedAt:now,progress:editing?.milestones.length?goalProgress(editing):Math.max(0,Math.min(100,Number(draft.progress)||0)),...(editing?.completedAt?{completedAt:editing.completedAt}:{})};
     onChange(editing?goals.map(g=>g.id===editing.id?item:g):[item,...goals]);setShowForm(false);
   };
-  const toggleMilestone=(goalId:string,milestoneId:string)=>onChange(toggleGoalMilestone(goals,goalId,milestoneId).goals);
+  const toggleMilestone=(goalId:string,milestoneId:string)=>{const goal=normalized.find(g=>g.id===goalId),milestone=goal?.milestones.find(m=>m.id===milestoneId);const result=toggleGoalMilestone(goals,goalId,milestoneId);if(result.changed){onChange(result.goals);if(milestone&&!milestone.done)onMilestoneComplete(goalId,milestoneId);}};
   const addMilestone=(goalId:string)=>{if(!milestoneTitle.trim())return;const result=addGoalMilestone(goals,goalId,{id:makeId(),title:milestoneTitle,dueDate:milestoneDate,done:false});onChange(result.goals);setMilestoneTitle("");setMilestoneDate("");setMilestoneGoal(null);};
   const status=(g:LifeGoal,s:LifeGoal["status"])=>onChange(updateGoalStatus(goals,g.id,s).goals);
   const remove=(g:LifeGoal)=>{if(confirm("Delete “"+g.title+"” and its milestone history?"))onChange(goals.filter(x=>x.id!==g.id));};
