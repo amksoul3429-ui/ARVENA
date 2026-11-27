@@ -17,7 +17,7 @@
 - [x] Ordinary saves refuse to overwrite malformed or unsupported stored data; explicit confirmed restore has a separate validated write path
 - [x] Service-worker activation only removes obsolete ASTERIA-owned caches
 - [ ] App shell responsibilities fully refactored and verified against the documented boundary map
-- [ ] Build/test configuration and deployment workflows consolidated and verified
+- [x] Build/test configuration and deployment workflows consolidated into one automated Pages workflow and verified
 - [ ] Remove dead, duplicate or misleading foundation artifacts
 
 ### Phase 02 — Identity & Design
@@ -45,7 +45,7 @@
 - [ ] PWA installation, update and offline behavior verified on device
 
 ### Foundation verification and sign-off
-- [x] Pull-request branch CI passed: 96 automated tests and production build on commit 0181a9c (PR #2)
+- [x] Pull-request branch CI passed: 96 automated tests and production build on commit 5b78258 (PR #2)
 - [ ] Production deployment verified after merge
 - [ ] Android/desktop device acceptance complete
 - [ ] Part 01 sign-off
