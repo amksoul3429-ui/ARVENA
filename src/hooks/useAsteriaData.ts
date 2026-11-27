@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { loadAppData, saveAppData, subscribeToExternalChanges } from "../core/storage";
 import { blank, type Data } from "../core/appData";
 
@@ -24,9 +24,17 @@ export function useAsteriaData() {
   const [persistenceReady, setPersistenceReady] = useState(loadResult.ok);
   const [storageHealthy, setStorageHealthy] = useState(loadResult.ok);
   const [persistenceError, setPersistenceError] = useState("");
+  // A remote reset must clear this tab without immediately recreating the deleted key.
+  const skipNextPersistence = useRef(false);
 
   useEffect(() => {
     if (!persistenceReady) return;
+    if (skipNextPersistence.current) {
+      skipNextPersistence.current = false;
+      setStorageHealthy(true);
+      setPersistenceError("");
+      return;
+    }
     const result = saveAppData(data);
     setStorageHealthy(result.ok);
     setPersistenceError(result.ok ? "" : result.error);
@@ -36,7 +44,14 @@ export function useAsteriaData() {
     }
   }, [data, persistenceReady, legacyExplorerVideos]);
 
-  useEffect(() => subscribeToExternalChanges(next => setData(next)), []);
+  useEffect(() => subscribeToExternalChanges(next => {
+    if (next === null) {
+      skipNextPersistence.current = true;
+      setData(blank);
+      return;
+    }
+    setData(next);
+  }), []);
 
   useEffect(() => {
     // Optional legacy cleanup must never prevent the local-first app from starting.
