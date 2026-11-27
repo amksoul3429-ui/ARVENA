@@ -2,6 +2,7 @@ import {useEffect,useRef,useState} from 'react';
 import {useAsteriaData} from './hooks/useAsteriaData';
 import NavigationOverlay from './components/NavigationOverlay';
 import {labels,type Page} from './core/navigation';
+import type {RecordPage} from './core/records';
 import {useAsteriaActions} from './hooks/useAsteriaActions';
 import {blank,today,id,rewardMetrics,type Data,type Item} from './core/appData';
 import CommandCenter from './components/CommandCenter';
@@ -30,7 +31,7 @@ function App(){
  const {data,setData,setPersistenceReady,storageHealthy,persistenceError,loadError,loadWarning}=useAsteriaData();
  const[notificationAccess,setNotificationAccess]=useState(getNotificationAccess);
  const[theme,setTheme]=useState<'dark'|'light'>(()=>{try{return (window.localStorage.getItem('asteria-theme')||window.localStorage.getItem('arvena-theme'))==='light'?'light':'dark'}catch{return 'dark'}});
- const[page,setPage]=useState<Page>('Overview'),[modal,setModal]=useState<Page|null>(null),[editing,setEditing]=useState<Item|null>(null),[plannerDate,setPlannerDate]=useState(today()),[mobile,setMobile]=useState(false),[toast,setToast]=useState(loadWarning||loadError),[search,setSearch]=useState('');
+ const[page,setPage]=useState<Page>('Overview'),[modal,setModal]=useState<RecordPage|null>(null),[editing,setEditing]=useState<Item|null>(null),[plannerDate,setPlannerDate]=useState(today()),[mobile,setMobile]=useState(false),[toast,setToast]=useState(loadWarning||loadError),[search,setSearch]=useState('');
  const focusReturnRef=useRef<HTMLElement|null>(null);
  useEffect(()=>{if(persistenceError)setToast(persistenceError)},[persistenceError]);
  useEffect(()=>{document.documentElement.dataset.theme=theme;try{window.localStorage.setItem('asteria-theme',theme)}catch{/* Theme preference is optional. */}},[theme]);
@@ -61,10 +62,10 @@ function App(){
   else if(focusReturnRef.current){focusReturnRef.current.focus();focusReturnRef.current=null;}
  },[modal,mobile]);
  const key=(p:Page)=>p==='Missions'?'missions':p==='Planner'?'tasks':p==='Dream Life'?'goals':p==='Knowledge'?'knowledge':p==='Videos'?'videos':p==='Evolution'?'evolution':p==='Rewards'?'rewards':'journal';
- const open=(p:Page,item?:Item)=>{focusReturnRef.current=document.activeElement as HTMLElement|null;setEditing(item||null);setModal(p)};
+ const open=(p:RecordPage,item?:Item)=>{focusReturnRef.current=document.activeElement as HTMLElement|null;setEditing(item||null);setModal(p)};
  const openPlanner=(date:string)=>{setPlannerDate(date);open('Planner')};
- const remove=(p:Page,item:Item)=>{setData(d=>({...d,[key(p)]:d[key(p)].filter(x=>x.id!==item.id)}));setToast('Deleted')};
- const save=(p:Page,form:HTMLFormElement)=>{setData(d=>saveRecord(d,p as 'Missions'|'Planner'|'Dream Life'|'Knowledge'|'Rewards'|'Journal',new FormData(form),editing));setModal(null);setEditing(null);setToast(editing?'Saved changes':'Added successfully')};
+ const remove=(p:RecordPage,item:Item)=>{setData(d=>({...d,[key(p)]:d[key(p)].filter(x=>x.id!==item.id)}));setToast('Deleted')};
+ const save=(p:RecordPage,form:HTMLFormElement)=>{setData(d=>saveRecord(d,p,new FormData(form),editing));setModal(null);setEditing(null);setToast(editing?'Saved changes':'Added successfully')};
  const {changeMissionStatus,completeMission,addMissionToPlanner,claimRewardAchievement,unlockSystemReward,redeemPersonal,fulfillPersonal}=useAsteriaActions(setData,setToast);
  const list=(p:Page)=>data[key(p)].filter(x=>x.title.toLowerCase().includes(search.toLowerCase()));
  return <div className="shell">
