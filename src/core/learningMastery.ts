@@ -1,4 +1,4 @@
-import { normalizeKnowledgeCourse, type KnowledgeCourse } from "./knowledge";
+import { normalizeKnowledgeCourse, type KnowledgeCourse } from "./knowledge.js";
 
 const DAY = 86400000;
 const dateKey = (value: string | Date) => {
