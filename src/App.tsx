@@ -1,5 +1,6 @@
 import {useEffect,useRef,useState} from 'react';
 import {useAsteriaData} from './hooks/useAsteriaData';
+import {useAsteriaActions} from './hooks/useAsteriaActions';
 import {blank,today,id,rewardMetrics,type Data,type Item} from './core/appData';
 import CommandCenter from './components/CommandCenter';
 import UniversalExplorer from './UniversalExplorer';
@@ -15,11 +16,10 @@ import SystemReports from './components/SystemReports';
 import SettingsSecurity from './components/SettingsSecurity';
 import RecordModal from './components/RecordModal';
 import {syncMissionTask,removeMissionTasks} from './core/planner';
-import {normalizeMission,transitionMission,assignMissionToPlanner,missionReward} from './core/missions';
+import {normalizeMission} from './core/missions';
 import type { LifeGoal, GoalMilestone } from './core/goals';
 import './components/MissionControl.css';
 import {getLevel,xpIntoLevel} from './core/system';
-import {claimAchievement,redeemPersonalReward,fulfillPersonalReward,unlockSystemItem} from './core/rewards';
 import {clearStoredAppData} from './core/storage';
 import {getNotificationAccess,requestNotificationAccess,sendSystemNotification} from './core/permissions';
 import {Activity,BookOpen,CalendarDays,ChevronRight,Compass,Edit3,Flame,LayoutDashboard,Menu,Plus,Settings,Target,Trophy,Wallet,Video as VideoIcon,X,Zap,Sun,Moon} from 'lucide-react';
@@ -73,27 +73,7 @@ function App(){
  if(p==='Rewards')item={...base,description:v('description'),type:v('type'),cost:+v('cost'),redeemed:old?.redeemed||false};
  if(p==='Journal')item={...base,content:v('content'),mood:v('mood')};
  setData(d=>{const next={...d,[key(p)]:old?d[key(p)].map(x=>x.id===old.id?item:x):[item,...d[key(p)]]};if(p==='Missions'&&old)next.tasks=syncMissionTask(d.tasks as any,item as any) as Item[];return next});setModal(null);setEditing(null);setToast(old?'Saved changes':'Added successfully')};
- const changeMissionStatus=(missionId:string,next:'Active'|'Available')=>{
-  setData(d=>{const result=transitionMission(d.missions,missionId,next);if(!result.ok){setToast(result.reason);return d;}setToast(result.reason);return {...d,missions:result.missions};});
- };
- const completeMission=(missionId:string)=>{
-  setData(d=>{const current=d.missions.find(m=>m.id===missionId);if(!current){setToast('Mission not found');return d;}const normalized=normalizeMission(current);if(normalized.status!=='Active'){setToast('Activate this mission before completing it');return d;}const result=transitionMission(d.missions,missionId,'Completed');if(!result.ok){setToast(result.reason);return d;}const reward=missionReward(normalized);setToast('Mission completed · '+reward.xp+' XP and '+reward.credits+' credits awarded');return {...d,missions:result.missions,xp:d.xp+reward.xp,credits:d.credits+reward.credits};});
- };
- const addMissionToPlanner=(missionId:string)=>{
-  setData(d=>{const result=assignMissionToPlanner(d.missions,d.tasks as any,missionId,today(),id());if(!result.ok){setToast(result.reason);return d;}setToast('Mission added to Daily Planner · no reward is awarded for assignment');return {...d,tasks:result.tasks};});
- };
- const claimRewardAchievement=(achievementId:string)=>{
-  setData(d=>{const result=claimAchievement(rewardMetrics(d),d.achievementClaims,achievementId);if(!result.ok){setToast(result.reason);return d;}setToast('Achievement claimed · +'+result.credits+' credits · +'+result.xp+' XP');return {...d,achievementClaims:result.claimed,credits:d.credits+result.credits,xp:d.xp+result.xp};});
- };
- const unlockSystemReward=(unlockId:string,mode:'credits'|'milestone')=>{
-  setData(d=>{const result=unlockSystemItem(d.unlockedItems,rewardMetrics(d),d.credits,unlockId,mode);if(!result.ok){setToast(result.reason);return d;}setToast(result.reason);return {...d,unlockedItems:result.unlocked,credits:result.credits};});
- };
- const redeemPersonal=(rewardId:string)=>{
-  setData(d=>{const result=redeemPersonalReward(d.rewards,d.credits,rewardId);if(!result.ok){setToast(result.reason);return d;}setToast(result.reason);return {...d,rewards:result.rewards as Item[],credits:result.credits};});
- };
- const fulfillPersonal=(rewardId:string)=>{
-  setData(d=>{const result=fulfillPersonalReward(d.rewards,rewardId);if(!result.ok){setToast(result.reason);return d;}setToast(result.reason);return {...d,rewards:result.rewards as Item[]};});
- };
+ const {changeMissionStatus,completeMission,addMissionToPlanner,claimRewardAchievement,unlockSystemReward,redeemPersonal,fulfillPersonal}=useAsteriaActions(setData,setToast);
  const list=(p:Page)=>data[key(p)].filter(x=>x.title.toLowerCase().includes(search.toLowerCase()));
  const navIcon:Record<Page,any>={Explore:Compass,Overview:LayoutDashboard,Missions:Target,Planner:CalendarDays,'Dream Life':Compass,Evolution:Activity,Knowledge:BookOpen,Videos:VideoIcon,Rewards:Trophy,Journal:Edit3,Reports:Flame,Settings:Settings};
  return <div className="shell">
