@@ -3,7 +3,7 @@ export type KnowledgeQuestion = { prompt: string; options: string[]; answerIndex
 export type KnowledgeLesson = {
   id: string; title: string; summary: string; content: string; objectives: string[];
   estimatedMinutes: number; resources: KnowledgeResource[]; question?: KnowledgeQuestion;
-  done: boolean; completedAt?: string;
+  done: boolean; completedAt?: string; reviewIntervalDays: number; reviewStreak: number; reviewDueAt?: string; lastReviewedAt?: string; assessmentAttempts: number; assessmentCorrect: number;
 };
 export type KnowledgeCourse = {
   id: string; title: string; created: string; subject: string; level: string; description: string;
@@ -32,6 +32,10 @@ export function normalizeKnowledgeLesson(value: unknown, index = 0): KnowledgeLe
     objectives: strings(value.objectives), estimatedMinutes: num(value.estimatedMinutes, 1, 1440, 20),
     resources, ...(question ? { question } : {}), done: value.done === true,
     ...(typeof value.completedAt === "string" ? { completedAt: value.completedAt } : {}),
+    reviewIntervalDays: num(value.reviewIntervalDays, 0, 365, 0), reviewStreak: num(value.reviewStreak, 0, 10000, 0),
+    ...(typeof value.reviewDueAt === "string" ? { reviewDueAt: value.reviewDueAt } : {}),
+    ...(typeof value.lastReviewedAt === "string" ? { lastReviewedAt: value.lastReviewedAt } : {}),
+    assessmentAttempts: num(value.assessmentAttempts, 0, 1000000, 0), assessmentCorrect: num(value.assessmentCorrect, 0, 1000000, 0),
   };
 }
 export function normalizeKnowledgeCourse(value: unknown): KnowledgeCourse | null {
