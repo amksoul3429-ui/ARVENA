@@ -51,6 +51,7 @@ test("service worker installation precaches the built same-origin JS and CSS ent
   assert.ok(worker.added.includes("/ARVENA/index.html"));
   assert.ok(worker.added.includes("/ARVENA/manifest.webmanifest"));
   assert.ok(worker.added.includes("/ARVENA/favicon.svg"));
+  assert.ok(worker.added.includes("/ARVENA/asteria-mark.svg"));
   assert.ok(worker.added.includes("https://example.test/ARVENA/assets/app-123.js"));
   assert.ok(worker.added.includes("https://example.test/ARVENA/assets/app-456.css"));
   assert.ok(worker.puts.includes("/ARVENA/index.html"));
