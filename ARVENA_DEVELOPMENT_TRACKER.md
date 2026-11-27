@@ -9,6 +9,7 @@
 - [x] Existing domain modules and storage boundary identified
 - [x] Record editor extracted into a dedicated component
 - [x] Record form-to-domain mapping extracted into a testable core module
+- [x] Every navigable workspace has an explicit typed data-collection mapping and tested scoped filtering/deletion
 - [x] Mobile navigation overlay extracted into a dedicated component with centralized page definitions
 - [x] Persistence, migration status and cross-tab synchronization encapsulated in useAsteriaData
 - [x] Mission and reward orchestration delegated to useAsteriaActions
@@ -45,7 +46,7 @@
 - [ ] PWA installation, update and offline behavior verified on device
 
 ### Foundation verification and sign-off
-- [x] Pull-request branch CI passed: 96 automated tests and production build on commit 5b78258 (PR #2)
+- [x] Pull-request branch CI passed: 99 automated tests and production build on commit 0dbe2fd (PR #2)
 - [ ] Production deployment verified after merge
 - [ ] Android/desktop device acceptance complete
 - [ ] Part 01 sign-off
