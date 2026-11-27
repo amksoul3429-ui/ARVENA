@@ -2,9 +2,7 @@
 
 ## Identity
 **ASTERIA — Universal Intelligence & Knowledge System**
-**Integrated intelligence:** AERIS — Hybrid Intelligence (Commander, Companion, Strategist)
-
-ASTERIA is a mobile-first universal knowledge, research, learning and personal-intelligence environment. AERIS is an integrated intelligence layer, not a separate application. Universal exploration is the primary experience; personal-life systems are connected subsystems.
+ASTERIA is a mobile-first universal knowledge, research, learning and personal-intelligence environment. Universal exploration is the primary experience; personal-life systems are connected subsystems. AERIS is a separate application and is not an ASTERIA runtime dependency.
 
 ## Product principles
 - Universal search and exploration without a predefined topic catalogue.
@@ -24,7 +22,7 @@ ASTERIA is a mobile-first universal knowledge, research, learning and personal-i
 - Versioned local storage and backup/recovery
 - Knowledge and personal-system domain modules
 - Integration/service adapters
-- Permissioned AERIS intelligence layer (Part 02)
+- Explicit integration adapters; AERIS remains separate and is not embedded in ASTERIA
 - Search/learning/research engines (Part 03)
 
 ## Data compatibility
