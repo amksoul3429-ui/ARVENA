@@ -74,6 +74,12 @@ export function validateAppData(value: unknown): AppData {
   };
 }
 
+function isRecognizableAppData(value: Record<string, unknown>): boolean {
+  const collections = ["missions", "tasks", "goals", "knowledge", "rewards", "journal", "activity", "videos", "evolution", "achievementClaims", "unlockedItems"];
+  return collections.some(key => Array.isArray(value[key])) ||
+    typeof value.xp === "number" || typeof value.credits === "number";
+}
+
 function parseStoredValue(raw: string): AppData {
   const parsed: unknown = JSON.parse(raw);
   // Versioned envelope is the current format; flat objects are the original ULS format.
@@ -81,7 +87,11 @@ function parseStoredValue(raw: string): AppData {
     if (parsed.version !== BACKUP_VERSION || !isObject(parsed.data)) {
       throw new Error("Unsupported stored data version");
     }
+    if (!isRecognizableAppData(parsed.data)) throw new Error("Unrecognized stored data format");
     return validateAppData(parsed.data);
+  }
+  if (!isObject(parsed) || !isRecognizableAppData(parsed)) {
+    throw new Error("Unrecognized legacy stored data format");
   }
   return validateAppData(parsed);
 }
