@@ -167,7 +167,7 @@ test("current-version backup rejects unrelated empty data objects", () => {
 test("cross-tab storage deletion clears stale in-memory data", () => {
   const received = [];
   const unsubscribe = subscribeToExternalChanges(data => received.push(data));
-  const handler = eventListeners.get("storage");
+  const handler = [...eventListeners.get("storage")][0];
   handler({ key: "unrelated-key", newValue: null });
   assert.equal(received.length, 0);
   handler({ key: STORAGE_KEY, newValue: null });
@@ -180,7 +180,7 @@ test("cross-tab storage deletion clears stale in-memory data", () => {
 test("cross-tab storage updates are validated and malformed writes ignored", () => {
   const received = [];
   const unsubscribe = subscribeToExternalChanges(data => received.push(data));
-  const handler = eventListeners.get("storage");
+  const handler = [...eventListeners.get("storage")][0];
   handler({ key: STORAGE_KEY, newValue: JSON.stringify(createBackup({ ...sample, xp: 240 })) });
   assert.equal(received.length, 1);
   assert.equal(received[0].xp, 240);
