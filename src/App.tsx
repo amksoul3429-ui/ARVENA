@@ -7,6 +7,8 @@ import {useAsteriaActions} from './hooks/useAsteriaActions';
 import {usePwa} from './hooks/usePwa';
 import {useAsteriaTheme} from './hooks/useAsteriaTheme';
 import AppHeader from './components/AppHeader';
+import DesktopSidebar from './components/DesktopSidebar';
+import InsightRail from './components/InsightRail';
 import {blank,today,id,rewardMetrics,type Data,type Item} from './core/appData';
 import CommandCenter from './components/CommandCenter';
 const UniversalExplorer=lazy(()=>import('./UniversalExplorer'));
@@ -72,9 +74,9 @@ function App(){
  const save=(p:RecordPage,form:HTMLFormElement)=>{setData(d=>saveRecord(d,p,new FormData(form),editing));setModal(null);setEditing(null);setToast(editing?'Saved changes':'Added successfully')};
  const {changeMissionStatus,completeMission,addMissionToPlanner,claimRewardAchievement,unlockSystemReward,redeemPersonal,fulfillPersonal}=useAsteriaActions(setData,setToast);
  const list=(p:Page)=>filterWorkspaceRecords(data,p,search);
- return <div className="shell">
- {mobile&&<NavigationOverlay page={page} xp={data.xp} onNavigate={setPage} onClose={()=>setMobile(false)}/>}
- <main id="main-content"><a className="skip-link" href="#main-content">Skip to main content</a><AppHeader page={page} theme={theme} credits={data.credits} level={getLevel(data.xp)} navigationOpen={mobile} canInstall={canInstall} updateReady={updateReady} onOpenNavigation={()=>{focusReturnRef.current=document.activeElement as HTMLElement|null;setMobile(true)}} onToggleTheme={()=>setTheme(t=>t==='dark'?'light':'dark')} onInstall={()=>void install()} onApplyUpdate={applyUpdate}/>
+ return <div className="shell asteria-shell"><div className="asteria-layout"><DesktopSidebar page={page} xp={data.xp} onNavigate={setPage}/>
+ {mobile&&<NavigationOverlay page={page} xp={data.xp} onNavigate={setPage} onClose={()=>setMobile(false)}/>}<div className="asteria-workspace">
+ <main id="main-content"><a className="skip-link" href="#main-content">Skip to main content</a><AppHeader page={page} theme={theme} credits={data.credits} level={getLevel(data.xp)} navigationOpen={mobile} canInstall={canInstall} updateReady={updateReady} onOpenNavigation={()=>{focusReturnRef.current=document.activeElement as HTMLElement|null;setMobile(true)}} onToggleTheme={()=>setTheme(t=>t==='dark'?'light':'dark')} onInstall={()=>void install()} onApplyUpdate={applyUpdate} search={search} onSearch={setSearch}/>
  <div className="content"><Suspense fallback={<div className="panel" role="status" aria-live="polite">Loading workspace…</div>}>
  {page==='Explore'&&<UniversalExplorer videos={data.videos as any[]} onChange={videos=>setData(d=>({...d,videos:videos as unknown as Item[]}))}/>}
  {page==='Overview'&&<CommandCenter data={data} level={getLevel(data.xp)} xpIntoLevel={xpIntoLevel(data.xp)} onOpen={p=>open(p)} onNavigate={p=>setPage(p)} onToggleTask={taskId=>setData(d=>({...d,tasks:d.tasks.map(t=>t.id===taskId?{...t,done:!t.done}:t)}))}/>}
@@ -88,10 +90,10 @@ function App(){
  {page==='Journal'&&<PersonalJournal entries={data.journal} onChange={entries=>setData(d=>({...d,journal:entries as Item[]}))}/>}
  {page==='Reports'&&<SystemReports data={data}/>}
  {page==='Settings'&&<SettingsSecurity data={data} storageHealthy={storageHealthy} notificationAccess={notificationAccess} onRequestNotifications={async()=>{const access=await requestNotificationAccess();setNotificationAccess(access);if(access==='granted'){sendSystemNotification('ASTERIA notifications enabled','ASTERIA can now show browser notifications.');setToast('Notifications enabled')}else if(access==='denied')setToast('Notifications are blocked in browser settings')}} onRestore={(restored,warning)=>{const result=restoreAppData(restored);if(!result.ok){setToast(result.error);return;}setPersistenceReady(true);setData(result.value as Data);setToast(warning||'Backup restored successfully')}} onReset={()=>{const result=clearStoredAppData();if(!result.ok){setToast(result.error);return;}resetPersistence();setPersistenceReady(true);setData({...blank});setToast('Local data reset')}}/>}
- </Suspense></div><footer>ASTERIA · PRIVATE · LOCAL-FIRST</footer></main>
+ </Suspense></div><footer>ASTERIA · PRIVATE · LOCAL-FIRST</footer></main><InsightRail data={data} onNavigate={setPage}/></div></div>
  {modal&&<RecordModal page={modal} title={labels[modal]||modal} initial={editing} defaultDate={plannerDate} close={()=>{setModal(null);setEditing(null)}} save={f=>save(modal,f)}/>}
  {toast&&<div className="toast">✓　{toast}</div>}
- <div className="search"><input placeholder="Filter current section..." value={search} onChange={e=>setSearch(e.target.value)}/>{search&&<button onClick={()=>setSearch('')}><X size={13}/></button>}</div>
+
  </div>
 }
 function Head({page,onAdd}:{page:Page;onAdd?:()=>void}){return <div className="head"><div><small>UNIVERSAL LIFE SYSTEM / {page.toUpperCase()}</small><h1>{labels[page]}</h1><p>Plan deliberately. Execute consistently. Review honestly.</p></div>{onAdd&&<button className="primary" onClick={onAdd}><Plus size={15}/> ADD NEW</button>}</div>}
