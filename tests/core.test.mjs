@@ -183,7 +183,7 @@ test("cross-tab storage deletion clears stale in-memory data", () => {
   assert.equal(received.length, 0);
   handler({ key: STORAGE_KEY, newValue: null });
   assert.equal(received.length, 1);
-  assert.deepEqual(received[0], validateAppData({}));
+  assert.equal(received[0], null);
   unsubscribe();
   assert.equal(eventListeners.get("storage").size, 0);
 });
