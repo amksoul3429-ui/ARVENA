@@ -97,7 +97,7 @@
 - [x] Habit check-in XP awards use stable habit/date event IDs
 - [x] Skill practice levels use the shared capped progression rule
 - [x] Regression tests for award integrity, duplicate prevention, levels, ranks and skill progression
-- [ ] Branch CI and production build passed
+- [x] Branch CI passed: 118/118 automated tests, TypeScript and Vite production build (workflow 46024178662)
 - [ ] Owner desktop/mobile acceptance
 
 ## PART 05 — SECURITY, INTEGRATION & PRODUCTION
