@@ -188,3 +188,40 @@ test("cross-tab storage updates are validated and malformed writes ignored", () 
   assert.equal(received.length, 1);
   unsubscribe();
 });
+
+
+test("storage read failures are reported without overwriting existing browser data", () => {
+  const originalGet = window.localStorage.getItem;
+  window.localStorage.getItem = () => { throw new Error("storage blocked"); };
+  try {
+    const result = loadAppData();
+    assert.equal(result.ok, false);
+    assert.match(result.error, /left untouched/);
+  } finally {
+    window.localStorage.getItem = originalGet;
+  }
+});
+
+test("quota failures are reported as recoverable save errors", () => {
+  const originalSet = window.localStorage.setItem;
+  window.localStorage.setItem = () => { throw new DOMException("quota", "QuotaExceededError"); };
+  try {
+    const result = saveAppData(sample);
+    assert.equal(result.ok, false);
+    assert.match(result.error, /storage is full/i);
+  } finally {
+    window.localStorage.setItem = originalSet;
+  }
+});
+
+test("reset failures are returned to the caller instead of being reported as success", () => {
+  const originalRemove = window.localStorage.removeItem;
+  window.localStorage.removeItem = () => { throw new Error("storage blocked"); };
+  try {
+    const result = clearStoredAppData();
+    assert.equal(result.ok, false);
+    assert.match(result.error, /could not clear/i);
+  } finally {
+    window.localStorage.removeItem = originalRemove;
+  }
+});
