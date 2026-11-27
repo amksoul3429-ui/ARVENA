@@ -80,16 +80,17 @@ lesson("Sustainability, policy and collective action","Trade-offs, environmental
 ];
 
 export function createUniversalKnowledgeCourses(now = new Date().toISOString()): KnowledgeCourse[] {
+ const prerequisites: Record<string,string> = { "universal-technology":"universal-mathematics", "universal-health":"universal-science", "universal-psychology":"universal-science", "universal-environment":"universal-science", "universal-economics":"universal-mathematics", "universal-business":"universal-economics", "universal-philosophy":"universal-humanities", "universal-creative":"universal-humanities" };
  return seeds.map(seed => ({
   id:seed.id,title:seed.title,created:now,subject:seed.subject,level:"Foundation to Advanced",
   description:seed.description,
   objectives:["Understand core concepts and vocabulary","Apply principles to practical examples","Evaluate evidence, assumptions and limitations","Connect ideas across disciplines"],
-  prerequisiteCourseId:"",unlockCost:seed.cost,unlocked:seed.cost===0,done:false,updatedAt:now,
+  prerequisiteCourseId:prerequisites[seed.id] || "",unlockCost:seed.cost,unlocked:seed.cost===0 && !prerequisites[seed.id],done:false,updatedAt:now,
   lessons:seed.lessons.map((item,index)=>({
    id:seed.id+"-lesson-"+(index+1),title:item.title,summary:item.summary,content:item.content,
    objectives:item.objectives,estimatedMinutes:25+index*5,resources:[],
    question:{prompt:item.question,options:item.options,answerIndex:item.answer,explanation:item.explanation},
-   done:false
+   done:false,reviewIntervalDays:0,reviewStreak:0,assessmentAttempts:0,assessmentCorrect:0
   }))
  }));
 }
