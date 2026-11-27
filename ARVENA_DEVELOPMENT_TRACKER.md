@@ -50,7 +50,7 @@
 - [ ] PWA installation, update and offline behavior verified on device
 
 ### Foundation verification and sign-off
-- [x] CI passed: 103/103 automated tests, TypeScript/Vite production build and dependency install on current verified HEAD d1d7b7e (run 46016552772)
+- [x] CI passed: 103/103 automated tests, TypeScript/Vite production build and dependency install on current verified HEAD 5e01c4a (run 46017911163)
 - [ ] Production deployment verified after merge
 - [ ] Android/desktop device acceptance complete
 - [ ] Part 01 sign-off
@@ -87,4 +87,4 @@
 
 **AERIS is a separate application. ASTERIA must not embed an AERIS interface or depend on AERIS to operate.**
 
-**Completion policy:** Part 01 remains incomplete until implementation, automated verification, deployment and user-device acceptance meet the standards above.
+**Acceptance handoff:** Implementation and automated checks are prepared on the foundation branch. The unchecked browser/device items are intentionally reserved for the owner to test on their own desktop and mobile devices after the branch is merged and deployed. Do not mark Part 01 signed off until those results are recorded. The original approved Sacred Bloom artwork remains an owner-supplied identity asset; the current mark is interim.
