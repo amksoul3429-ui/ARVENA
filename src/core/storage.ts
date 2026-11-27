@@ -108,16 +108,17 @@ export function saveAppData(value: unknown): StorageResult<AppData> {
     const data = validateAppData(value);
     const existingRaw = window.localStorage.getItem(STORAGE_KEY);
     if (existingRaw) {
+      let existing: AppData;
       try {
         const parsedExisting: unknown = JSON.parse(existingRaw);
-        if (isObject(parsedExisting) && parsedExisting.format === BACKUP_FORMAT) {
-          if (parsedExisting.version !== BACKUP_VERSION) {
-            return { ok: false, error: "Saved data was created by a newer ASTERIA version. It was left untouched; open it with a compatible version or explicitly reset local data." };
-          }
-          const existing = parseStoredValue(existingRaw);
-          if (JSON.stringify(existing) === JSON.stringify(data)) return { ok: true, value: data };
+        if (isObject(parsedExisting) && parsedExisting.format === BACKUP_FORMAT && parsedExisting.version !== BACKUP_VERSION) {
+          return { ok: false, error: "Saved data was created by a newer ASTERIA version. It was left untouched; open it with a compatible version or explicitly reset local data." };
         }
-      } catch { /* A deliberate valid save may replace malformed data after recovery. */ }
+        existing = parseStoredValue(existingRaw);
+      } catch {
+        return { ok: false, error: "Saved data could not be validated and was left untouched. Restore a verified backup or explicitly reset local data." };
+      }
+      if (JSON.stringify(existing) === JSON.stringify(data)) return { ok: true, value: data };
     }
     const envelope: BackupEnvelope = {
       format: BACKUP_FORMAT, version: BACKUP_VERSION, app: "ASTERIA",
@@ -130,6 +131,24 @@ export function saveAppData(value: unknown): StorageResult<AppData> {
     return { ok: false, error: quota
       ? "Browser storage is full. Export a backup and free space before making more changes."
       : "Could not save data. Check browser storage permissions and try again." };
+  }
+}
+
+/** Replaces local data only as part of the user's explicitly confirmed backup-restore flow. */
+export function restoreAppData(value: unknown): StorageResult<AppData> {
+  try {
+    const data = validateAppData(value);
+    const envelope: BackupEnvelope = {
+      format: BACKUP_FORMAT, version: BACKUP_VERSION, app: "ASTERIA",
+      exportedAt: new Date().toISOString(), data,
+    };
+    window.localStorage.setItem(STORAGE_KEY, JSON.stringify(envelope));
+    return { ok: true, value: data };
+  } catch (error) {
+    const quota = error instanceof DOMException && (error.name === "QuotaExceededError" || error.name === "NS_ERROR_DOM_QUOTA_REACHED");
+    return { ok: false, error: quota
+      ? "Browser storage is full. Free space before restoring this backup."
+      : "Could not restore the backup. Existing saved data was not intentionally cleared." };
   }
 }
 
