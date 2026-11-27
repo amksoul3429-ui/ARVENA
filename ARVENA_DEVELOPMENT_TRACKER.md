@@ -50,7 +50,7 @@
 - [ ] PWA installation, update and offline behavior verified on device
 
 ### Foundation verification and sign-off
-- [x] CI passed: 103/103 automated tests, TypeScript/Vite production build and dependency install on commit ed3b76b (subsequent changes are queued for re-verification)
+- [x] CI passed: 103/103 automated tests, TypeScript/Vite production build and dependency install on current verified HEAD d6b662f (run 46016161880)
 - [ ] Production deployment verified after merge
 - [ ] Android/desktop device acceptance complete
 - [ ] Part 01 sign-off
