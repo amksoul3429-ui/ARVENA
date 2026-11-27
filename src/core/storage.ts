@@ -157,9 +157,12 @@ export function restoreAppData(value: unknown): StorageResult<AppData> {
 export function clearStoredAppData(): StorageResult<true> {
   try {
     window.localStorage.removeItem(STORAGE_KEY);
+    // Remove the pre-migration Explorer library too, otherwise a later launch
+    // could import those records again after the user explicitly reset the app.
+    window.localStorage.removeItem("arvena-video-library-v1");
     return { ok: true, value: true };
   } catch {
-    return { ok: false, error: "Could not clear local data. Check browser storage permissions and try again." };
+    return { ok: false, error: "Could not clear all local app records. Check browser storage permissions and try again." };
   }
 }
 
