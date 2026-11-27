@@ -1,4 +1,4 @@
-# ARVENA — Manual Acceptance Checklist
+# ASTERIA — Manual Acceptance Checklist
 
 Use this checklist on the deployed app after the GitHub Actions build and deployment succeed. Test on Android Chrome first, then on desktop if available.
 
@@ -45,16 +45,19 @@ Use this checklist on the deployed app after the GitHub Actions build and deploy
 - [ ] Keep the backup private; it may contain personal journal and life-planning data.
 - [ ] If testing restore, use a copy of the backup and verify records return.
 - [ ] Confirm ordinary refresh/navigation does not erase records.
+- [ ] In a disposable test profile after exporting a backup, reset local data; verify the data key remains absent until a new record is created.
+- [ ] With two tabs open, reset from one tab and verify the other clears without restoring the deleted snapshot.
 - [ ] Do not test destructive reset unless you have a verified backup and intentionally want to test reset.
 
 ## D. PWA and offline checks
 
-- [ ] In Android Chrome, use the browser menu to install ARVENA / Add to Home screen.
-- [ ] Open ARVENA from its installed icon.
+- [ ] In Android Chrome, use the browser menu to install ASTERIA / Add to Home screen.
+- [ ] Open ASTERIA from its installed icon.
 - [ ] Confirm the app shell opens and navigation works.
 - [ ] With the app loaded once, briefly enable airplane mode and reopen it.
 - [ ] Confirm the cached app shell appears; online YouTube discovery is expected to require internet.
 - [ ] Turn internet back on and confirm the app recovers.
+- [ ] When the app shows **UPDATE READY**, apply the update and confirm the latest build opens.
 - [ ] Confirm a new deployment is eventually reflected after reopening/reloading the app.
 
 ## E. Theme and usability
@@ -87,7 +90,7 @@ A successful local build or test suite does not replace the device checks above.
 - [ ] Under API restrictions, restrict the key to **YouTube Data API v3**.
 - [ ] Under website/referrer restrictions, allow the production origin, for example `https://amksoul3429-ui.github.io/*`.
 - [ ] If testing on a local Vite server, add the exact localhost origin/referrer you use (for example `http://localhost:5173/*`) temporarily.
-- [ ] Never commit the API key, add it to source code, put it in a public issue, or paste it into chat. Enter it only in ARVENA's password-style API-key field.
+- [ ] Never commit the API key, add it to source code, put it in a public issue, or paste it into chat. Enter it only in ASTERIA's password-style API-key field.
 - [ ] Do not assume that saving a key means it is valid; the app now labels the key as unverified until a real search succeeds.
 
 ### Live discovery test
