@@ -1,4 +1,4 @@
-# ASTERIA × AERIS — Master Development Tracker
+# ASTERIA — Master Development Tracker
 
 ## PART 01 — ASTERIA FOUNDATION (Phases 01–04)
 
@@ -7,60 +7,84 @@
 ### Phase 01 — Architecture
 - [x] Architecture boundaries and data flow documented
 - [x] Existing domain modules and storage boundary identified
-- [ ] App shell responsibilities refactored and verified against the documented boundary map
-- [ ] Build/test configuration and deployment workflows consolidated and verified
+- [x] Record editor extracted into a dedicated component
+- [x] Record form-to-domain mapping extracted into a testable core module
+- [x] Every navigable workspace has an explicit typed data-collection mapping and tested scoped filtering/deletion
+- [x] Mobile navigation overlay extracted into a dedicated component with centralized page definitions
+- [x] Persistence, migration status and cross-tab synchronization encapsulated in useAsteriaData
+- [x] Cross-tab explicit reset clears peer tabs without recreating the deleted storage snapshot
+- [x] First-run empty state and confirmed reset do not immediately recreate an empty storage snapshot
+- [x] Unrecognized legacy/current envelopes are rejected without destructive normalization
+- [x] Mission and reward orchestration delegated to useAsteriaActions
+- [x] Universal Explorer video library uses the shared app data model in the main app
+- [x] Legacy standalone Explorer videos migrate into shared storage before the legacy copy is removed
+- [x] Ordinary saves refuse to overwrite malformed or unsupported stored data; explicit confirmed restore has a separate validated write path
+- [x] Service-worker activation only removes obsolete ASTERIA-owned caches
+- [ ] App shell responsibilities fully refactored and verified against the documented boundary map
+- [x] Build/test configuration and deployment workflows consolidated into one automated Pages workflow and verified
 - [ ] Remove dead, duplicate or misleading foundation artifacts
 
 ### Phase 02 — Identity & Design
 - [x] ASTERIA branding and theme tokens exist
 - [x] Light/dark theme foundations exist
-- [ ] All workspace screens and controls verified for contrast and consistency in both themes
+- [x] High-contrast light-theme overrides implemented across all major workspaces
+- [ ] All workspace screens and controls visually verified for contrast and consistency in both themes
 - [ ] Original user-approved Sacred Bloom artwork and complete app icon set integrated (placeholder is not accepted)
 - [ ] Mobile and desktop visual acceptance completed
 
 ### Phase 03 — Core Interface
 - [x] Universal Explorer integrated into first-class navigation
 - [x] Centered mobile navigation overlay implemented
+- [x] Native PWA install prompt and update-ready action are wired into the app shell
 - [x] Responsive Explorer styles connected
+- [x] Navigation and record dialogs have dialog semantics, initial focus and keyboard focus containment
 - [ ] Navigation, overlay, keyboard/accessibility, all workspaces and interactions manually acceptance-tested
 - [ ] Interface consistency and responsive behavior accepted across phone/tablet/desktop
 
 ### Phase 04 — Data & Storage
 - [x] Historical storage key and backup identifier retained
 - [x] Data validation, migration and backup/restore code exist
+- [x] Import/export/restore paths have automated validation and safe-write regression coverage
 - [ ] Import/export/restore tested on real browser/device with existing data and recovery copy
 - [ ] Cross-tab updates and storage failures verified
 - [ ] PWA installation, update and offline behavior verified on device
 
 ### Foundation verification and sign-off
-- [x] Automated tests and production build passed on earlier recorded CI commit (not evidence for current HEAD)
-- [ ] Current HEAD CI checks pass
-- [ ] Production deploy verified
+- [x] CI passed: 103/103 automated tests, TypeScript/Vite production build and dependency install on latest completed run 46018051878 (103/103 tests, TypeScript/Vite production build); the subsequent tracker-only commit is also queued for CI
+- [ ] Production deployment verified after merge
 - [ ] Android/desktop device acceptance complete
 - [ ] Part 01 sign-off
 
-## PART 02 — AERIS INTELLIGENCE (PHASES 05–09)
-- [ ] Phase 05 — AERIS Intelligence Core
-- [ ] Phase 06 — AERIS Personalities & Adaptive Interaction
-- [ ] Phase 07 — Voice Intelligence & Hands-Free Interaction
-- [ ] Phase 08 — AERIS Command & Action Engine
-- [ ] Phase 09 — Intelligence Memory & Context Engine
+## PART 02 — LIFE SYSTEMS
+- [ ] Command Center
+- [ ] Mission Control
+- [ ] Daily Planner
+- [ ] Dream Life & Vision
+- [ ] Personal Evolution
+- [ ] Personal Journal
+- [ ] System Reports
 
-## PART 03 — UNIVERSAL KNOWLEDGE (PHASES 10–15)
-- [ ] Phase 10 — Universal Search & Exploration
-- [ ] Phase 11 — Universal Learning Engine
-- [ ] Phase 12 — Research & Discovery Engine
-- [ ] Phase 13 — Media & Resource Intelligence
-- [ ] Phase 14 — Practice, Testing & Mastery
-- [ ] Phase 15 — Knowledge Library & Knowledge Graph
+## PART 03 — UNIVERSAL KNOWLEDGE
+- [ ] Universal Knowledge Library
+- [ ] Knowledge Marketplace
+- [ ] Complete learning pathways and skill trees
+- [ ] Video Learning Studio
+- [ ] Practice, assessment, revision and mastery
 
-## PART 04 — PERSONAL EVOLUTION & INTELLIGENCE (PHASES 16–18)
-- [ ] Phase 16 — Personal Evolution & Life Systems
-- [ ] Phase 17 — Business, Finance & Strategic Systems
-- [ ] Phase 18 — Adaptive Personal Intelligence
+## PART 04 — PROGRESSION & PERSONAL DEVELOPMENT
+- [ ] Unified XP and credits economy
+- [ ] Levels, ranks, titles and achievements
+- [ ] Mission and milestone rewards
+- [ ] Knowledge and skill unlock progression
+- [ ] Reward validation and analytics
 
-## PART 05 — SECURITY, INTEGRATION & PRODUCTION (PHASES 19–20)
-- [ ] Phase 19 — Security, Integration & Performance
-- [ ] Phase 20 — Testing, Deployment & Production Evolution
+## PART 05 — SECURITY, INTEGRATION & PRODUCTION
+- [ ] Privacy and security hardening
+- [ ] Data portability and recovery
+- [ ] Additional integrations and automation
+- [ ] Performance and accessibility refinement
+- [ ] Production deployment and verification
 
-**Completion policy:** Part 01 remains incomplete until implementation, automated verification, deployment and user-device acceptance meet the standards above.
+**AERIS is a separate application. ASTERIA must not embed an AERIS interface or depend on AERIS to operate.**
+
+**Acceptance handoff:** Implementation and automated checks are prepared on the foundation branch. The unchecked browser/device items are intentionally reserved for the owner to test on their own desktop and mobile devices after the branch is merged and deployed. Do not mark Part 01 signed off until those results are recorded. The original approved Sacred Bloom artwork remains an owner-supplied identity asset; the current mark is interim.

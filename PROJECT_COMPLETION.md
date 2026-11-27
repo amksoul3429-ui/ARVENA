@@ -1,5 +1,7 @@
 # ARVENA — 13-Part Development Tracker
 
+> **Status clarification (ASTERIA Part 01):** This file is a historical log of workspace/module implementation. It is not the Part 01 Foundation acceptance tracker and does not indicate that Phases 01–04 are signed off. Use `ARVENA_DEVELOPMENT_TRACKER.md` as the authoritative Part 01 status; device, artwork and production acceptance remain separate gates.
+
 Only mark a part complete after implementation, automated build verification, and source-level functional review.
 
 | # | Part | Status |

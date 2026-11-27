@@ -27,7 +27,7 @@ export const EMPTY_APP_DATA: AppData = {
   missions: [], tasks: [], goals: [], knowledge: [], rewards: [], journal: [], activity: [], videos: [], evolution: [], achievementClaims: [], unlockedItems: [], xp: 0, credits: 0,
 };
 
-export type StorageResult<T> = { ok: true; value: T; warning?: string } | { ok: false; error: string };
+export type StorageResult<T> = { ok: true; value: T; warning?: string; persisted?: boolean } | { ok: false; error: string };
 export type BackupEnvelope = {
   format: typeof BACKUP_FORMAT;
   version: typeof BACKUP_VERSION;
@@ -74,6 +74,12 @@ export function validateAppData(value: unknown): AppData {
   };
 }
 
+function isRecognizableAppData(value: Record<string, unknown>): boolean {
+  const collections = ["missions", "tasks", "goals", "knowledge", "rewards", "journal", "activity", "videos", "evolution", "achievementClaims", "unlockedItems"];
+  return collections.some(key => Array.isArray(value[key])) ||
+    typeof value.xp === "number" || typeof value.credits === "number";
+}
+
 function parseStoredValue(raw: string): AppData {
   const parsed: unknown = JSON.parse(raw);
   // Versioned envelope is the current format; flat objects are the original ULS format.
@@ -81,7 +87,11 @@ function parseStoredValue(raw: string): AppData {
     if (parsed.version !== BACKUP_VERSION || !isObject(parsed.data)) {
       throw new Error("Unsupported stored data version");
     }
+    if (!isRecognizableAppData(parsed.data)) throw new Error("Unrecognized stored data format");
     return validateAppData(parsed.data);
+  }
+  if (!isObject(parsed) || !isRecognizableAppData(parsed)) {
+    throw new Error("Unrecognized legacy stored data format");
   }
   return validateAppData(parsed);
 }
@@ -89,15 +99,15 @@ function parseStoredValue(raw: string): AppData {
 export function loadAppData(): StorageResult<AppData> {
   try {
     const raw = window.localStorage.getItem(STORAGE_KEY);
-    if (!raw) return { ok: true, value: EMPTY_APP_DATA };
+    if (!raw) return { ok: true, value: EMPTY_APP_DATA, persisted: false };
     const value = parseStoredValue(raw);
     // Rewrite legacy flat data as a normalized envelope without changing the storage key.
     const parsed: unknown = JSON.parse(raw);
     if (!isObject(parsed) || parsed.format !== BACKUP_FORMAT) {
       const saved = saveAppData(value);
-      if (!saved.ok) return { ok: true, value, warning: "Data loaded, but its migration could not be saved. Export a backup." };
+      if (!saved.ok) return { ok: true, value, warning: "Data loaded, but its migration could not be saved. Export a backup.", persisted: true };
     }
-    return { ok: true, value };
+    return { ok: true, value, persisted: true };
   } catch {
     return { ok: false, error: "Saved data could not be read. Your original browser data was left untouched." };
   }
@@ -108,16 +118,18 @@ export function saveAppData(value: unknown): StorageResult<AppData> {
     const data = validateAppData(value);
     const existingRaw = window.localStorage.getItem(STORAGE_KEY);
     if (existingRaw) {
+      let existing: AppData;
       try {
         const parsedExisting: unknown = JSON.parse(existingRaw);
-        if (isObject(parsedExisting) && parsedExisting.format === BACKUP_FORMAT) {
-          if (parsedExisting.version !== BACKUP_VERSION) {
-            return { ok: false, error: "Saved data was created by a newer ASTERIA version. It was left untouched; open it with a compatible version or explicitly reset local data." };
-          }
-          const existing = parseStoredValue(existingRaw);
-          if (JSON.stringify(existing) === JSON.stringify(data)) return { ok: true, value: data };
+        if (isObject(parsedExisting) && parsedExisting.format === BACKUP_FORMAT && parsedExisting.version !== BACKUP_VERSION) {
+          return { ok: false, error: "Saved data was created by a newer ASTERIA version. It was left untouched; open it with a compatible version or explicitly reset local data." };
         }
-      } catch { /* A deliberate valid save may replace malformed data after recovery. */ }
+        existing = parseStoredValue(existingRaw);
+      } catch {
+        return { ok: false, error: "Saved data could not be validated and was left untouched. Restore a verified backup or explicitly reset local data." };
+      }
+      const currentEnvelope = (() => { try { const parsed: unknown = JSON.parse(existingRaw); return isObject(parsed) && parsed.format === BACKUP_FORMAT && parsed.version === BACKUP_VERSION; } catch { return false; } })();
+      if (currentEnvelope && JSON.stringify(existing) === JSON.stringify(data)) return { ok: true, value: data };
     }
     const envelope: BackupEnvelope = {
       format: BACKUP_FORMAT, version: BACKUP_VERSION, app: "ASTERIA",
@@ -133,13 +145,34 @@ export function saveAppData(value: unknown): StorageResult<AppData> {
   }
 }
 
+/** Replaces local data only as part of the user's explicitly confirmed backup-restore flow. */
+export function restoreAppData(value: unknown): StorageResult<AppData> {
+  try {
+    const data = validateAppData(value);
+    const envelope: BackupEnvelope = {
+      format: BACKUP_FORMAT, version: BACKUP_VERSION, app: "ASTERIA",
+      exportedAt: new Date().toISOString(), data,
+    };
+    window.localStorage.setItem(STORAGE_KEY, JSON.stringify(envelope));
+    return { ok: true, value: data };
+  } catch (error) {
+    const quota = error instanceof DOMException && (error.name === "QuotaExceededError" || error.name === "NS_ERROR_DOM_QUOTA_REACHED");
+    return { ok: false, error: quota
+      ? "Browser storage is full. Free space before restoring this backup."
+      : "Could not restore the backup. Existing saved data was not intentionally cleared." };
+  }
+}
+
 /** Removes the app data only after the user has explicitly confirmed a reset. */
 export function clearStoredAppData(): StorageResult<true> {
   try {
     window.localStorage.removeItem(STORAGE_KEY);
+    // Remove the pre-migration Explorer library too, otherwise a later launch
+    // could import those records again after the user explicitly reset the app.
+    window.localStorage.removeItem("arvena-video-library-v1");
     return { ok: true, value: true };
   } catch {
-    return { ok: false, error: "Could not clear local data. Check browser storage permissions and try again." };
+    return { ok: false, error: "Could not clear all local app records. Check browser storage permissions and try again." };
   }
 }
 
@@ -171,9 +204,15 @@ export function parseBackup(value: unknown): StorageResult<AppData> {
     : { ok: false, error: "The JSON file does not contain recognizable ASTERIA/ULS data." };
 }
 
-export function subscribeToExternalChanges(onChange: (data: AppData) => void): () => void {
+export function subscribeToExternalChanges(onChange: (data: AppData | null) => void): () => void {
   const onStorage = (event: StorageEvent) => {
-    if (event.key !== STORAGE_KEY || !event.newValue) return;
+    if (event.key !== STORAGE_KEY) return;
+    // Propagate explicit resets so stale tabs cannot restore deleted snapshots.
+    if (event.newValue === null) {
+      onChange(null);
+      return;
+    }
+    if (!event.newValue) return;
     try { onChange(parseStoredValue(event.newValue)); } catch { /* Ignore malformed writes from another tab. */ }
   };
   const onLocal = (event: Event) => {

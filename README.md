@@ -30,12 +30,12 @@ npm run build
 npm run preview
 ```
 
-GitHub Actions has separate quality checks and Pages build/deployment workflows. A deploy is not considered device-verified solely because Actions passed.
+GitHub Actions runs quality checks and the production build in one workflow, with Pages deployment restricted to the `main` branch. A successful branch build verifies the source and production bundle. The app is deployed from `main`; after the branch is merged and deployment succeeds, complete the hands-on checks in `TESTING-CHECKLIST.md`.
 
 ## Install
-Production URL: https://amksoul3429-ui.github.io/ARVENA/
+Production URL: https://amksoul3429-ui.github.io/ASTERIA/
 
-Open the URL in Chrome on Android or a supported browser and use **Install app** / **Add to Home screen**. A service worker caches the shell for offline startup; offline behavior must still be tested on-device.
+Open the URL in Chrome on Android or a supported browser and use **Install app** / **Add to Home screen**. A service worker caches the built shell and entry assets for offline startup. Where supported, the app offers a native install prompt and an explicit update-ready action; both still require on-device acceptance.
 
 ## Data, compatibility and privacy
 - Records are saved locally in the browser under the backward-compatible `uls-data-v1` key.
@@ -46,4 +46,4 @@ Open the URL in Chrome on Android or a supported browser and use **Install app**
 - The YouTube API key is saved locally in browser settings only, excluded from backups, and never committed. Restrict the key to YouTube Data API v3 and the site referrer. Rotate any exposed key.
 
 ## Acceptance status
-**Part 01 — ASTERIA Foundation remains in progress.** The tracker is evidence-based and does not claim completion from styling commits or documentation. Remaining work includes complete implementation/architecture cleanup, consistent UI verification, original approved identity artwork, current CI verification and manual Android/desktop acceptance of navigation, storage, backup/restore, installation, offline and update behavior.
+**Part 01 — ASTERIA Foundation remains in progress.** The tracker is evidence-based and does not claim completion from styling commits or documentation. The implementation and automated verification are prepared on the foundation branch. Your remaining work is hands-on Android/desktop acceptance using `TESTING-CHECKLIST.md` after deployment, plus supplying/approving the original Sacred Bloom artwork if it is to replace the clearly interim mark. The branch has not been merged or deployed to production yet. AERIS is separate and is not an ASTERIA runtime dependency.

@@ -1,14 +1,21 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { BACKUP_FORMAT, BACKUP_VERSION, STORAGE_KEY, clearStoredAppData, createBackup, loadAppData, parseBackup, saveAppData, validateAppData } from "../.test-build/storage.js";
+import { BACKUP_FORMAT, BACKUP_VERSION, STORAGE_KEY, clearStoredAppData, createBackup, loadAppData, parseBackup, restoreAppData, saveAppData, subscribeToExternalChanges, validateAppData } from "../.test-build/storage.js";
 
 const store = new Map();
+const eventListeners = new Map();
 globalThis.window = {
   localStorage: {
     getItem: key => store.has(key) ? store.get(key) : null,
     setItem: (key, value) => store.set(key, String(value)),
     removeItem: key => store.delete(key),
   },
+  addEventListener: (type, listener) => {
+    const listeners = eventListeners.get(type) || new Set();
+    listeners.add(listener);
+    eventListeners.set(type, listeners);
+  },
+  removeEventListener: (type, listener) => eventListeners.get(type)?.delete(listener),
 };
 
 const sample = {
@@ -151,7 +158,132 @@ test("explicit local reset clears a protected future-version envelope", () => {
   assert.equal(store.has(STORAGE_KEY), false);
 });
 
+test("explicit local reset also removes the legacy standalone Explorer video library", () => {
+  store.set(STORAGE_KEY, JSON.stringify(createBackup(sample)));
+  store.set("arvena-video-library-v1", JSON.stringify([
+    { id: "legacy-video", title: "Saved lecture", url: "https://youtu.be/example", created: "2026-11-23" }
+  ]));
+  const cleared = clearStoredAppData();
+  assert.equal(cleared.ok, true);
+  assert.equal(store.has(STORAGE_KEY), false);
+  assert.equal(store.has("arvena-video-library-v1"), false);
+});
+
 test("current-version backup rejects unrelated empty data objects", () => {
   const parsed = parseBackup({ format: BACKUP_FORMAT, version: BACKUP_VERSION, data: { unrelated: true } });
   assert.equal(parsed.ok, false);
+});
+
+
+test("cross-tab storage deletion clears stale in-memory data", () => {
+  const received = [];
+  const unsubscribe = subscribeToExternalChanges(data => received.push(data));
+  const handler = [...eventListeners.get("storage")][0];
+  handler({ key: "unrelated-key", newValue: null });
+  assert.equal(received.length, 0);
+  handler({ key: STORAGE_KEY, newValue: null });
+  assert.equal(received.length, 1);
+  assert.equal(received[0], null);
+  unsubscribe();
+  assert.equal(eventListeners.get("storage").size, 0);
+});
+
+test("cross-tab storage updates are validated and malformed writes ignored", () => {
+  const received = [];
+  const unsubscribe = subscribeToExternalChanges(data => received.push(data));
+  const handler = [...eventListeners.get("storage")][0];
+  handler({ key: STORAGE_KEY, newValue: JSON.stringify(createBackup({ ...sample, xp: 240 })) });
+  assert.equal(received.length, 1);
+  assert.equal(received[0].xp, 240);
+  handler({ key: STORAGE_KEY, newValue: "{broken-json" });
+  assert.equal(received.length, 1);
+  unsubscribe();
+});
+
+
+test("storage read failures are reported without overwriting existing browser data", () => {
+  const originalGet = window.localStorage.getItem;
+  window.localStorage.getItem = () => { throw new Error("storage blocked"); };
+  try {
+    const result = loadAppData();
+    assert.equal(result.ok, false);
+    assert.match(result.error, /left untouched/);
+  } finally {
+    window.localStorage.getItem = originalGet;
+  }
+});
+
+test("quota failures are reported as recoverable save errors", () => {
+  const originalSet = window.localStorage.setItem;
+  window.localStorage.setItem = () => { throw new DOMException("quota", "QuotaExceededError"); };
+  try {
+    const result = saveAppData(sample);
+    assert.equal(result.ok, false);
+    assert.match(result.error, /storage is full/i);
+  } finally {
+    window.localStorage.setItem = originalSet;
+  }
+});
+
+test("reset failures are returned to the caller instead of being reported as success", () => {
+  const originalRemove = window.localStorage.removeItem;
+  window.localStorage.removeItem = () => { throw new Error("storage blocked"); };
+  try {
+    const result = clearStoredAppData();
+    assert.equal(result.ok, false);
+    assert.match(result.error, /could not clear/i);
+  } finally {
+    window.localStorage.removeItem = originalRemove;
+  }
+});
+
+
+test("ordinary saves never overwrite malformed existing data", () => {
+  const raw = "{broken-json";
+  store.set(STORAGE_KEY, raw);
+  const saved = saveAppData({ ...sample, xp: 500 });
+  assert.equal(saved.ok, false);
+  assert.equal(store.get(STORAGE_KEY), raw);
+});
+
+test("explicit confirmed restore replaces malformed data with a validated envelope", () => {
+  store.set(STORAGE_KEY, "{broken-json");
+  const restored = restoreAppData(sample);
+  assert.equal(restored.ok, true);
+  const stored = JSON.parse(store.get(STORAGE_KEY));
+  assert.equal(stored.format, BACKUP_FORMAT);
+  assert.deepEqual(stored.data, validateAppData(sample));
+});
+
+
+test("unrecognized flat browser data is preserved instead of migrated to an empty snapshot", () => {
+  const raw = JSON.stringify({ unrelatedApplication: { value: "keep me" } });
+  store.set(STORAGE_KEY, raw);
+  const loaded = loadAppData();
+  assert.equal(loaded.ok, false);
+  assert.equal(store.get(STORAGE_KEY), raw);
+});
+
+test("unrecognized current-version envelopes are preserved instead of normalized to empty data", () => {
+  const raw = JSON.stringify({ format: BACKUP_FORMAT, version: BACKUP_VERSION, data: { unrelated: true } });
+  store.set(STORAGE_KEY, raw);
+  const loaded = loadAppData();
+  assert.equal(loaded.ok, false);
+  assert.equal(store.get(STORAGE_KEY), raw);
+});
+
+
+test("an empty first-run store remains absent until the user creates data", () => {
+  store.delete(STORAGE_KEY);
+  const loaded = loadAppData();
+  assert.equal(loaded.ok, true);
+  if (loaded.ok) assert.equal(loaded.persisted, false);
+  assert.equal(store.has(STORAGE_KEY), false);
+});
+
+test("an existing saved snapshot is reported as persisted", () => {
+  store.set(STORAGE_KEY, JSON.stringify(createBackup(sample)));
+  const loaded = loadAppData();
+  assert.equal(loaded.ok, true);
+  if (loaded.ok) assert.equal(loaded.persisted, true);
 });

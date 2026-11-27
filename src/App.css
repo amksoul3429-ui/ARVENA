@@ -170,3 +170,5 @@
 .navigation-layer>.navigation-panel .close{display:grid!important;place-items:center!important;}
 :root[data-theme="light"] .navigation-layer{background:rgba(24,36,58,.34)!important;}
 :root[data-theme="light"] .navigation-layer>.navigation-panel{background:rgba(255,255,255,.99)!important;border-color:#dce3ef!important;}
+
+.pwa-action{display:inline-flex;align-items:center;gap:6px;padding:8px 10px;border:1px solid #625b9c;border-radius:18px;background:rgba(132,119,230,.14);color:#d9d4ff;font-size:9px;font-weight:800;letter-spacing:.6px;white-space:nowrap}.pwa-action.update{border-color:#8a7145;background:rgba(190,151,79,.14);color:#f0d6a4}:root[data-theme="light"] .pwa-action{border-color:#d6d0f3;background:#eeecff;color:#51478e}:root[data-theme="light"] .pwa-action.update{border-color:#e8d9b9;background:#fff6e4;color:#795b28}@media(max-width:520px){.pwa-action{padding:7px;font-size:8px}.pwa-action svg{width:12px}}

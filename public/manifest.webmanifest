@@ -1,12 +1,12 @@
 {
   "id": "./",
-  "name": "ASTERIA — Universal Intelligence & Knowledge System",
+  "name": "ASTERIA — Personal Intelligence System",
   "short_name": "ASTERIA",
   "description": "Explore anything. Understand everything.",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
-  "orientation": "portrait",
+  "orientation": "any",
   "background_color": "#0b1020",
   "theme_color": "#0b1020",
   "icons": [

@@ -1,0 +1,42 @@
+import type { Data, Item } from "./appData";
+import type { Page } from "./navigation";
+
+export type DataCollection = keyof Pick<Data,
+  "missions" | "tasks" | "goals" | "knowledge" | "videos" | "evolution" | "rewards" | "journal" | "activity"
+>;
+
+const PAGE_COLLECTION: Record<Page, DataCollection> = {
+  Explore: "videos",
+  Overview: "missions",
+  Missions: "missions",
+  Planner: "tasks",
+  "Dream Life": "goals",
+  Evolution: "evolution",
+  Knowledge: "knowledge",
+  Videos: "videos",
+  Rewards: "rewards",
+  Journal: "journal",
+  Reports: "activity",
+  Settings: "activity",
+};
+
+/** Explicitly maps every navigable workspace to its backing collection. */
+export function collectionForPage(page: Page): DataCollection {
+  return PAGE_COLLECTION[page];
+}
+
+/** Filters only the selected workspace's records, without mutating shared data. */
+export function filterWorkspaceRecords(data: Data, page: Page, query: string): Item[] {
+  const normalized = query.trim().toLocaleLowerCase();
+  const records = data[collectionForPage(page)] as Item[];
+  return normalized ? records.filter(record => record.title.toLocaleLowerCase().includes(normalized)) : records;
+}
+
+/** Removes one record from the collection owned by a workspace. */
+export function removeWorkspaceRecord(data: Data, page: Page, recordId: string): Data {
+  const collection = collectionForPage(page);
+  return {
+    ...data,
+    [collection]: (data[collection] as Item[]).filter(record => record.id !== recordId),
+  };
+}
