@@ -10,6 +10,9 @@
 - [x] Record editor extracted into a dedicated component
 - [x] Persistence, migration status and cross-tab synchronization encapsulated in useAsteriaData
 - [x] Mission and reward orchestration delegated to useAsteriaActions
+- [x] Universal Explorer video library uses the shared app data model in the main app
+- [x] Ordinary saves refuse to overwrite malformed or unsupported stored data; explicit confirmed restore has a separate validated write path
+- [x] Service-worker activation only removes obsolete ASTERIA-owned caches
 - [ ] App shell responsibilities fully refactored and verified against the documented boundary map
 - [ ] Build/test configuration and deployment workflows consolidated and verified
 - [ ] Remove dead, duplicate or misleading foundation artifacts
@@ -33,12 +36,13 @@
 ### Phase 04 — Data & Storage
 - [x] Historical storage key and backup identifier retained
 - [x] Data validation, migration and backup/restore code exist
+- [x] Import/export/restore paths have automated validation and safe-write regression coverage
 - [ ] Import/export/restore tested on real browser/device with existing data and recovery copy
 - [ ] Cross-tab updates and storage failures verified
 - [ ] PWA installation, update and offline behavior verified on device
 
 ### Foundation verification and sign-off
-- [x] Pull-request branch CI passed: 89 automated tests and production build on commit f779141 (PR #2)
+- [x] Pull-request branch CI passed: 91 automated tests and production build on commit 02be5f1 (PR #2)
 - [ ] Production deployment verified after merge
 - [ ] Production deploy verified
 - [ ] Android/desktop device acceptance complete
