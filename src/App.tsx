@@ -73,7 +73,7 @@ function App(){
  const list=(p:Page)=>filterWorkspaceRecords(data,p,search);
  return <div className="shell">
  {mobile&&<NavigationOverlay page={page} xp={data.xp} onNavigate={setPage} onClose={()=>setMobile(false)}/>}
- <main><AppHeader page={page} theme={theme} credits={data.credits} xp={data.xp} canInstall={canInstall} updateReady={updateReady} onOpenNavigation={()=>{focusReturnRef.current=document.activeElement as HTMLElement|null;setMobile(true)}} onToggleTheme={()=>setTheme(t=>t==='dark'?'light':'dark')} onInstall={()=>void install()} onApplyUpdate={applyUpdate}/>
+ <main><AppHeader page={page} theme={theme} credits={data.credits} level={getLevel(data.xp)} navigationOpen={mobile} canInstall={canInstall} updateReady={updateReady} onOpenNavigation={()=>{focusReturnRef.current=document.activeElement as HTMLElement|null;setMobile(true)}} onToggleTheme={()=>setTheme(t=>t==='dark'?'light':'dark')} onInstall={()=>void install()} onApplyUpdate={applyUpdate}/>
  <div className="content">
  {page==='Explore'&&<UniversalExplorer videos={data.videos as any[]} onChange={videos=>setData(d=>({...d,videos:videos as unknown as Item[]}))}/>}
  {page==='Overview'&&<CommandCenter data={data} level={getLevel(data.xp)} xpIntoLevel={xpIntoLevel(data.xp)} onOpen={p=>open(p)} onNavigate={p=>setPage(p)} onToggleTask={taskId=>setData(d=>({...d,tasks:d.tasks.map(t=>t.id===taskId?{...t,done:!t.done}:t)}))}/>}
