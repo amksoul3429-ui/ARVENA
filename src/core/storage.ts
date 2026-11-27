@@ -27,7 +27,7 @@ export const EMPTY_APP_DATA: AppData = {
   missions: [], tasks: [], goals: [], knowledge: [], rewards: [], journal: [], activity: [], videos: [], evolution: [], achievementClaims: [], unlockedItems: [], xp: 0, credits: 0,
 };
 
-export type StorageResult<T> = { ok: true; value: T; warning?: string } | { ok: false; error: string };
+export type StorageResult<T> = { ok: true; value: T; warning?: string; persisted?: boolean } | { ok: false; error: string };
 export type BackupEnvelope = {
   format: typeof BACKUP_FORMAT;
   version: typeof BACKUP_VERSION;
@@ -99,15 +99,15 @@ function parseStoredValue(raw: string): AppData {
 export function loadAppData(): StorageResult<AppData> {
   try {
     const raw = window.localStorage.getItem(STORAGE_KEY);
-    if (!raw) return { ok: true, value: EMPTY_APP_DATA };
+    if (!raw) return { ok: true, value: EMPTY_APP_DATA, persisted: false };
     const value = parseStoredValue(raw);
     // Rewrite legacy flat data as a normalized envelope without changing the storage key.
     const parsed: unknown = JSON.parse(raw);
     if (!isObject(parsed) || parsed.format !== BACKUP_FORMAT) {
       const saved = saveAppData(value);
-      if (!saved.ok) return { ok: true, value, warning: "Data loaded, but its migration could not be saved. Export a backup." };
+      if (!saved.ok) return { ok: true, value, warning: "Data loaded, but its migration could not be saved. Export a backup.", persisted: true };
     }
-    return { ok: true, value };
+    return { ok: true, value, persisted: true };
   } catch {
     return { ok: false, error: "Saved data could not be read. Your original browser data was left untouched." };
   }
