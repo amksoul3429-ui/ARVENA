@@ -16,7 +16,7 @@ type Props = {
   onApplyUpdate: () => void;
 };
 
-export default function AppHeader({ page, theme, credits, xp, level, navigationOpen, canInstall, updateReady, onOpenNavigation, onToggleTheme, onInstall, onApplyUpdate }: Props) {
+export default function AppHeader({ page, theme, credits, level, navigationOpen, canInstall, updateReady, onOpenNavigation, onToggleTheme, onInstall, onApplyUpdate }: Props) {
   return <header>
     <button className="hamb" aria-label="Open navigation" aria-expanded={navigationOpen} aria-controls="asteria-navigation-dialog" onClick={onOpenNavigation}><Menu/></button>
     <span>ASTERIA　›　<b>{page.toUpperCase()}</b></span>
