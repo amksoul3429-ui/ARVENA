@@ -30,7 +30,7 @@ npm run build
 npm run preview
 ```
 
-GitHub Actions has separate quality checks and Pages build/deployment workflows. A deploy is not considered device-verified solely because Actions passed.
+GitHub Actions runs quality checks and the production build in one workflow, with Pages deployment restricted to the `main` branch. A successful branch build does not mean a production deploy or device acceptance has been verified.
 
 ## Install
 Production URL: https://amksoul3429-ui.github.io/ARVENA/
@@ -46,4 +46,4 @@ Open the URL in Chrome on Android or a supported browser and use **Install app**
 - The YouTube API key is saved locally in browser settings only, excluded from backups, and never committed. Restrict the key to YouTube Data API v3 and the site referrer. Rotate any exposed key.
 
 ## Acceptance status
-**Part 01 — ASTERIA Foundation remains in progress.** The tracker is evidence-based and does not claim completion from styling commits or documentation. Remaining work includes complete implementation/architecture cleanup, consistent UI verification, original approved identity artwork, current CI verification and manual Android/desktop acceptance of navigation, storage, backup/restore, installation, offline and update behavior.
+**Part 01 — ASTERIA Foundation remains in progress.** The tracker is evidence-based and does not claim completion from styling commits or documentation. Remaining work includes architecture cleanup, visual acceptance of all workspace themes, original approved identity artwork, real-browser storage/backup/restore checks, production deployment verification and manual Android/desktop acceptance of navigation, installation, offline and update behavior. AERIS is separate and is not an ASTERIA runtime dependency.
