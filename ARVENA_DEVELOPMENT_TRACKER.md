@@ -12,6 +12,7 @@
 - [x] Every navigable workspace has an explicit typed data-collection mapping and tested scoped filtering/deletion
 - [x] Mobile navigation overlay extracted into a dedicated component with centralized page definitions
 - [x] Persistence, migration status and cross-tab synchronization encapsulated in useAsteriaData
+- [x] Cross-tab explicit reset clears peer tabs without recreating the deleted storage snapshot
 - [x] Mission and reward orchestration delegated to useAsteriaActions
 - [x] Universal Explorer video library uses the shared app data model in the main app
 - [x] Legacy standalone Explorer videos migrate into shared storage before the legacy copy is removed
@@ -46,7 +47,7 @@
 - [ ] PWA installation, update and offline behavior verified on device
 
 ### Foundation verification and sign-off
-- [x] Pull-request branch CI passed: 99 automated tests and production build on commit 0dbe2fd (PR #2)
+- [x] Current pull-request HEAD CI passed: 99/99 automated tests, TypeScript/Vite production build and dependency install on commit 7b0f0e9 (PR #2)
 - [ ] Production deployment verified after merge
 - [ ] Android/desktop device acceptance complete
 - [ ] Part 01 sign-off
