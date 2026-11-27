@@ -1,6 +1,7 @@
 /** Shared, idempotent progression economy for every ASTERIA workspace. */
 export type ProgressionEvent = { id:string; title:string; created:string; kind:"progression"; source:string; xp:number; credits:number };
-export type ProgressionState = { xp:number; credits:number; activity:unknown[] };
+export type ProgressionActivity = { id:string; title:string; created:string; [key:string]:unknown };
+export type ProgressionState = { xp:number; credits:number; activity:ProgressionActivity[] };
 export function levelForXp(value:number){return Math.floor(Math.max(0,Math.floor(Number(value)||0))/500)+1;}
 export function levelProgress(value:number){const xp=Math.max(0,Math.floor(Number(value)||0));return {level:levelForXp(xp),current:xp%500,required:500,percent:Math.round((xp%500)/5)};}
 export function rankForLevel(level:number){const ranks=[{level:1,title:"Initiate"},{level:2,title:"Apprentice"},{level:3,title:"Pathfinder"},{level:5,title:"Strategist"},{level:8,title:"Specialist"},{level:12,title:"Vanguard"},{level:16,title:"Architect"},{level:20,title:"Sovereign"}];return [...ranks].reverse().find(r=>level>=r.level)||ranks[0];}
