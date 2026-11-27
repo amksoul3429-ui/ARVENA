@@ -194,12 +194,12 @@ export function parseBackup(value: unknown): StorageResult<AppData> {
     : { ok: false, error: "The JSON file does not contain recognizable ASTERIA/ULS data." };
 }
 
-export function subscribeToExternalChanges(onChange: (data: AppData) => void): () => void {
+export function subscribeToExternalChanges(onChange: (data: AppData | null) => void): () => void {
   const onStorage = (event: StorageEvent) => {
     if (event.key !== STORAGE_KEY) return;
     // Propagate explicit resets so stale tabs cannot restore deleted snapshots.
     if (event.newValue === null) {
-      onChange(validateAppData({}));
+      onChange(null);
       return;
     }
     if (!event.newValue) return;
