@@ -254,3 +254,20 @@ test("explicit confirmed restore replaces malformed data with a validated envelo
   assert.equal(stored.format, BACKUP_FORMAT);
   assert.deepEqual(stored.data, validateAppData(sample));
 });
+
+
+test("unrecognized flat browser data is preserved instead of migrated to an empty snapshot", () => {
+  const raw = JSON.stringify({ unrelatedApplication: { value: "keep me" } });
+  store.set(STORAGE_KEY, raw);
+  const loaded = loadAppData();
+  assert.equal(loaded.ok, false);
+  assert.equal(store.get(STORAGE_KEY), raw);
+});
+
+test("unrecognized current-version envelopes are preserved instead of normalized to empty data", () => {
+  const raw = JSON.stringify({ format: BACKUP_FORMAT, version: BACKUP_VERSION, data: { unrelated: true } });
+  store.set(STORAGE_KEY, raw);
+  const loaded = loadAppData();
+  assert.equal(loaded.ok, false);
+  assert.equal(store.get(STORAGE_KEY), raw);
+});
