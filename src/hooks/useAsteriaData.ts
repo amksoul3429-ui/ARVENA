@@ -58,14 +58,6 @@ export function useAsteriaData() {
     setData(next);
   }), []);
 
-  useEffect(() => {
-    // Optional legacy cleanup must never prevent the local-first app from starting.
-    try {
-      window.localStorage.removeItem("arvena-aeris-endpoint-v1");
-      window.localStorage.removeItem("arvena-aeris-token-v1");
-    } catch { /* Storage preferences are optional. */ }
-  }, []);
-
   const resetPersistence = () => {
     skipNextPersistence.current = true;
     setHasPersistedSnapshot(false);
