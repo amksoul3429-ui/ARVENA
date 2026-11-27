@@ -8,6 +8,7 @@
 - [x] Architecture boundaries and data flow documented
 - [x] Existing domain modules and storage boundary identified
 - [x] Record editor extracted into a dedicated component
+- [x] Mobile navigation overlay extracted into a dedicated component with centralized page definitions
 - [x] Persistence, migration status and cross-tab synchronization encapsulated in useAsteriaData
 - [x] Mission and reward orchestration delegated to useAsteriaActions
 - [x] Universal Explorer video library uses the shared app data model in the main app
@@ -43,7 +44,7 @@
 - [ ] PWA installation, update and offline behavior verified on device
 
 ### Foundation verification and sign-off
-- [x] Pull-request branch CI passed: 91 automated tests and production build on commit 4d33f36 (PR #2)
+- [x] Pull-request branch CI passed: 91 automated tests and production build on commit 5a0711a (PR #2)
 - [ ] Production deployment verified after merge
 - [ ] Production deploy verified
 - [ ] Android/desktop device acceptance complete
