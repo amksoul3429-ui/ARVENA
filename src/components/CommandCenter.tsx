@@ -17,7 +17,7 @@ export default function CommandCenter({data,level,xpIntoLevel,onOpen,onNavigate,
  const actions:[string,string,()=>void][]=[['Mission','Create a mission',()=>onOpen('Missions')],['Task','Plan a task',()=>onOpen('Planner')],['Goal','Add a life goal',()=>onOpen('Dream Life')],['Learn','Add a learning item',()=>onOpen('Knowledge')],['Journal','Write an entry',()=>onOpen('Journal')]];
  return <div className="command-center">
   <section className="cc-welcome">
-   <div><span className="cc-eyebrow">ARVENA / PERSONAL COMMAND</span><h1>Your direction.<br/><em>Your next move.</em></h1><p>{prettyDate(now)} · One deliberate day at a time.</p></div>
+   <div><span className="cc-eyebrow">ASTERIA / PERSONAL COMMAND</span><h1>Your direction.<br/><em>Your next move.</em></h1><p>{prettyDate(now)} · One deliberate day at a time.</p></div>
    <div className="cc-level"><div className="cc-level-icon"><Zap size={25}/></div><small>OPERATOR LEVEL</small><strong>{level}</strong><span>{xpIntoLevel} / 500 XP</span><div className="cc-track"><i style={{width:(xpIntoLevel/5)+'%'}}/></div></div>
   </section>
   <section className="cc-stats">
