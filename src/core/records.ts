@@ -1,5 +1,5 @@
 import type { Data, Item } from "./appData";
-import { syncMissionTask } from "./planner";
+import { syncMissionTask } from "./planner.js";
 import type { Page } from "./navigation";
 
 export type RecordPage = Extract<Page, "Missions" | "Planner" | "Dream Life" | "Knowledge" | "Rewards" | "Journal">;
