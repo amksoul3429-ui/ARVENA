@@ -47,7 +47,7 @@ export function useAsteriaData() {
   useEffect(() => subscribeToExternalChanges(next => {
     if (next === null) {
       skipNextPersistence.current = true;
-      setData(blank);
+      setData({ ...blank });
       return;
     }
     setData(next);
