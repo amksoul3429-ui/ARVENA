@@ -26,7 +26,7 @@ function createWorker({ html = "", networkFetch = async () => { throw new Error(
     },
     caches: {
       open: async () => cache,
-      keys: async () => ["old-cache", "asteria-shell-v5"],
+      keys: async () => ["unrelated-site-cache", "asteria-shell-v4", "asteria-shell-v5"],
       delete: async key => { deleted.push(key); return true; },
       match: async () => matched,
     },
@@ -73,5 +73,5 @@ test("service worker activation removes old app caches and claims clients", asyn
   let activationPromise;
   worker.listeners.get("activate")({ waitUntil: promise => { activationPromise = promise; } });
   await activationPromise;
-  assert.deepEqual(worker.deleted, ["old-cache"]);
+  assert.deepEqual(worker.deleted, ["asteria-shell-v4"]);
 });
