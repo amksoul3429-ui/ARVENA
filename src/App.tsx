@@ -27,7 +27,7 @@ type Page='Explore'|'Overview'|'Missions'|'Planner'|'Dream Life'|'Evolution'|'Kn
 const sections:Page[]=['Explore','Overview','Missions','Planner','Dream Life','Evolution','Knowledge','Videos','Rewards','Journal','Reports','Settings'];
 const labels:Record<Page,string>={'Explore':'Universal Explorer','Overview':'Command Center','Missions':'Mission Control','Planner':'Daily Planner','Dream Life':'Dream Life','Evolution':'Personal Evolution','Knowledge':'Knowledge Library','Videos':'Video Learning Studio','Rewards':'Rewards & Achievements','Journal':'Personal Journal','Reports':'System Reports','Settings':'Settings'};
 function App(){
- const {data,setData,persistenceReady,setPersistenceReady,storageHealthy,persistenceError,loadError,loadWarning}=useAsteriaData();
+ const {data,setData,setPersistenceReady,storageHealthy,persistenceError,loadError,loadWarning}=useAsteriaData();
  const[notificationAccess,setNotificationAccess]=useState(getNotificationAccess);
  const[theme,setTheme]=useState<'dark'|'light'>(()=>{try{return (window.localStorage.getItem('asteria-theme')||window.localStorage.getItem('arvena-theme'))==='light'?'light':'dark'}catch{return 'dark'}});
  const[page,setPage]=useState<Page>('Overview'),[modal,setModal]=useState<Page|null>(null),[editing,setEditing]=useState<Item|null>(null),[plannerDate,setPlannerDate]=useState(today()),[mobile,setMobile]=useState(false),[toast,setToast]=useState(loadWarning||loadError),[search,setSearch]=useState('');
