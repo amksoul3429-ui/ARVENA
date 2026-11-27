@@ -42,7 +42,7 @@ export function normalizeKnowledgeCourse(value: unknown): KnowledgeCourse | null
   if (!isObj(value) || typeof value.id !== "string" || !value.id || typeof value.title !== "string" || !value.title.trim()) return null;
   const legacy = !Array.isArray(value.lessons);
   const lessons = legacy
-    ? [{ id: "legacy-" + value.id, title: str(value.title), summary: str(value.description), content: str(value.notes), objectives: [], estimatedMinutes: 20, resources: [], done: value.done === true, ...(value.done === true ? { completedAt: str(value.completedAt, str(value.created)) } : {}) }]
+    ? [{ id: "legacy-" + value.id, title: str(value.title), summary: str(value.description), content: str(value.notes), objectives: [], estimatedMinutes: 20, resources: [], done: value.done === true, reviewIntervalDays: 0, reviewStreak: 0, assessmentAttempts: 0, assessmentCorrect: 0, ...(value.done === true ? { completedAt: str(value.completedAt, str(value.created)) } : {}) }]
     : (value.lessons as unknown[]).map(normalizeKnowledgeLesson).filter((x): x is KnowledgeLesson => !!x);
   const done = value.done === true || (lessons.length > 0 && lessons.every(l => l.done));
   return {
