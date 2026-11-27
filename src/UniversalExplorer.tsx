@@ -1,4 +1,5 @@
 import {useState} from 'react';
+import './universal-explorer.css';
 import {Globe2,Search,ExternalLink,PlayCircle,Video,BookOpen,LoaderCircle,ArrowUpRight,Orbit,GraduationCap} from 'lucide-react';
 
 type Article={title:string;snippet:string;url:string};
