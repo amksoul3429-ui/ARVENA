@@ -87,11 +87,18 @@
 - [ ] Owner YouTube API key configured and live discovery verified
 
 ## PART 04 — PROGRESSION & PERSONAL DEVELOPMENT
-- [ ] Unified XP and credits economy
-- [ ] Levels, ranks, titles and achievements
-- [ ] Mission and milestone rewards
-- [ ] Knowledge and skill unlock progression
-- [ ] Reward validation and analytics
+
+> **Implementation status: implemented on `part-04-progression-system`; CI and deployment verification pending.** See [PART-04-PROGRESSION.md](PART-04-PROGRESSION.md).
+
+- [x] Shared, idempotent XP and credits award ledger using the existing activity collection
+- [x] Centralized level thresholds, progress calculations, rank ladder and titles
+- [x] Mission completion and achievement claims routed through duplicate-protected progression awards
+- [x] Life-goal milestone completion rewards (20 XP + 2 credits), protected against repeat payouts
+- [x] Habit check-in XP awards use stable habit/date event IDs
+- [x] Skill practice levels use the shared capped progression rule
+- [x] Regression tests for award integrity, duplicate prevention, levels, ranks and skill progression
+- [ ] Branch CI and production build passed
+- [ ] Owner desktop/mobile acceptance
 
 ## PART 05 — SECURITY, INTEGRATION & PRODUCTION
 - [ ] Privacy and security hardening
